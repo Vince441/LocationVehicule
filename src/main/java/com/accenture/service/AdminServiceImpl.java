@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -24,12 +25,17 @@ public class AdminServiceImpl implements AdminService {
         this.adminMapper = adminMapper;
     }
 
+    /**
+     * @param adminRequestDto
+     * @return
+     */
+
 
     @Override
     public AdminResponseDto ajouter(AdminRequestDto adminRequestDto) {
-       Admin admin = adminMapper.toAdmin(adminRequestDto);
-    Admin adminEnreg = adminDao.save(admin);
-    return adminMapper.toAdminResponseDto(adminEnreg);
+        Admin admin = adminMapper.toAdmin(adminRequestDto);
+        Admin adminEnreg = adminDao.save(admin);
+        return adminMapper.toAdminResponseDto(adminEnreg);
     }
 
     @Override
@@ -44,7 +50,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminResponseDto trouver(Long id) throws ClientException {
         Optional<Admin> optAdmin = adminDao.findById(id);
-        if(optAdmin.isEmpty())
+        if (optAdmin.isEmpty())
             throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
         Admin admin = optAdmin.get();
         return adminMapper.toAdminResponseDto((admin));
