@@ -1,6 +1,8 @@
 package com.accenture.service.dto;
 
 
+import com.accenture.repository.entity.Adresse;
+
 import java.time.LocalDate;
 
 public record ClientResponseDto(
@@ -9,7 +11,7 @@ public record ClientResponseDto(
         String prenom,
         String email,
         String password,
-        AdresseDto adresse,
+        Adresse adresse,
         LocalDate dateDeNaissance,
         LocalDate dateInscription,
         String permis,
