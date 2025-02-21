@@ -1,6 +1,6 @@
 package com.accenture.service.dto;
 
-public record AdresseRequestDto(
+public record AdresseDto(
         String rue,
         String codePostal,
         String ville
