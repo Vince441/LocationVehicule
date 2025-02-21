@@ -11,10 +11,9 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @DiscriminatorValue("CLIENT")
+
 public class Client extends UtilisateurConnecte {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "adresse_id")

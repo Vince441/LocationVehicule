@@ -1,7 +1,6 @@
 package com.accenture.controller;
 
 import com.accenture.service.ClientService;
-import com.accenture.service.dto.AdresseRequestDto;
 import com.accenture.service.dto.ClientRequestDto;
 import com.accenture.service.dto.ClientResponseDto;
 import org.springframework.http.HttpStatus;
