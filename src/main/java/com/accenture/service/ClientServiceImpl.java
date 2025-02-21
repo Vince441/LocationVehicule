@@ -12,6 +12,8 @@ import com.accenture.service.mapper.ClientMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +34,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientResponseDto ajouter(ClientRequestDto clientRequestDto) {
+        verifierClient(clientRequestDto);
         Adresse adresse = adressMapper.toAdresse(clientRequestDto.adresse());
         Client client = clientMapper.toClient(clientRequestDto);
 
@@ -54,9 +57,41 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientResponseDto trouver(Long id) throws ClientException {
         Optional<Client> optClient = clientDao.findById(id);
-        if(optClient.isEmpty())
+        if (optClient.isEmpty())
             throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
         Client client = optClient.get();
         return clientMapper.toClientResponseDto((client));
     }
+
+
+    private static boolean ageRequis(LocalDate dateDeNaissance) {
+        if (dateDeNaissance == null) {
+            return false;
+        }
+        return Period.between(dateDeNaissance, LocalDate.now()).getYears() >= 18;
+    }
+
+
+    private static void verifierClient(ClientRequestDto clientRequestDto) throws ClientException {
+        if (clientRequestDto == null)
+            throw new ClientException("Le client est null");
+        if (clientRequestDto.nom() == null || clientRequestDto.nom().isBlank())
+            throw new ClientException("le nom est obligatoire");
+        if (clientRequestDto.prenom() == null || clientRequestDto.prenom().isBlank())
+            throw new ClientException("le prenom est obligatoire");
+        if (clientRequestDto.email() == null || clientRequestDto.email().isBlank())
+            throw new ClientException("L'email est obligatoire");
+        if (clientRequestDto.password() == null || clientRequestDto.password().isBlank())
+            throw new ClientException("le password est obligatoire");
+        if (clientRequestDto.adresse() == null || clientRequestDto.adresse().rue().isBlank() ||
+                clientRequestDto.adresse().codePostal().isBlank() || clientRequestDto.adresse().ville().isBlank())
+            throw new ClientException("L'adresse est obligatoire");
+        if (clientRequestDto.dateDeNaissance() == null)
+            throw new ClientException("La date est obligatoire");
+        if (!ageRequis(clientRequestDto.dateDeNaissance())) {
+            throw new ClientException("L'utilisateur doit avoir 18 ans");
+        }
+    }
+
+
 }
