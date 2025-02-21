@@ -1,0 +1,9 @@
+com.accenture
+com.accenture.controller
+com.accenture.exception
+com.accenture.model
+com.accenture.repository
+com.accenture.repository.entity
+com.accenture.service
+com.accenture.service.dto
+com.accenture.service.mapper
