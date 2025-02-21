@@ -33,7 +33,7 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public ClientResponseDto ajouter(ClientRequestDto clientRequestDto) {
+    public ClientResponseDto ajouter(ClientRequestDto clientRequestDto) throws ClientException, EntityNotFoundException {
         verifierClient(clientRequestDto);
         Adresse adresse = adressMapper.toAdresse(clientRequestDto.adresse());
         Client client = clientMapper.toClient(clientRequestDto);
@@ -55,7 +55,7 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public ClientResponseDto trouver(Long id) throws ClientException {
+    public ClientResponseDto trouver(Long id) throws EntityNotFoundException {
         Optional<Client> optClient = clientDao.findById(id);
         if (optClient.isEmpty())
             throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
