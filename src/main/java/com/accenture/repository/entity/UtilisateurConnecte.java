@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
 @Data
 @Entity
 @NoArgsConstructor
@@ -16,11 +15,9 @@ import lombok.NoArgsConstructor;
 public class UtilisateurConnecte {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String email;
     private String nom;
     private String prenom;
-    private String email;
     private String password;
 
 }
