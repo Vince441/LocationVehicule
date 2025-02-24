@@ -1,9 +1,13 @@
 package com.accenture.service.dto;
 
+import com.accenture.model.Permis;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
+
 
 public record ClientRequestDto(
         @NotBlank(message = "Le nom est obligatoire")
@@ -24,11 +28,13 @@ public record ClientRequestDto(
         @NotNull(message = "La date de naissance est obligatoire")
         LocalDate dateDeNaissance,
 
-        @NotNull(message = "La date d'inscription est obligatoire")
-        LocalDate dateInscription,
+        @NotNull(message = "Le permis est obligatoire")
+        List<Permis> permis,
 
-        String permis,
+
         Boolean desactive
+
+
 
 ) {
 
