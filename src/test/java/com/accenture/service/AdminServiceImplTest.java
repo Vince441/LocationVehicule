@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -70,9 +69,10 @@ class AdminServiceImplTest {
         a.setPassword("a");
         return a;
     }
-}
 
-private static AdminResponseDto creeAdminResponseDto() {
-    return new AdminResponseDto
-            ("dmin", "A", "admin@gmail.fr", "a", Fonction.ADMIN);
+
+    private static AdminResponseDto creeAdminResponseDto() {
+        return new AdminResponseDto("dmin", "A", "admin@gmail.fr", "a", Fonction.ADMIN);
+    }
+
 }
