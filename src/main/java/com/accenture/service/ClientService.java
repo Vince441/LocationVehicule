@@ -10,9 +10,13 @@ public interface ClientService {
 
 ClientResponseDto ajouter(ClientRequestDto clientRequestDto);
 
-List<ClientResponseDto> liste();
+List<ClientResponseDto> trouverToutes();
 
-ClientResponseDto trouver(Long id) throws ClientException;
+ClientResponseDto trouver(String email) throws ClientException;
+
+ClientResponseDto modifier(String email, ClientRequestDto clientRequestDto) throws ClientException;
+
+void supprimer(String email, String password) throws ClientException;
 
 
 }

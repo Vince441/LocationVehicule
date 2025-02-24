@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 public class ClientServiceImpl implements ClientService {
 
-    public static final String JE_N_AI_PAS_TROUVER_L_ID = "Je n'ai pas trouvé l'id";
+    public static final String JE_N_AI_PAS_TROUVER_L_EMAIL = "Je n'ai pas trouvé l'email";
     private final ClientDao clientDao;
     private final ClientMapper clientMapper;
     private final AdresseMapper adressMapper;
@@ -45,7 +45,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientResponseDto> liste() {
+    public List<ClientResponseDto> trouverToutes() {
         return clientDao
                 .findAll()
                 .stream()
@@ -55,12 +55,30 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public ClientResponseDto trouver(Long id) throws EntityNotFoundException {
-        Optional<Client> optClient = clientDao.findById(id);
+    public ClientResponseDto trouver(String email) throws EntityNotFoundException {
+        Optional<Client> optClient = clientDao.findById(email);
         if (optClient.isEmpty())
-            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
+            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL);
         Client client = optClient.get();
         return clientMapper.toClientResponseDto((client));
+    }
+
+    @Override
+    public ClientResponseDto modifier(String email, ClientRequestDto clientRequestDto) throws ClientException {
+        if (!clientDao.existsById(email))
+            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL);
+        verifierClient(clientRequestDto);
+        Client client = clientMapper.toClient(clientRequestDto);
+        client.setEmail(email);
+        Client clientEnreg = clientDao.save(client);
+
+        return clientMapper.toClientResponseDto(clientEnreg);
+    }
+
+    @Override
+    public void supprimer(String email, String password) throws ClientException {
+Client client = clientDao.findByEmailAndPassword(email, password).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+clientDao.delete(client);
     }
 
 
@@ -83,15 +101,23 @@ public class ClientServiceImpl implements ClientService {
             throw new ClientException("L'email est obligatoire");
         if (clientRequestDto.password() == null || clientRequestDto.password().isBlank())
             throw new ClientException("le password est obligatoire");
-        if (clientRequestDto.adresse() == null || clientRequestDto.adresse().rue().isBlank() ||
-                clientRequestDto.adresse().codePostal().isBlank() || clientRequestDto.adresse().ville().isBlank())
+        if (clientRequestDto.adresse().rue() == null ||
+                clientRequestDto.adresse().codePostal() == null ||
+                clientRequestDto.adresse().ville() == null ||
+                clientRequestDto.adresse().rue().isBlank() ||
+                clientRequestDto.adresse().codePostal().isBlank() ||
+                clientRequestDto.adresse().ville().isBlank())
             throw new ClientException("L'adresse est obligatoire");
         if (clientRequestDto.dateDeNaissance() == null)
             throw new ClientException("La date est obligatoire");
         if (!ageRequis(clientRequestDto.dateDeNaissance())) {
             throw new ClientException("L'utilisateur doit avoir 18 ans");
         }
+        if (clientRequestDto.permis() == null || clientRequestDto.permis().isEmpty()) {
+            throw new ClientException("Le permis est obligatoire");
+        }
+        if (clientRequestDto.desactive() == null) {
+            throw new ClientException("Le desactiver est obligatoire");
+        }
     }
-
-
 }
