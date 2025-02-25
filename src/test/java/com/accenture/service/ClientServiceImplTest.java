@@ -97,7 +97,7 @@ class ClientServiceImplTest {
 
 
     @DisplayName("""
-            Test de la methode trouverToutes qui doit renvoyer une liste de ClientResponseDto correspondant aux taches existant en vase de donnée
+            Test de la methode trouverToutes qui doit renvoyer une liste de ClientResponseDto correspondant aux utilisateur existant en base de donnée
             """)
     @Test
     void testTrouverToutes() {
