@@ -15,7 +15,7 @@ public interface AdminService {
 
     List<AdminResponseDto> trouverToutes();
 
-   AdminResponseDto trouver(String email) throws ClientException;
+   AdminResponseDto trouver(String email, String password) throws ClientException;
 
     AdminResponseDto modifier(String email, AdminRequestDto adminRequestDto) throws ClientException;
 

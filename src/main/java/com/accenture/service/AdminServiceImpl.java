@@ -43,29 +43,22 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-
-
     @Override
     public List<AdminResponseDto> trouverToutes() {
-//        return adminDao
-//                .findAll()
-//                .stream()
-//                .map(adminMapper::toAdminResponseDto)
-//                .toList();
-        
-        List<AdminResponseDto> list = new ArrayList<>();
-        List<Admin> all = adminDao.findAll();
-        for(Admin a : all){
-            AdminResponseDto adminResponseDto = adminMapper.toAdminResponseDto(a);
-            list.add(adminResponseDto);
+        return adminDao
+                .findAll()
+                .stream()
+                .map(adminMapper::toAdminResponseDto)
+                .toList();
 
-        }
-        return list;
+
     }
 
+
+
     @Override
-    public AdminResponseDto trouver(String email) throws ClientException {
-        Optional<Admin> optAdmin = adminDao.findById(email);
+    public AdminResponseDto trouver(String email, String password) throws ClientException {
+        Optional<Admin> optAdmin = adminDao.findByEmailAndPassword(email, password);
         if (optAdmin.isEmpty())
             throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL);
         Admin admin = optAdmin.get();
@@ -86,7 +79,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void supprimer(String email, String password) throws ClientException {
-        Admin admin = adminDao.findByEmailAndPassword(email, password).orElseThrow(() -> new RuntimeException("Admin non trouvé"));
+        Admin admin = adminDao.findByEmailAndPassword(email, password).orElseThrow(() -> new EntityNotFoundException("Admin non trouvé"));
         adminDao.delete(admin);
     }
 
@@ -102,8 +95,6 @@ public class AdminServiceImpl implements AdminService {
         if (adminRequestDto.password() == null || adminRequestDto.password().isBlank())
             throw new ClientException("le password est obligatoire");
     }
-
-
 
 
 }

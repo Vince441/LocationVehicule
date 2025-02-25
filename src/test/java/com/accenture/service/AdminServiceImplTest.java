@@ -5,7 +5,6 @@ import com.accenture.repository.AdminDao;
 import com.accenture.repository.entity.Admin;
 import com.accenture.service.dto.AdminRequestDto;
 import com.accenture.service.dto.AdminResponseDto;
-import com.accenture.service.dto.ClientResponseDto;
 import com.accenture.service.mapper.AdminMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
@@ -39,8 +38,8 @@ class AdminServiceImplTest {
 
     @Test
     void testTrouverExistePas() {
-        Mockito.when(daoMock.findById("a@gmail.fr")).thenReturn(Optional.empty());
-        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.trouver("a@gmail.fr"));
+        Mockito.when(daoMock.findByEmailAndPassword("a@gmail.fr", "a")).thenReturn(Optional.empty());
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.trouver("a@gmail.fr", "a"));
         assertEquals("Je n'ai pas trouvé l'email", ex.getMessage());
     }
 
@@ -53,11 +52,11 @@ class AdminServiceImplTest {
     void testTrouverExiste() {
         Admin a = creeAdmin();
         Optional<Admin> optAdmin = Optional.of(a);
-        Mockito.when(daoMock.findById("admin@gmail.fr")).thenReturn(optAdmin);
+        Mockito.when(daoMock.findByEmailAndPassword("admin@gmail.fr", "a")).thenReturn(optAdmin);
 
         AdminResponseDto dto = creeAdminResponseDto();
         Mockito.when(mapperMock.toAdminResponseDto(a)).thenReturn(dto);
-        assertSame(dto, service.trouver("admin@gmail.fr"));
+        assertSame(dto, service.trouver("admin@gmail.fr", "a"));
 
 
     }
@@ -67,8 +66,8 @@ class AdminServiceImplTest {
             Test methode ajouter
             """)
     @Test
-    void testAjouterOk(){
-        AdminRequestDto requestDto = new AdminRequestDto("dmin","A","admin@gmail.fr","a",Fonction.ADMIN);
+    void testAjouterOk() {
+        AdminRequestDto requestDto = new AdminRequestDto("dmin", "A", "admin@gmail.fr", "a", Fonction.ADMIN);
         Admin adminAvantEnreg = creeAdmin();
         adminAvantEnreg.setEmail("admin@gmail.fr");
 
@@ -86,35 +85,58 @@ class AdminServiceImplTest {
     }
 
 
-@DisplayName("""
-        Test de la methode trouverToutes qui doit renvoyer une list de AdminResponseDto correspondant aux utilisateur existant en bdd
-        """)
-@Test
-void testTrouverToutes(){
+    @DisplayName("""
+            Test de la methode trouverToutes qui doit renvoyer une list de AdminResponseDto correspondant aux utilisateur existant en bdd
+            """)
+    @Test
+    void testTrouverToutes() {
         Admin admin1 = creeAdmin();
         Admin admin2 = creeAdmin2();
 
-    List<Admin> admins = List.of(admin1, admin2);
+        List<Admin> admins = List.of(admin1, admin2);
 
-    AdminResponseDto adminResponseDto1 = creeAdminResponseDto();
-    AdminResponseDto adminResponseDto2 = creeAdminResponseDto2();
+        AdminResponseDto adminResponseDto1 = creeAdminResponseDto();
+        AdminResponseDto adminResponseDto2 = creeAdminResponseDto2();
 
-    List<AdminResponseDto> dtos = List.of(adminResponseDto1, adminResponseDto2);
+        List<AdminResponseDto> dtos = List.of(adminResponseDto1, adminResponseDto2);
 
-    Mockito.when(daoMock.findAll()).thenReturn(admins);
-    Mockito.when(mapperMock.toAdminResponseDto(admin1)).thenReturn(adminResponseDto1);
-    Mockito.when(mapperMock.toAdminResponseDto(admin2)).thenReturn(adminResponseDto2);
- //   Mockito.when((mapperMock.toAdminResponseDto(Mockito.any()))).thenReturn(adminResponseDto1, adminResponseDto2);
-
-
-    List<AdminResponseDto> toutes = service.trouverToutes();
-    assertEquals(dtos, toutes);
+        Mockito.when(daoMock.findAll()).thenReturn(admins);
+        Mockito.when(mapperMock.toAdminResponseDto(admin1)).thenReturn(adminResponseDto1);
+        Mockito.when(mapperMock.toAdminResponseDto(admin2)).thenReturn(adminResponseDto2);
 
 
-}
+        List<AdminResponseDto> listAdminDto = service.trouverToutes();
+        assertEquals(dtos, listAdminDto);
+    }
+
+    @DisplayName("""
+            Test de la methode supprimer qui doit supprimer un admin
+            """)
+    @Test
+    void testSupprimerExiste() {
+
+        Admin admin = creeAdmin();
+        String email = admin.getEmail();
+        String password = admin.getPassword();
+        Mockito.when(daoMock.findByEmailAndPassword(email, password)).thenReturn(Optional.of(admin));
+        service.supprimer(email, password);
+        Mockito.verify(daoMock, Mockito.times(1)).delete(admin);
 
 
+    }
 
+
+    @DisplayName("""
+            Test de la methode supprimer qui doit supprimer un admin qui existe pas
+            """)
+    @Test
+    void testSupprimerExistePas() {
+
+        Mockito.when(daoMock.findByEmailAndPassword("tp@gmail.fr", "s")).thenReturn(Optional.empty());
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.supprimer("tp@gmail.fr", "s"));
+        assertEquals("Admin non trouvé", ex.getMessage());
+
+    }
 
 
     private static Admin creeAdmin() {
@@ -128,7 +150,7 @@ void testTrouverToutes(){
     }
 
 
-    private static Admin creeAdmin2(){
+    private static Admin creeAdmin2() {
         Admin a = new Admin();
         a.setNom("MAN");
         a.setPrenom("SUPER");
@@ -143,8 +165,9 @@ void testTrouverToutes(){
         return new AdminResponseDto("dmin", "A", "admin@gmail.fr", "a", Fonction.ADMIN);
     }
 
-    private static AdminResponseDto creeAdminResponseDto2(){
-        return new AdminResponseDto("MAN","SUPER","superman@gmail.fr","b",Fonction.ADMIN);
+    private static AdminResponseDto creeAdminResponseDto2() {
+        return new AdminResponseDto("MAN", "SUPER", "superman@gmail.fr", "b", Fonction.ADMIN);
     }
+
 
 }
