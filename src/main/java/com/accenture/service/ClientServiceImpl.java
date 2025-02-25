@@ -55,8 +55,8 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public ClientResponseDto trouver(String email) throws EntityNotFoundException {
-        Optional<Client> optClient = clientDao.findById(email);
+    public ClientResponseDto trouver(String email, String password) throws EntityNotFoundException {
+        Optional<Client> optClient = clientDao.findByEmailAndPassword(email, password);
         if (optClient.isEmpty())
             throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL);
         Client client = optClient.get();
@@ -77,8 +77,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void supprimer(String email, String password) throws ClientException {
-Client client = clientDao.findByEmailAndPassword(email, password).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-clientDao.delete(client);
+        Client client = clientDao.findByEmailAndPassword(email, password).orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé"));
+        clientDao.delete(client);
     }
 
 

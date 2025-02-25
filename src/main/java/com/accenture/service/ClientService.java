@@ -12,7 +12,7 @@ ClientResponseDto ajouter(ClientRequestDto clientRequestDto);
 
 List<ClientResponseDto> trouverToutes();
 
-ClientResponseDto trouver(String email) throws ClientException;
+ClientResponseDto trouver(String email, String password) throws ClientException;
 
 ClientResponseDto modifier(String email, ClientRequestDto clientRequestDto) throws ClientException;
 

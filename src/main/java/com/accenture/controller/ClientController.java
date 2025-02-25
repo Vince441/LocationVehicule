@@ -25,9 +25,9 @@ public class ClientController {
         return clientService.trouverToutes();
     }
 
-    @GetMapping("/{id}")
-    ResponseEntity<ClientResponseDto> unClient(@PathVariable("id")String email) {
-        ClientResponseDto trouve = clientService.trouver(email);
+    @GetMapping("/recupInfo")
+    ResponseEntity<ClientResponseDto> unClient(@PathVariable("id")String email, String password) {
+        ClientResponseDto trouve = clientService.trouver(email, password);
         return ResponseEntity.ok(trouve);
     }
 
@@ -48,6 +48,8 @@ public class ClientController {
         clientService.supprimer(email, password);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+
 
 }
 

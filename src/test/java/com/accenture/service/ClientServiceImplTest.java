@@ -49,35 +49,13 @@ class ClientServiceImplTest {
             """)
     @Test
     void testTrouverExistePas() {
-        Mockito.when(daoMock.findById("bbbb@gmail.fr")).thenReturn(Optional.empty());
-        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.trouver("bbbb@gmail.fr"));
+        Mockito.when(daoMock.findByEmailAndPassword("bbbb@gmail.fr", "z")).thenReturn(Optional.empty());
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.trouver("bbbb@gmail.fr", "z"));
         assertEquals("Je n'ai pas trouvé l'email", ex.getMessage());
 
     }
 
-    @DisplayName("""
-            Test de la méthode ajouter
-            """)
-    @Test
-    void testAjouterOk() {
-        ClientRequestDto requestDto = new ClientRequestDto("L", "V", "v@gmail.fr", "ocre",
-                new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
-                LocalDate.of(1990, 12, 24), List.of(Permis.A), true);
-        Client clientAvantEnreg = creeClient();
-        clientAvantEnreg.setEmail("v@gmail.fr");
 
-        Client clientApresEnreg = creeClient();
-        ClientResponseDto responseDto = creeClientResponseDto();
-
-        Mockito.when(adresseMapper.toAdresse(requestDto.adresse())).thenReturn(new Adresse());
-        Mockito.when(mapperMock.toClient(requestDto)).thenReturn(clientAvantEnreg);
-        Mockito.when(daoMock.save(clientAvantEnreg)).thenReturn(clientApresEnreg);
-        Mockito.when(mapperMock.toClientResponseDto(clientApresEnreg)).thenReturn(responseDto);
-
-        assertSame(responseDto, service.ajouter(requestDto));
-        Mockito.verify(daoMock, Mockito.times(1)).save(clientAvantEnreg);
-
-    }
 
     @DisplayName("""
             Test de la méthode trouver (String email) qui doit renvoyer un ClientResponseDto lorsque le client existe en base
@@ -87,11 +65,11 @@ class ClientServiceImplTest {
 
         Client c = creeClient();
         Optional<Client> optClient = Optional.of(c);
-        Mockito.when(daoMock.findById("b@gmail.fr")).thenReturn(optClient);
+        Mockito.when(daoMock.findByEmailAndPassword("b@gmail.fr", "z")).thenReturn(optClient);
 
         ClientResponseDto dto = creeClientResponseDto();
         Mockito.when(mapperMock.toClientResponseDto(c)).thenReturn(dto);
-        assertSame(dto, service.trouver("b@gmail.fr"));
+        assertSame(dto, service.trouver("b@gmail.fr", "z"));
 
     }
 
@@ -117,6 +95,58 @@ class ClientServiceImplTest {
 
         assertEquals(dtos, service.trouverToutes());
     }
+
+    @DisplayName("""
+            Test de la méthode ajouter
+            """)
+    @Test
+    void testAjouterOk() {
+        ClientRequestDto requestDto = new ClientRequestDto("L", "V", "v@gmail.fr", "ocre",
+                new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
+                LocalDate.of(1990, 12, 24), List.of(Permis.A), true);
+        Client clientAvantEnreg = creeClient();
+        clientAvantEnreg.setEmail("v@gmail.fr");
+
+        Client clientApresEnreg = creeClient();
+        ClientResponseDto responseDto = creeClientResponseDto();
+
+        Mockito.when(adresseMapper.toAdresse(requestDto.adresse())).thenReturn(new Adresse());
+        Mockito.when(mapperMock.toClient(requestDto)).thenReturn(clientAvantEnreg);
+        Mockito.when(daoMock.save(clientAvantEnreg)).thenReturn(clientApresEnreg);
+        Mockito.when(mapperMock.toClientResponseDto(clientApresEnreg)).thenReturn(responseDto);
+
+        assertSame(responseDto, service.ajouter(requestDto));
+    }
+
+    @DisplayName("""
+        Test de la methode supprimer qui doit supprimer un client
+        """)
+    @Test
+    void testSupprimerExiste(){
+
+        Client client = creeClient();
+        String email = client.getEmail();
+        String password = client.getPassword();
+        Mockito.when(daoMock.findByEmailAndPassword(email, password)).thenReturn(Optional.of(client));
+        service.supprimer(email, password);
+        Mockito.verify(daoMock, Mockito.times(1)).delete(client);
+
+
+    }
+
+
+    @DisplayName("""
+        Test de la methode supprimer qui doit supprimer un client
+        """)
+    @Test
+    void testSupprimerExistePas(){
+
+        Mockito.when(daoMock.findByEmailAndPassword("tp@gmail.fr", "s")).thenReturn(Optional.empty());
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.supprimer("tp@gmail.fr", "s"));
+        assertEquals("Utilisateur non trouvé", ex.getMessage());
+
+    }
+
 
 
     @DisplayName("""
@@ -188,6 +218,31 @@ class ClientServiceImplTest {
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
     }
+
+    @DisplayName("""
+            Si ajouter(TacheRequestDto sans password (null) exception levée
+            """)
+    @Test
+    void testAjouterSansPassword() {
+        ClientRequestDto dto = new ClientRequestDto("L", "V", "v@gmail.fr", null, new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
+                LocalDate.of(1990, 12, 24),
+                List.of(Permis.A), true);
+        assertThrows(ClientException.class, () -> service.ajouter(dto));
+    }
+
+
+
+    @DisplayName("""
+            Si ajouter(TacheRequestDto sans password (blank) exception levée
+            """)
+    @Test
+    void testAjouterSansPasswordBlank() {
+        ClientRequestDto dto = new ClientRequestDto("L", "V", "v@gmail.fr", "\n", new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
+                LocalDate.of(1990, 12, 24),
+                List.of(Permis.A), true);
+        assertThrows(ClientException.class, () -> service.ajouter(dto));
+    }
+
 
 
     @DisplayName("""
@@ -306,6 +361,10 @@ class ClientServiceImplTest {
                 List.of(Permis.A), null);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
     }
+
+
+
+
 
 
     private static Client creeClient() {

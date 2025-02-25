@@ -28,8 +28,8 @@ public class AdminController {
     List<AdminResponseDto> tous (){ return adminService.trouverToutes();}
 
     @GetMapping("/{id}")
-    ResponseEntity<AdminResponseDto> unClient(@PathVariable("id") String email){
-        AdminResponseDto trouve = adminService.trouver(email);
+    ResponseEntity<AdminResponseDto> unClient(@PathVariable("id") String email, String password){
+        AdminResponseDto trouve = adminService.trouver(email, password);
                 return ResponseEntity.ok(trouve);
     }
 
