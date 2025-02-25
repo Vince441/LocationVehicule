@@ -11,6 +11,7 @@ import com.accenture.service.mapper.AdminMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,11 +47,20 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<AdminResponseDto> trouverToutes() {
-        return adminDao
-                .findAll()
-                .stream()
-                .map(adminMapper::toAdminResponseDto)
-                .toList();
+//        return adminDao
+//                .findAll()
+//                .stream()
+//                .map(adminMapper::toAdminResponseDto)
+//                .toList();
+        
+        List<AdminResponseDto> list = new ArrayList<>();
+        List<Admin> all = adminDao.findAll();
+        for(Admin a : all){
+            AdminResponseDto adminResponseDto = adminMapper.toAdminResponseDto(a);
+            list.add(adminResponseDto);
+
+        }
+        return list;
     }
 
     @Override
