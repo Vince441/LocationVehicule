@@ -14,11 +14,5 @@ public class UtilisateurConnecteImpl implements UtilisateurConnecteService {
     }
 
 
-    @Override
-    public UtilisateurConnecte trouver(Long id) throws ClientException {
-        return null;
-    }
-
-
 
 }
