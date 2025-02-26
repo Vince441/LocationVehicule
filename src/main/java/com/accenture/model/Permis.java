@@ -4,6 +4,10 @@ public enum Permis {
     A,
     B,
     C,
-    D
+    D,
+    C1,
+    A1,
+    A2,
+    D1,
 
 }

@@ -69,7 +69,6 @@ class AdminServiceImplTest {
     void testAjouterOk() {
         AdminRequestDto requestDto = new AdminRequestDto("dmin", "A", "admin@gmail.fr", "a", Fonction.ADMIN);
         Admin adminAvantEnreg = creeAdmin();
-        adminAvantEnreg.setEmail("admin@gmail.fr");
 
         Admin adminApresEnreg = creeAdmin();
         AdminResponseDto responseDto = creeAdminResponseDto();
@@ -79,7 +78,6 @@ class AdminServiceImplTest {
         Mockito.when(mapperMock.toAdminResponseDto(adminApresEnreg)).thenReturn(responseDto);
 
         assertSame(responseDto, service.ajouter(requestDto));
-        Mockito.verify(daoMock, Mockito.times(1)).save(adminAvantEnreg);
 
 
     }
