@@ -9,6 +9,5 @@ import org.mapstruct.Mapper;
 public interface AdresseMapper {
 
     Adresse toAdresse(AdresseDto adresseDto);
-    AdresseDto toAdresseDto(Adresse adresse);
 
 }

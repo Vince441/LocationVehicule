@@ -105,7 +105,7 @@ class ClientServiceImplTest {
                 new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
                 LocalDate.of(1990, 12, 24), List.of(Permis.A), true);
         Client clientAvantEnreg = creeClient();
-        clientAvantEnreg.setEmail("v@gmail.fr");
+
 
         Client clientApresEnreg = creeClient();
         ClientResponseDto responseDto = creeClientResponseDto();

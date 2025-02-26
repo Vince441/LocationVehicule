@@ -10,8 +10,7 @@ public interface UtilisateurConnecteService {
 
 
     List<UtilisateurConnecte> liste();
-
-    UtilisateurConnecte trouver(Long id) throws ClientException;
+    
 
 
 

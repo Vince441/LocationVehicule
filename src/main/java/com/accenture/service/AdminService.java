@@ -1,10 +1,9 @@
 package com.accenture.service;
 
-import com.accenture.exception.ClientException;
+import com.accenture.exception.AdminException;
 import com.accenture.service.dto.AdminRequestDto;
 import com.accenture.service.dto.AdminResponseDto;
-import com.accenture.service.dto.ClientRequestDto;
-import com.accenture.service.dto.ClientResponseDto;
+
 
 
 import java.util.List;
@@ -15,11 +14,11 @@ public interface AdminService {
 
     List<AdminResponseDto> trouverToutes();
 
-   AdminResponseDto trouver(String email, String password) throws ClientException;
+   AdminResponseDto trouver(String email, String password) throws AdminException;
 
-    AdminResponseDto modifier(String email, AdminRequestDto adminRequestDto) throws ClientException;
+    AdminResponseDto modifier(String email, AdminRequestDto adminRequestDto) throws AdminException;
 
-    void supprimer(String email, String password) throws ClientException;
+    void supprimer(String email, String password) throws AdminException;
 
 
 
