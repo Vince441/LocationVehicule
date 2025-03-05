@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.accenture</groupId>
-    <artifactId>12-spring-boot-complet</artifactId>
+    <artifactId>LocationVehicule</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>12-spring-boot-complet</name>
+    <name>LocationVehicule</name>
     <description>Demo project for Spring Boot</description>
     <url/>
     <licenses>

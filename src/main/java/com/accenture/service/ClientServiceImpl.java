@@ -3,7 +3,6 @@ package com.accenture.service;
 import com.accenture.exception.ClientException;
 import com.accenture.repository.ClientDao;
 import com.accenture.repository.entity.Adresse;
-
 import com.accenture.repository.entity.Client;
 import com.accenture.service.dto.ClientRequestDto;
 import com.accenture.service.dto.ClientResponseDto;
@@ -64,9 +63,10 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientResponseDto modifier(String email, ClientRequestDto clientRequestDto) throws ClientException {
-        if (!clientDao.existsById(email))
-            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL);
+    public ClientResponseDto modifier(String email, String password, ClientRequestDto clientRequestDto) throws ClientException {
+        clientDao.findByEmailAndPassword(email, password)
+                .orElseThrow(() -> new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL));
+
         verifierClient(clientRequestDto);
         Client client = clientMapper.toClient(clientRequestDto);
         client.setEmail(email);

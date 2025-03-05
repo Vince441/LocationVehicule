@@ -2,12 +2,12 @@ package com.accenture.repository.entity.vehicules;
 
 import com.accenture.model.vehicule.Transmission;
 import com.accenture.model.vehicule.TypeCarburant;
+import com.accenture.model.vehicule.TypeVoiture;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Data
 @Entity
@@ -22,8 +22,8 @@ public class Voiture extends Vehicule {
     private TypeCarburant carburant;
     private int nombreDePorte;
     private Transmission transmission;
-    private Boolean climatisation;
+    private boolean climatisation;
     private int nombreDeBagage;
-
+    private TypeVoiture typeVoiture;
 
 }

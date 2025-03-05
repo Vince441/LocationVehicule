@@ -3,6 +3,7 @@ package com.accenture.service.vehicules;
 import com.accenture.model.Permis;
 import com.accenture.model.vehicule.Transmission;
 import com.accenture.model.vehicule.TypeCarburant;
+import com.accenture.model.vehicule.TypeVoiture;
 import com.accenture.repository.VoitureDao;
 import com.accenture.repository.entity.vehicules.Voiture;
 import com.accenture.service.dto.vehicules.VoitureRequestDto;
@@ -21,7 +22,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-
 class VoitureServiceImplTest {
 
     @Mock
@@ -38,7 +38,7 @@ class VoitureServiceImplTest {
             """)
 
     @Test
-    void testTrouverToutes(){
+    void testTrouverToutes() {
         Voiture voiture1 = creeVoiture1();
         Voiture voiture2 = creeVoiture2();
 
@@ -63,27 +63,28 @@ class VoitureServiceImplTest {
             Test methode ajouter
             """)
     @Test
-    void testAjouterOk(){
+    void testAjouterOk() {
 
-        VoitureRequestDto requestDto = new VoitureRequestDto("Ford", "Mustang","Noir", Permis.A,
-                5,TypeCarburant.ESSENCE,3,Transmission.MANUELLE,
-                true,20, 200,0,true, false);
-Voiture voitureAvantEnreg = creeVoiture1();
-Voiture voitureApresEnreg = creeVoiture1();
+        VoitureRequestDto requestDto = new VoitureRequestDto("Ford", "Mustang", "Noir", Permis.A,
+                5, TypeCarburant.ESSENCE, 3, Transmission.AUTO,
+                true, 20, 200, 50, true, false, TypeVoiture.BERLINE);
+        Voiture voitureAvantEnreg = creeVoiture1();
+        Voiture voitureApresEnreg = creeVoiture1();
 
-VoitureResponseDto responseDto = creeVoitureResponseDto();
+        VoitureResponseDto responseDto = creeVoitureResponseDto();
 
-Mockito.when(mapperMock.toVoiture(requestDto)).thenReturn(voitureAvantEnreg);
-Mockito.when(daoMock.save(voitureAvantEnreg)).thenReturn(voitureApresEnreg);
-Mockito.when(mapperMock.toVoitureResponseDto(voitureApresEnreg)).thenReturn(responseDto);
+        Mockito.when(mapperMock.toVoiture(requestDto)).thenReturn(voitureAvantEnreg);
+        Mockito.when(daoMock.save(voitureAvantEnreg)).thenReturn(voitureApresEnreg);
+        Mockito.when(mapperMock.toVoitureResponseDto(voitureApresEnreg)).thenReturn(responseDto);
 
-assertSame(responseDto, service.ajouter(requestDto));
+        assertSame(responseDto, service.ajouter(requestDto));
 
 
     }
 
-    private static Voiture creeVoiture1(){
+    private static Voiture creeVoiture1() {
         Voiture v = new Voiture();
+        v.setId(1);
         v.setMarque("Ford");
         v.setModele("Mustang");
         v.setCouleur("Noir");
@@ -94,16 +95,17 @@ assertSame(responseDto, service.ajouter(requestDto));
         v.setTransmission(Transmission.AUTO);
         v.setClimatisation(true);
         v.setNombreDeBagage(20);
-
+        v.setTypeVoiture(TypeVoiture.BERLINE);
         v.setTarifJournalier(200);
-        v.setKilometrage(0);
+        v.setKilometrage(50);
         v.setActif(true);
         v.setRetirerDuParc(false);
-return v;
+        return v;
     }
 
-    private static Voiture creeVoiture2(){
+    private static Voiture creeVoiture2() {
         Voiture v = new Voiture();
+        v.setId(2);
         v.setMarque("Peugeot");
         v.setModele("207");
         v.setCouleur("Noir");
@@ -114,7 +116,7 @@ return v;
         v.setTransmission(Transmission.MANUELLE);
         v.setClimatisation(false);
         v.setNombreDeBagage(10);
-
+        v.setTypeVoiture(TypeVoiture.SUV);
         v.setTarifJournalier(80);
         v.setKilometrage(120000);
         v.setActif(true);
@@ -122,17 +124,17 @@ return v;
         return v;
     }
 
-private static VoitureResponseDto creeVoitureResponseDto(){
-        return new VoitureResponseDto("Ford", "Mustang","Noir", Permis.A,
-                5,TypeCarburant.ESSENCE,3,Transmission.MANUELLE,
-                true,20, 200,0,true, false);
-}
+    private static VoitureResponseDto creeVoitureResponseDto() {
+        return new VoitureResponseDto(1, "Ford", "Mustang", "Noir", Permis.A,
+                5, TypeCarburant.ESSENCE, 3, Transmission.AUTO,
+                true, 20, 200, 50, true, false, TypeVoiture.BERLINE);
+    }
 
-private static VoitureResponseDto creeVoitureResponseDto2(){
-        return new VoitureResponseDto("Peugeot", "207","Noir",Permis.A,
-                5,TypeCarburant.ESSENCE,5,Transmission.MANUELLE,
-                false,10,80,120000, true, false);
-}
+    private static VoitureResponseDto creeVoitureResponseDto2() {
+        return new VoitureResponseDto(2, "Peugeot", "207", "Noir", Permis.A,
+                5, TypeCarburant.ESSENCE, 5, Transmission.MANUELLE,
+                false, 10, 80, 120000, true, false, TypeVoiture.SUV);
+    }
 
 
 }

@@ -1,12 +1,18 @@
 package com.accenture.controller;
 
+import com.accenture.exception.AdminException;
 import com.accenture.service.AdminService;
 import com.accenture.service.dto.AdminRequestDto;
 import com.accenture.service.dto.AdminResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -15,38 +21,88 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
-
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+    private static final String DONNEE_INVALIDE = "Données invalides";
 
 
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
     }
 
-    @GetMapping
-    List<AdminResponseDto> tous (){ return adminService.trouverToutes();}
 
-    @GetMapping("/{id}")
-    ResponseEntity<AdminResponseDto> unAdmin(@PathVariable("id") String email, String password){
-        AdminResponseDto trouve = adminService.trouver(email, password);
-                return ResponseEntity.ok(trouve);
+    @GetMapping("/liste")
+    @Operation(summary = "Liste des administrateurs", description = "Permet de voir la liste des admins.")
+    @ApiResponse(responseCode = "201", description = "Liste des admins récuperé avec succès")
+    @ApiResponse(responseCode = "400", description = "Liste des admins non disponnible")
+    public List<AdminResponseDto> tous() {
+        try {
+            List<AdminResponseDto> admins = adminService.trouverToutes();
+            logger.info("La liste des administrateurs récupérée avec succès");
+            return admins;
+        } catch (AdminException e) {
+            logger.error("Erreur lors de la récupération de la liste des administrateurs", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+        }
+    }
+
+
+    @GetMapping("/recupInfo/{email}")
+    @Operation(summary = "Informations du compte", description = "Permet de voir les informations de son compte.")
+    @ApiResponse(responseCode = "201", description = "Recuperation du compte admin")
+    @ApiResponse(responseCode = "400", description = "Compte admin non disponnible")
+    public ResponseEntity<AdminResponseDto> unAdmin(@PathVariable("email") String email, @RequestParam String password) {
+        try {
+            AdminResponseDto trouve = adminService.trouver(email, password);
+            logger.info("Administrateur trouvé avec succès pour l'email: {}", email);
+            return ResponseEntity.ok(trouve);
+        } catch (AdminException e) {
+            logger.error("Erreur lors de la récupération de l'administrateur pour l'email: {}", email, e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+        }
     }
 
     @PostMapping
-    ResponseEntity<Void> ajouter(@RequestBody AdminRequestDto adminRequestDto){
-        adminService.ajouter(adminRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    @Operation(summary = "Créer un administrateur", description = "Permet d'ajouter un compte admin.")
+    @ApiResponse(responseCode = "201", description = "Ajout du compte réussis")
+    @ApiResponse(responseCode = "400", description = "Données invalides")
+    public ResponseEntity<Void> ajouterAdmin(@RequestBody AdminRequestDto adminRequestDto) {
+        try {
+            adminService.ajouter(adminRequestDto);
+            logger.info("Administrateur créer avec succès");
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (AdminException e) {
+            logger.error("Erreur lors de la création de l'administrateur", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+        }
     }
 
-    @PutMapping("/{id}")
-    ResponseEntity<AdminResponseDto> modifier(@PathVariable("id") String email, @RequestBody @Valid AdminRequestDto adminRequestDto) {
-        AdminResponseDto reponse = adminService.modifier(email, adminRequestDto);
-        return ResponseEntity.ok(reponse);
+    @PutMapping("/{email}")
+    @Operation(summary = "Modification d'un administrateur", description = "Permet de modifier un compte admin.")
+    @ApiResponse(responseCode = "200", description = "Modification du compte réussis")
+    @ApiResponse(responseCode = "400", description = "Modification impossible")
+    public ResponseEntity<AdminResponseDto> modifierAdmin(@PathVariable("email") String email, @RequestParam String password, @RequestBody @Valid AdminRequestDto adminRequestDto) {
+        try {
+            AdminResponseDto reponse = adminService.modifier(email, password, adminRequestDto);
+            logger.info("Administrateur modifié avec succès pour l'email: {}", email);
+            return ResponseEntity.ok(reponse);
+        } catch (AdminException e) {
+            logger.error("Erreur lors de la modification de l'administrateur pour l'email: {}", email, e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+        }
     }
 
-    @DeleteMapping("/{id}")
-    ResponseEntity<AdminResponseDto> supprimer(@PathVariable("id") String email, String password){
-        adminService.supprimer(email, password);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    @DeleteMapping("/{email}")
+    @Operation(summary = "Supprimer un administrateur", description = "Permet de supprimer un compte admin.")
+    @ApiResponse(responseCode = "204", description = "Supression du compte réussis")
+    @ApiResponse(responseCode = "400", description = "Supression impossible")
+    public ResponseEntity<Void> supprimerAdmin(@PathVariable("email") String email, @RequestParam String password) {
+        try {
+            adminService.supprimer(email, password);
+            logger.info("Administrateur supprimé avec succès pour l'email: {}", email);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (AdminException e) {
+            logger.error("Erreur lors de la suppression de l'administrateur pour l'email: {}", email, e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+        }
     }
-
 }
