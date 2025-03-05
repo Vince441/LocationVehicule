@@ -3,8 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-!**/log/mon-appli.log
-!**/log/spring-boot.log
+!**/log
 !**/Javadoc
 ### STS ###
 .apt_generated
