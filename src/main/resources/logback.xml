@@ -1,6 +1,7 @@
 <configuration>    <!--  Encodage et pattern commun  -->
     <property name="LOG_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>    <!--  Appender pour écrire les logs dans la console  -->
+              value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
+    <!--  Appender pour écrire les logs dans la console  -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${LOG_PATTERN}</pattern>
@@ -12,7 +13,8 @@
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
         <rollingPolicy
-                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">            <!--  configuration de rotation quotidienne  -->
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--  configuration de rotation quotidienne  -->
             <fileNamePattern>spring-boot.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
@@ -23,8 +25,9 @@
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
         <rollingPolicy
-                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">            <!--  configuration de rotation quotidienne  -->
-            <fileNamePattern>mon-appli.%d{yyyy-MM-dd}.log</fileNamePattern>
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--  configuration de rotation quotidienne  -->
+            <fileNamePattern>log/mon-appli.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
     </appender>    <!--  Logger pour Hibernate et Spring  -->
