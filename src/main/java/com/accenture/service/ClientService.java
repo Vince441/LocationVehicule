@@ -18,4 +18,5 @@ public interface ClientService {
 
     void supprimer(String email, String password) throws ClientException;
 
+    ClientResponseDto modifierPartiellement(String email, String password, ClientRequestDto clientRequestDto) throws ClientException;
 }

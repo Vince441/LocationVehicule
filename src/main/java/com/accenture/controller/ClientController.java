@@ -74,6 +74,20 @@ public class ClientController {
         }
     }
 
+    @PatchMapping("/{email}")
+    @Operation(summary = "Modifier d'un client partiellement", description = "Modification partiellement de mon compte")
+    @ApiResponse(responseCode = "200", description = "Modification du compte réussis")
+    @ApiResponse(responseCode = "400", description = "Echec lors de la modification du compte")
+    public ResponseEntity<ClientResponseDto> modifierPartiellementUnClient(@PathVariable("email") String email, @RequestParam String password, @RequestBody ClientRequestDto clientRequestDto) {
+        try {
+            ClientResponseDto response = clientService.modifierPartiellement(email, password, clientRequestDto);
+            logger.info("Le client à bien été modifier partiellement");
+            return ResponseEntity.ok(response);
+        } catch (ClientException e) {
+            throw new ClientException(e.getMessage());
+        }
+    }
+
     @PutMapping("/{email}")
     @Operation(summary = "Modifier d'un client", description = "Modification de mon compte")
     @ApiResponse(responseCode = "200", description = "Modification du compte réussis")

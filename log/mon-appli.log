@@ -147,3 +147,23 @@ com.accenture.exception.vehicules.VehiculeException: La marque est obligatoire
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-03-05 16:18:44 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 23372 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-05 16:18:44 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-05 16:18:44 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-05 16:18:55 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 11.035 seconds (process running for 12.991)
+2025-03-05 16:19:25 [http-nio-8080-exec-7] INFO  c.a.controller.ClientController - Client crée avec succès
+2025-03-05 16:20:12 [http-nio-8080-exec-8] INFO  c.a.controller.ClientController - Le client à bien été modifier partiellement
+2025-03-05 16:20:57 [http-nio-8080-exec-9] INFO  c.a.controller.ClientController - Client modifié avec succès pour l'email: v.l@gmail.com
+2025-03-05 16:21:12 [http-nio-8080-exec-10] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
+2025-03-05 16:21:25 [http-nio-8080-exec-1] INFO  c.a.controller.ClientController - Le client à bien été modifier partiellement
+2025-03-05 16:21:39 [http-nio-8080-exec-2] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
+2025-03-05 16:22:34 [http-nio-8080-exec-3] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
+2025-03-05 16:22:51 [http-nio-8080-exec-5] INFO  c.a.controller.ClientController - Le client à bien été modifier partiellement
+2025-03-05 16:23:02 [http-nio-8080-exec-6] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
+2025-03-05 16:25:22 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 25764 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-05 16:25:22 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-05 16:25:22 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-05 16:25:32 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 11.08 seconds (process running for 12.818)
+2025-03-05 16:25:51 [http-nio-8080-exec-1] INFO  c.a.controller.ClientController - Client crée avec succès
+2025-03-05 16:26:16 [http-nio-8080-exec-2] INFO  c.a.controller.ClientController - Le client à bien été modifier partiellement
+2025-03-05 16:26:23 [http-nio-8080-exec-5] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
