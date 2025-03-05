@@ -31,6 +31,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    /**
+     * Ajoute un nouveau client à la base de données.
+     * La méthode vérifie que les informations du client sont valides avant de les enregistrer.
+     * Si les informations sont valides, un nouveau client est créé et ajouté à la base de données.
+     *
+     * @param clientRequestDto l'objet {@link ClientRequestDto} contenant les informations du client à ajouter.
+     * @return un objet {@link ClientResponseDto} représentant le client ajouté.
+     * @throws ClientException         si les informations du client ne sont pas valides.
+     * @throws EntityNotFoundException si une entité liée (comme l'adresse) n'est pas trouvée.
+     */
     @Override
     public ClientResponseDto ajouter(ClientRequestDto clientRequestDto) throws ClientException, EntityNotFoundException {
         verifierClient(clientRequestDto);
@@ -43,6 +53,13 @@ public class ClientServiceImpl implements ClientService {
         return clientMapper.toClientResponseDto(clientEnreg);
     }
 
+
+    /**
+     * Récupère tous les clients de la base de données et les retourne sous forme d'une liste de {@link ClientResponseDto}.
+     * Chaque client est mappé depuis l'entité {@link Client} vers un DTO {@link ClientResponseDto}.
+     *
+     * @return une liste de {@link ClientResponseDto} représentant tous les clients dans la base de données.
+     */
     @Override
     public List<ClientResponseDto> trouverToutes() {
         return clientDao
@@ -52,7 +69,16 @@ public class ClientServiceImpl implements ClientService {
                 .toList();
     }
 
-
+    /**
+     * Recherche un client dans la base de données en fonction de son email et de son mot de passe.
+     * Si un client correspondant est trouvé, un DTO représentant ce client est retourné.
+     * Si aucun client n'est trouvé avec les informations données, une exception est levée.
+     *
+     * @param email    l'adresse email du client à rechercher.
+     * @param password le mot de passe du client à rechercher.
+     * @return un objet {@link ClientResponseDto} représentant le client trouvé.
+     * @throws EntityNotFoundException si aucun client n'est trouvé avec l'email et le mot de passe fournis.
+     */
     @Override
     public ClientResponseDto trouver(String email, String password) throws EntityNotFoundException {
         Optional<Client> optClient = clientDao.findByEmailAndPassword(email, password);
@@ -62,6 +88,19 @@ public class ClientServiceImpl implements ClientService {
         return clientMapper.toClientResponseDto((client));
     }
 
+
+    /**
+     * Modifie les informations d'un client existant dans la base de données.
+     * La méthode vérifie que le client existe en fonction de son email et mot de passe, puis met à jour ses informations avec celles fournies dans le DTO {@link ClientRequestDto}.
+     * Si le client n'est pas trouvé, une exception est levée.
+     *
+     * @param email            l'email du client à modifier.
+     * @param password         le mot de passe du client à modifier.
+     * @param clientRequestDto un objet {@link ClientRequestDto} contenant les nouvelles informations du client.
+     * @return un objet {@link ClientResponseDto} représentant le client modifié.
+     * @throws ClientException         si les informations du client ne sont pas valides.
+     * @throws EntityNotFoundException si aucun client n'est trouvé avec l'email et le mot de passe fournis.
+     */
     @Override
     public ClientResponseDto modifier(String email, String password, ClientRequestDto clientRequestDto) throws ClientException {
         clientDao.findByEmailAndPassword(email, password)
@@ -75,6 +114,14 @@ public class ClientServiceImpl implements ClientService {
         return clientMapper.toClientResponseDto(clientEnreg);
     }
 
+    /**
+     * Supprime un client de la base de données en fonction de son email et de son mot de passe.
+     * Si le client correspondant est trouvé, il est supprimé. Sinon, une exception est levée.
+     *
+     * @param email    l'email du client à supprimer.
+     * @param password le mot de passe du client à supprimer.
+     * @throws EntityNotFoundException si aucun client n'est trouvé avec l'email et le mot de passe fournis.
+     */
     @Override
     public void supprimer(String email, String password) throws ClientException {
         Client client = clientDao.findByEmailAndPassword(email, password).orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé"));
@@ -82,6 +129,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    /**
+     * Vérifie si un utilisateur est âgé de 18 ans ou plus à partir de sa date de naissance.
+     *
+     * @param dateDeNaissance la date de naissance de l'utilisateur à vérifier.
+     * @return {@code true} si l'utilisateur a 18 ans ou plus, sinon {@code false}.
+     * Retourne {@code false} si la date de naissance est {@code null}.
+     */
     private static boolean ageRequis(LocalDate dateDeNaissance) {
         if (dateDeNaissance == null) {
             return false;
@@ -90,6 +144,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    /**
+     * Vérifie la validité des informations d'un client fournies dans le DTO {@link ClientRequestDto}.
+     * La méthode valide chaque champ du DTO pour s'assurer que toutes les informations nécessaires sont présentes et correctes.
+     * Si l'une des informations est invalide, une exception {@link ClientException} est levée.
+     *
+     * @param clientRequestDto un objet {@link ClientRequestDto} contenant les informations à vérifier.
+     * @throws ClientException si l'une des informations est invalide ou manquante, une exception est levée avec un message explicite.
+     */
     private static void verifierClient(ClientRequestDto clientRequestDto) throws ClientException {
         if (clientRequestDto == null)
             throw new ClientException("Le client est null");
