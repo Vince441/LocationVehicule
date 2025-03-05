@@ -399,14 +399,14 @@ class ClientServiceImplTest {
     private static ClientResponseDto creeClientResponseDto() {
 
         return new ClientResponseDto("L", "V", "v@gmail.fr", "ocre",
-                new Adresse(1L, "29 rue de la bibine", "44000", "Nantes"),
+                new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
                 LocalDate.of(1990, 12, 24), List.of(Permis.A), true);
     }
 
     private static ClientResponseDto creeClientResponseDto2() {
 
         return new ClientResponseDto("Ldp", "A", "a@gmail.fr", "test",
-                new Adresse(2L, "29bis rue de la bibine", "44100", "Saint-Herblain"),
+                new AdresseDto("29bis rue de la bibine", "44100", "Saint-Herblain"),
                 LocalDate.of(1992, 12, 24), List.of(Permis.A), true);
     }
 

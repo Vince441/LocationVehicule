@@ -10,6 +10,7 @@ import org.mapstruct.Mapper;
 public interface AdminMapper {
 
     Admin toAdmin(AdminRequestDto adminRequestDto);
+
     AdminResponseDto toAdminResponseDto(Admin admin);
 
 }

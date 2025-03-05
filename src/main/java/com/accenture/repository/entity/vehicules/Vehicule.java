@@ -1,6 +1,7 @@
 package com.accenture.repository.entity.vehicules;
 
 import com.accenture.model.Permis;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,11 +29,5 @@ public class Vehicule {
     private int kilometrage;
     private Boolean actif;
     private Boolean retirerDuParc;
-
-
-
-
-
-
 
 }
