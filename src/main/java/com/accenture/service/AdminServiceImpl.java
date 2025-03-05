@@ -26,10 +26,7 @@ public class AdminServiceImpl implements AdminService {
         this.adminMapper = adminMapper;
     }
 
-    /**
-     * @param adminRequestDto
-     * @return
-     */
+
 
 
     @Override
@@ -53,7 +50,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-
     @Override
     public AdminResponseDto trouver(String email, String password) throws AdminException {
         Optional<Admin> optAdmin = adminDao.findByEmailAndPassword(email, password);
@@ -64,9 +60,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminResponseDto modifier(String email, AdminRequestDto adminRequestDto) throws AdminException {
-        if (!adminDao.existsById(email))
-            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL);
+    public AdminResponseDto modifier(String email, String password, AdminRequestDto adminRequestDto) throws AdminException {
+        adminDao.findByEmailAndPassword(email, password)
+                .orElseThrow(() -> new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL));
+
         verifierAdmin(adminRequestDto);
         Admin admin = adminMapper.toAdmin(adminRequestDto);
         admin.setEmail(email);

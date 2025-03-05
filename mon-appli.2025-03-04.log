@@ -1,0 +1,84 @@
+2025-03-04 17:06:58 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 5404 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-04 17:06:58 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-04 17:06:58 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-04 17:07:07 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 9.881 seconds (process running for 11.554)
+2025-03-04 19:50:23 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 14500 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-04 19:50:23 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-04 19:50:23 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-04 19:51:31 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 1736 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-04 19:51:31 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-04 19:51:31 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-04 19:51:40 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 9.014 seconds (process running for 9.938)
+2025-03-04 19:55:10 [http-nio-8080-exec-2] INFO  c.a.controller.AdminController - Liste des administrateurs récupérée avec succès
+2025-03-04 19:55:41 [http-nio-8080-exec-4] INFO  c.a.controller.AdminController - Liste des administrateurs récupérée avec succès
+2025-03-04 19:55:55 [http-nio-8080-exec-7] INFO  c.a.controller.AdminController - Liste des administrateurs récupérée avec succès
+2025-03-04 19:56:20 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 6684 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-04 19:56:20 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-04 19:56:20 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-04 19:56:27 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 8.167 seconds (process running for 9.056)
+2025-03-04 19:56:35 [http-nio-8080-exec-1] INFO  c.a.controller.AdminController - Requête pour obtenir la liste des administrateurs reçue
+2025-03-04 19:56:35 [http-nio-8080-exec-1] INFO  c.a.controller.AdminController - Liste des administrateurs récupérée avec succès
+2025-03-04 19:58:24 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 2084 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-04 19:58:24 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-04 19:58:24 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-04 19:58:32 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 8.33 seconds (process running for 9.241)
+2025-03-04 19:58:45 [http-nio-8080-exec-1] INFO  c.a.controller.AdminController - Requête pour ajouter un administrateur reçue
+2025-03-04 19:58:45 [http-nio-8080-exec-1] ERROR c.a.controller.AdminController - Erreur lors de l'ajout de l'administrateur
+com.accenture.exception.ClientException: le nom est obligatoire
+	at com.accenture.service.AdminServiceImpl.verifierAdmin(AdminServiceImpl.java:88)
+	at com.accenture.service.AdminServiceImpl.ajouter(AdminServiceImpl.java:37)
+	at com.accenture.controller.AdminController.ajouter(AdminController.java:66)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:257)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-03-04 19:59:04 [http-nio-8080-exec-3] INFO  c.a.controller.AdminController - Requête pour ajouter un administrateur reçue
+2025-03-04 19:59:04 [http-nio-8080-exec-3] INFO  c.a.controller.AdminController - Administrateur ajouté avec succès
+2025-03-04 20:02:12 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 26524 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-04 20:02:12 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-04 20:02:12 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-04 20:02:20 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 8.569 seconds (process running for 9.407)

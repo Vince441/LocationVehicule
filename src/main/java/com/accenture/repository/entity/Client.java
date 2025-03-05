@@ -1,6 +1,7 @@
 package com.accenture.repository.entity;
 
 import com.accenture.model.Permis;
+//import com.accenture.repository.entity.location.Location;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
