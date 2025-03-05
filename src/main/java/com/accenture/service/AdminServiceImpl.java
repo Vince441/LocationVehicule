@@ -2,6 +2,7 @@ package com.accenture.service;
 
 import com.accenture.exception.AdminException;
 import com.accenture.exception.ClientException;
+import com.accenture.exception.vehicules.VehiculeException;
 import com.accenture.repository.AdminDao;
 import com.accenture.repository.entity.Admin;
 import com.accenture.service.dto.AdminRequestDto;
@@ -27,8 +28,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-
-
+    /**
+     * Ajoute un nouvel administrateur dans la base de données.
+     * Cette méthode valide les informations fournies dans le DTO {@link AdminRequestDto},
+     * puis crée un nouvel administrateur en les enregistrant dans la base de données.
+     *
+     * @param adminRequestDto un objet {@link AdminRequestDto} contenant les informations de l'administrateur à ajouter.
+     * @return un objet {@link AdminResponseDto} représentant l'administrateur ajouté, après l'enregistrement dans la base de données.
+     * @throws VehiculeException si les informations de l'administrateur ne sont pas valides, déclenchant une exception dans la méthode {@link #verifierAdmin(AdminRequestDto)}.
+     */
     @Override
     public AdminResponseDto ajouter(AdminRequestDto adminRequestDto) {
         verifierAdmin(adminRequestDto);
@@ -37,7 +45,12 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.toAdminResponseDto(adminEnreg);
     }
 
-
+    /**
+     * Récupère la liste de tous les administrateurs enregistrés dans la base de données.
+     * Chaque administrateur est retourné sous forme de DTO {@link AdminResponseDto}.
+     *
+     * @return une liste d'objets {@link AdminResponseDto} représentant tous les administrateurs présents dans la base de données.
+     */
     @Override
     public List<AdminResponseDto> trouverToutes() {
         return adminDao
@@ -45,11 +58,19 @@ public class AdminServiceImpl implements AdminService {
                 .stream()
                 .map(adminMapper::toAdminResponseDto)
                 .toList();
-
-
     }
 
-
+    /**
+     * Recherche un administrateur dans la base de données en fonction de son adresse email et de son mot de passe.
+     * Si un administrateur correspondant est trouvé, un DTO {@link AdminResponseDto} est retourné.
+     * Si l'administrateur n'est pas trouvé, une exception est levée.
+     *
+     * @param email    l'adresse email de l'administrateur à rechercher.
+     * @param password le mot de passe de l'administrateur à rechercher.
+     * @return un objet {@link AdminResponseDto} représentant l'administrateur trouvé.
+     * @throws AdminException          si l'administrateur n'est pas trouvé pour l'email et le mot de passe fournis.
+     * @throws EntityNotFoundException si aucun administrateur n'est trouvé avec les informations données.
+     */
     @Override
     public AdminResponseDto trouver(String email, String password) throws AdminException {
         Optional<Admin> optAdmin = adminDao.findByEmailAndPassword(email, password);
@@ -59,6 +80,18 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.toAdminResponseDto((admin));
     }
 
+    /**
+     * Modifie les informations d'un administrateur dans la base de données en fonction de son email et mot de passe.
+     * Si un administrateur correspondant est trouvé, ses informations sont mises à jour avec celles fournies dans le DTO {@link AdminRequestDto}.
+     * Si l'administrateur n'est pas trouvé, une exception est levée.
+     *
+     * @param email           l'adresse email de l'administrateur dont les informations doivent être mises à jour.
+     * @param password        le mot de passe de l'administrateur dont les informations doivent être mises à jour.
+     * @param adminRequestDto un objet {@link AdminRequestDto} contenant les nouvelles informations de l'administrateur.
+     * @return un objet {@link AdminResponseDto} représentant l'administrateur mis à jour.
+     * @throws AdminException          si les informations de l'administrateur ne sont pas valides, ou si une erreur survient lors de la mise à jour.
+     * @throws EntityNotFoundException si aucun administrateur n'est trouvé avec les informations données (email et mot de passe).
+     */
     @Override
     public AdminResponseDto modifier(String email, String password, AdminRequestDto adminRequestDto) throws AdminException {
         adminDao.findByEmailAndPassword(email, password)
@@ -72,12 +105,29 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.toAdminResponseDto(adminEnreg);
     }
 
+    /**
+     * Supprime un administrateur de la base de données en fonction de son email et de son mot de passe.
+     * Si un administrateur correspondant est trouvé, il est supprimé de la base de données.
+     * Si l'administrateur n'est pas trouvé, une exception est levée.
+     *
+     * @param email    l'adresse email de l'administrateur à supprimer.
+     * @param password le mot de passe de l'administrateur à supprimer.
+     * @throws AdminException          si une erreur se produit lors de la suppression de l'administrateur.
+     * @throws EntityNotFoundException si aucun administrateur n'est trouvé avec les informations données (email et mot de passe).
+     */
     @Override
     public void supprimer(String email, String password) throws AdminException {
         Admin admin = adminDao.findByEmailAndPassword(email, password).orElseThrow(() -> new EntityNotFoundException("Admin non trouvé"));
         adminDao.delete(admin);
     }
 
+    /**
+     * Vérifie que les informations contenues dans le DTO {@link AdminRequestDto} sont valides.
+     * Cette méthode vérifie si tous les champs obligatoires sont présents et non vides.
+     *
+     * @param adminRequestDto l'objet {@link AdminRequestDto} contenant les informations de l'administrateur à vérifier.
+     * @throws AdminException si une des informations obligatoires est manquante ou invalide.
+     */
     private static void verifierAdmin(AdminRequestDto adminRequestDto) throws AdminException {
         if (adminRequestDto == null)
             throw new ClientException("Le client est null");
