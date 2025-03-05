@@ -1,5 +1,6 @@
 package com.accenture.controller.vehicules;
 
+import com.accenture.exception.locations.LocationException;
 import com.accenture.exception.vehicules.VehiculeException;
 import com.accenture.service.vehicules.VehiculeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,7 +57,7 @@ public class ParcVehiculeController {
             return listeDeToutlesVehiculesActifetNonActif;
         } catch (VehiculeException e) {
             logger.error("Echec lors de la récupération de la liste des véhicules actif et non actif");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new LocationException(e.getMessage());
         }
     }
 
@@ -71,7 +72,7 @@ public class ParcVehiculeController {
             return listeVehiculesRetirerDuParc;
         } catch (VehiculeException e) {
             logger.error("Echec de la récupération de la liste des véhicules retirer ou dans le parc");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new LocationException(e.getMessage());
         }
     }
 }

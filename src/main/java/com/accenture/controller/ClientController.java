@@ -40,7 +40,7 @@ public class ClientController {
             return client;
         } catch (ClientException e) {
             logger.error("Erreur lors de la récupération de la liste des clients", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new ClientException(e.getMessage());
         }
     }
 
@@ -55,7 +55,7 @@ public class ClientController {
             return ResponseEntity.ok(trouve);
         } catch (ClientException e) {
             logger.error("Erreur lors de la récupération de l'administrateur pour l'email: {}", email, e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new ClientException(e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ClientException e) {
             logger.error("Erreur lors de la création du client", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new ClientException(e.getMessage());
         }
     }
 
@@ -85,7 +85,7 @@ public class ClientController {
             return ResponseEntity.ok(reponse);
         } catch (ClientException e) {
             logger.error("Erreur lors de la modification du client pour l'email: {}", email, e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new ClientException(e.getMessage());
         }
     }
 
@@ -102,7 +102,7 @@ public class ClientController {
         } catch (ClientException e) {
             logger.error("Erreur lors de la suppression du client pour l'email: {}", email, e);
 
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new ClientException(e.getMessage());
         }
     }
 }

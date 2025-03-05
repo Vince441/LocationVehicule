@@ -24,7 +24,6 @@ public class LocationController {
 
     private final LocationService locationService;
     private static final Logger logger = LoggerFactory.getLogger(LocationController.class);
-    private static final String DONNEE_INVALIDE = "Données invalides";
 
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
@@ -42,7 +41,7 @@ public class LocationController {
             return location;
         } catch (LocationException e) {
             logger.error("Erreur lors de la récupération de la location");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new LocationException(e.getMessage());
         }
     }
 
@@ -57,7 +56,7 @@ public class LocationController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (LocationException e) {
             logger.error("Erreur lors de la création de la location", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new LocationException(e.getMessage());
         }
     }
 }

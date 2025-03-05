@@ -45,7 +45,7 @@ public class VoitureController {
             return listeDeToutesLesVoitures;
         } catch (VehiculeException e) {
             logger.error("Echec lors de la récupération de la liste des voitures");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -60,7 +60,7 @@ public class VoitureController {
             return listeDesVoituresActifNonActif;
         } catch (VehiculeException e) {
             logger.error("Echec lors de la récupération de la liste des véhicules actif et non actif");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -76,7 +76,7 @@ public class VoitureController {
             return ResponseEntity.ok(trouve);
         } catch (VehiculeException e) {
             logger.error("Echec lors de la récupération de la voiture");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -91,7 +91,7 @@ public class VoitureController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (VehiculeException e) {
             logger.error("Echec lors de la création de la voiture");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -106,7 +106,7 @@ public class VoitureController {
             return ResponseEntity.ok(reponse);
         } catch (VehiculeException e) {
             logger.error("Echec de la modification de la voiture");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -121,7 +121,7 @@ public class VoitureController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (VehiculeException e) {
             logger.info("Echec lors de la suppression de la voiture");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
