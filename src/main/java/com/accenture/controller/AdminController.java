@@ -41,7 +41,7 @@ public class AdminController {
             return admins;
         } catch (AdminException e) {
             logger.error("Erreur lors de la récupération de la liste des administrateurs", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new AdminException(e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class AdminController {
             return ResponseEntity.ok(trouve);
         } catch (AdminException e) {
             logger.error("Erreur lors de la récupération de l'administrateur pour l'email: {}", email, e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new AdminException(e.getMessage());
         }
     }
 
@@ -72,7 +72,7 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (AdminException e) {
             logger.error("Erreur lors de la création de l'administrateur", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new AdminException(e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ public class AdminController {
             return ResponseEntity.ok(reponse);
         } catch (AdminException e) {
             logger.error("Erreur lors de la modification de l'administrateur pour l'email: {}", email, e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new AdminException(e.getMessage());
         }
     }
 
@@ -102,7 +102,7 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (AdminException e) {
             logger.error("Erreur lors de la suppression de l'administrateur pour l'email: {}", email, e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new AdminException(e.getMessage());
         }
     }
 }

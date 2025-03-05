@@ -69,6 +69,8 @@ public class ClientServiceImpl implements ClientService {
                 .toList();
     }
 
+
+
     /**
      * Recherche un client dans la base de données en fonction de son email et de son mot de passe.
      * Si un client correspondant est trouvé, un DTO représentant ce client est retourné.

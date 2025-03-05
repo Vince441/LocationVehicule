@@ -24,7 +24,6 @@ public class MotoController {
 
     private final MotoService motoService;
     private static final Logger logger = LoggerFactory.getLogger(MotoController.class);
-    private static final String DONNEE_INVALIDE = "Données invalides";
 
 
     public MotoController(MotoService motoService) {
@@ -38,11 +37,11 @@ public class MotoController {
     public List<MotoResponseDto> trouverToutesLesMotos() {
         try {
             List<MotoResponseDto> listDesMotos = motoService.trouverToute();
-            logger.info("Liste des motos récupérée avec sccès");
+            logger.info("Liste des motos récupérée avec succès");
             return listDesMotos;
         } catch (VehiculeException e) {
             logger.error("Erreur lors de la récupération de la liste des motos");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -58,7 +57,7 @@ public class MotoController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (VehiculeException e) {
             logger.error("Erreur lors de la création de la moto", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -73,7 +72,7 @@ public class MotoController {
             return listeDesMotosActifNonActif;
         } catch (VehiculeException e) {
             logger.error("Echec de la récupération de la liste des motos actif et non actif");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -88,7 +87,7 @@ public class MotoController {
             return ResponseEntity.ok(trouve);
         } catch (VehiculeException e) {
             logger.error("Echec lors de la récupération de la moto");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -103,7 +102,7 @@ public class MotoController {
             return ResponseEntity.ok(reponse);
         } catch (VehiculeException e) {
             logger.info("Echec lors de la modification de la moto");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
@@ -118,7 +117,7 @@ public class MotoController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (VehiculeException e) {
             logger.error("Echec lors de la supression de la moto", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new VehiculeException(e.getMessage());
         }
     }
 
