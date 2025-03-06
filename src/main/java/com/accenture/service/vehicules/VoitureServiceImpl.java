@@ -54,6 +54,39 @@ public class VoitureServiceImpl implements VoitureService {
         return voitureMapper.toVoitureResponseDto(voiturEnreg);
     }
 
+    private static void verifierVoiture(VoitureRequestDto voitureRequestDto) throws VehiculeException {
+        verifierInformationVehicule(voitureRequestDto);
+        verifierInformationVoiture(voitureRequestDto);
+    }
+
+    private static void verifierInformationVoiture(VoitureRequestDto voitureRequestDto) {
+        if (voitureRequestDto.nombrePlace() == null || voitureRequestDto.nombrePlace() < 2)
+            throw new VehiculeException("Le nombre de place est obligatoire et supperieur à 2");
+        if (voitureRequestDto.carburant() == null) throw new VehiculeException("Le type de carburant est obligatoire");
+        if (voitureRequestDto.nombreDePorte() == null || voitureRequestDto.nombreDePorte() != 3 && voitureRequestDto.nombreDePorte() != 5)
+            throw new VehiculeException("Le nombre de porte est obligatoire et de 3 ou 5 portes");
+        if (voitureRequestDto.transmission() == null)
+            throw new VehiculeException("Le type de transmission est obligatoire");
+        if (voitureRequestDto.nombreDeBagage() == null || voitureRequestDto.nombreDeBagage() <= 0)
+            throw new VehiculeException("Le nombre de bagage est obligatoire et supperieur à 0");
+    }
+
+    private static void verifierInformationVehicule(VoitureRequestDto voitureRequestDto) {
+        if (voitureRequestDto == null) throw new VehiculeException("La voiture est null");
+        if (voitureRequestDto.marque() == null || voitureRequestDto.marque().isBlank())
+            throw new VehiculeException("La marque est obligatoire");
+        if (voitureRequestDto.modele() == null || voitureRequestDto.modele().isBlank())
+            throw new VehiculeException("Le modele est obligatoire");
+        if (voitureRequestDto.couleur() == null || voitureRequestDto.couleur().isBlank())
+            throw new VehiculeException("La couleur est obligatoire");
+        if (voitureRequestDto.permis() == null) throw new VehiculeException("Le permis est obligatoire");
+        if (voitureRequestDto.tarifJournalier() == null || voitureRequestDto.tarifJournalier() <= 0)
+            throw new VehiculeException("Le tarif journalier est obligatoire et supperieur à 0");
+        if (voitureRequestDto.kilometrage() == null || voitureRequestDto.kilometrage() <= 0)
+            throw new VehiculeException("Le kilometrage est obligatoire et supp à 0");
+    }
+
+
     /**
      * Récupère toutes les voitures qui ont un état d'activité correspondant à la valeur spécifiée et les transforme en une liste d'objets {@link VoitureResponseDto}.
      *
@@ -86,6 +119,20 @@ public class VoitureServiceImpl implements VoitureService {
     }
 
 
+    /**
+     * Modifies an existing car (vehicle) partially based on the provided data.
+     * <p>
+     * This method takes in a vehicle ID and a {@link VoitureRequestDto} object containing
+     * the new values for the vehicle fields. It retrieves the existing vehicle from the database,
+     * updates its fields based on the new data, and then saves the updated vehicle back to the database.
+     * </p>
+     *
+     * @param id                the ID of the vehicle to be modified
+     * @param voitureRequestDto the data transfer object containing the new values to be applied to the vehicle
+     * @return a {@link VoitureResponseDto} containing the updated vehicle data
+     * @throws VehiculeException       if there is an issue with the vehicle data or processing
+     * @throws EntityNotFoundException if the vehicle with the given ID is not found in the database
+     */
     @Override
     public VoitureResponseDto modifierPartiellement(int id, VoitureRequestDto voitureRequestDto) throws VehiculeException {
         Optional<Voiture> optVoiture = voitureDao.findById(id);
@@ -103,15 +150,13 @@ public class VoitureServiceImpl implements VoitureService {
 
     }
 
+
     private static void remplacer(Voiture voitureExistant, Voiture voitureEnreg) throws VehiculeException {
-        if (voitureEnreg.getMarque() != null)
-            voitureExistant.setMarque(voitureEnreg.getMarque());
-        if (voitureEnreg.getModele() != null)
-            voitureExistant.setModele(voitureEnreg.getModele());
-        if (voitureEnreg.getCouleur() != null)
-            voitureExistant.setCouleur(voitureEnreg.getCouleur());
-        if (voitureEnreg.getPermis() != null)
-            voitureExistant.setPermis(voitureEnreg.getPermis());
+        remplacerInformationVehicule(voitureExistant, voitureEnreg);
+        remplacerInformationVoiture(voitureExistant, voitureEnreg);
+    }
+
+    private static void remplacerInformationVoiture(Voiture voitureExistant, Voiture voitureEnreg) {
         if (voitureEnreg.getNombrePlace() != null)
             voitureExistant.setNombrePlace(voitureEnreg.getNombrePlace());
         if (voitureEnreg.getCarburant() != null)
@@ -120,6 +165,19 @@ public class VoitureServiceImpl implements VoitureService {
             voitureExistant.setClimatisation(voitureEnreg.getClimatisation());
         if (voitureEnreg.getNombreDeBagage() != null)
             voitureExistant.setNombreDeBagage(voitureEnreg.getNombreDeBagage());
+        if (voitureEnreg.getTypeVoiture() != null)
+            voitureExistant.setTypeVoiture(voitureEnreg.getTypeVoiture());
+    }
+
+    private static void remplacerInformationVehicule(Voiture voitureExistant, Voiture voitureEnreg) {
+        if (voitureEnreg.getMarque() != null)
+            voitureExistant.setMarque(voitureEnreg.getMarque());
+        if (voitureEnreg.getModele() != null)
+            voitureExistant.setModele(voitureEnreg.getModele());
+        if (voitureEnreg.getCouleur() != null)
+            voitureExistant.setCouleur(voitureEnreg.getCouleur());
+        if (voitureEnreg.getPermis() != null)
+            voitureExistant.setPermis(voitureEnreg.getPermis());
         if (voitureEnreg.getTarifJournalier() != null)
             voitureExistant.setTarifJournalier(voitureEnreg.getTarifJournalier());
         if (voitureEnreg.getKilometrage() != null)
@@ -128,8 +186,6 @@ public class VoitureServiceImpl implements VoitureService {
             voitureExistant.setActif(voitureEnreg.getActif());
         if (voitureEnreg.getRetirerDuParc() != null)
             voitureExistant.setRetirerDuParc(voitureEnreg.getRetirerDuParc());
-        if (voitureEnreg.getTypeVoiture() != null)
-            voitureExistant.setTypeVoiture(voitureEnreg.getTypeVoiture());
     }
 
 
@@ -147,38 +203,4 @@ public class VoitureServiceImpl implements VoitureService {
     }
 
 
-    /**
-     * Vérifie la validité des informations d'une voiture contenues dans le DTO {@link VoitureRequestDto}.
-     * Cette méthode valide plusieurs attributs de la voiture, y compris la marque, le modèle, la couleur, le permis,
-     * le nombre de places, le type de carburant, le nombre de portes, la transmission, le nombre de bagages,
-     * le tarif journalier et le kilométrage.
-     *
-     * @param voitureRequestDto un objet {@link VoitureRequestDto} contenant les informations de la voiture à valider.
-     * @throws VehiculeException si une ou plusieurs informations de la voiture sont invalides.
-     *                           Des exceptions spécifiques sont levées pour chaque champ manquant ou incorrect.
-     */
-    private static void verifierVoiture(VoitureRequestDto voitureRequestDto) throws VehiculeException {
-        if (voitureRequestDto == null) throw new VehiculeException("La voiture est null");
-        if (voitureRequestDto.marque() == null || voitureRequestDto.marque().isBlank())
-            throw new VehiculeException("La marque est obligatoire");
-        if (voitureRequestDto.modele() == null || voitureRequestDto.modele().isBlank())
-            throw new VehiculeException("Le modele est obligatoire");
-        if (voitureRequestDto.couleur() == null || voitureRequestDto.couleur().isBlank())
-            throw new VehiculeException("La couleur est obligatoire");
-        if (voitureRequestDto.permis() == null) throw new VehiculeException("Le permis est obligatoire");
-        if (voitureRequestDto.nombrePlace() == null || voitureRequestDto.nombrePlace() < 2)
-            throw new VehiculeException("Le nombre de place est obligatoire et supperieur à 2");
-        if (voitureRequestDto.carburant() == null) throw new VehiculeException("Le type de carburant est obligatoire");
-        if (voitureRequestDto.nombreDePorte() == null || voitureRequestDto.nombreDePorte() != 3 && voitureRequestDto.nombreDePorte() != 5)
-            throw new VehiculeException("Le nombre de porte est obligatoire et de 3 ou 5 portes");
-        if (voitureRequestDto.transmission() == null)
-            throw new VehiculeException("Le type de transmission est obligatoire");
-        if (voitureRequestDto.nombreDeBagage() == null || voitureRequestDto.nombreDeBagage() <= 0)
-            throw new VehiculeException("Le nombre de bagage est obligatoire et supperieur à 0");
-        if (voitureRequestDto.tarifJournalier() == null || voitureRequestDto.tarifJournalier() <= 0)
-            throw new VehiculeException("Le tarif journalier est obligatoire et supperieur à 0");
-        if (voitureRequestDto.kilometrage() == null || voitureRequestDto.kilometrage() <= 0)
-            throw new VehiculeException("Le kilometrage est obligatoire et supp à 0");
-
-    }
 }

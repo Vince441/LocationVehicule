@@ -1,21 +1,16 @@
 package com.accenture.controller;
 
 import com.accenture.exception.AdminException;
-import com.accenture.exception.ClientException;
 import com.accenture.service.AdminService;
 import com.accenture.service.dto.AdminRequestDto;
 import com.accenture.service.dto.AdminResponseDto;
-import com.accenture.service.dto.ClientRequestDto;
-import com.accenture.service.dto.ClientResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,7 +20,6 @@ public class AdminController {
 
     private final AdminService adminService;
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-    private static final String DONNEE_INVALIDE = "Données invalides";
 
 
     public AdminController(AdminService adminService) {
@@ -64,6 +58,7 @@ public class AdminController {
         }
     }
 
+
     @PostMapping
     @Operation(summary = "Créer un administrateur", description = "Permet d'ajouter un compte admin.")
     @ApiResponse(responseCode = "201", description = "Ajout du compte réussis")
@@ -79,6 +74,7 @@ public class AdminController {
         }
     }
 
+
     @PatchMapping("/{email}")
     @Operation(summary = "Modifier d'un admin partiellement", description = "Modification partiellement de mon compte")
     @ApiResponse(responseCode = "200", description = "Modification du compte réussis")
@@ -92,9 +88,6 @@ public class AdminController {
             throw new AdminException(e.getMessage());
         }
     }
-
-
-
 
 
     @DeleteMapping("/{email}")
@@ -112,3 +105,5 @@ public class AdminController {
         }
     }
 }
+
+

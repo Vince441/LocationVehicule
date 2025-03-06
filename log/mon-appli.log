@@ -112,3 +112,11 @@
 2025-03-06 12:30:53 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
 2025-03-06 12:30:53 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
 2025-03-06 12:30:53 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 0.597 seconds (process running for 4487.095)
+2025-03-06 14:03:52 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 15364 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 14:03:52 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 14:03:52 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 14:04:08 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 17.051 seconds (process running for 20.456)
+2025-03-06 14:04:31 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 22212 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 14:04:31 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 14:04:31 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 14:04:40 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 9.684 seconds (process running for 10.581)

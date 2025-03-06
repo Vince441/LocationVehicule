@@ -6,7 +6,6 @@ import com.accenture.service.dto.ClientRequestDto;
 import com.accenture.service.dto.ClientResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,6 @@ import java.util.List;
 public class ClientController {
     private final ClientService clientService;
     private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
-    private static final String DONNEE_INVALIDE = "Données invalides";
 
 
     public ClientController(ClientService clientService) {
