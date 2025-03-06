@@ -119,11 +119,11 @@ public class VoitureServiceImpl implements VoitureService {
 
     /**
      * Modifies an existing car (vehicle) partially based on the provided data.
-     * <p>
+     *
      * This method takes in a vehicle ID and a {@link VoitureRequestDto} object containing
      * the new values for the vehicle fields. It retrieves the existing vehicle from the database,
      * updates its fields based on the new data, and then saves the updated vehicle back to the database.
-     * </p>
+     *
      *
      * @param id                the ID of the vehicle to be modified
      * @param voitureRequestDto the data transfer object containing the new values to be applied to the vehicle

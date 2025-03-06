@@ -54,6 +54,52 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    private static void verifierClient(ClientRequestDto clientRequestDto) throws ClientException {
+        verifierUtilisateurInformation(clientRequestDto);
+        verifierClientInformation(clientRequestDto);
+        verifierAdresseClient(clientRequestDto);
+    }
+
+    private static void verifierUtilisateurInformation(ClientRequestDto clientRequestDto) {
+        if (clientRequestDto == null)
+            throw new ClientException("Le client est null");
+        if (clientRequestDto.nom() == null || clientRequestDto.nom().isBlank())
+            throw new ClientException("le nom est obligatoire");
+        if (clientRequestDto.prenom() == null || clientRequestDto.prenom().isBlank())
+            throw new ClientException("le prenom est obligatoire");
+        if (clientRequestDto.email() == null || clientRequestDto.email().isBlank())
+            throw new ClientException("L'email est obligatoire");
+        if (clientRequestDto.password() == null || clientRequestDto.password().isBlank())
+            throw new ClientException("le password est obligatoire");
+    }
+
+    private static void verifierClientInformation(ClientRequestDto clientRequestDto) {
+
+        if (clientRequestDto.dateDeNaissance() == null)
+            throw new ClientException("La date est obligatoire");
+        if (!ageRequis(clientRequestDto.dateDeNaissance())) {
+            throw new ClientException("L'utilisateur doit avoir 18 ans");
+        }
+        if (clientRequestDto.permis() == null || clientRequestDto.permis().isEmpty()) {
+            throw new ClientException("Le permis est obligatoire");
+        }
+        if (clientRequestDto.desactive() == null) {
+            throw new ClientException("Le desactiver est obligatoire");
+        }
+    }
+
+    private static void verifierAdresseClient(ClientRequestDto clientRequestDto) {
+        if (clientRequestDto.adresse().rue() == null ||
+                clientRequestDto.adresse().codePostal() == null ||
+                clientRequestDto.adresse().ville() == null ||
+                clientRequestDto.adresse().rue().isBlank() ||
+                clientRequestDto.adresse().codePostal().isBlank() ||
+                clientRequestDto.adresse().ville().isBlank())
+            throw new ClientException("L'adresse est obligatoire");
+    }
+
+
+
     /**
      * Récupère tous les clients de la base de données et les retourne sous forme d'une liste de {@link ClientResponseDto}.
      * Chaque client est mappé depuis l'entité {@link Client} vers un DTO {@link ClientResponseDto}.
@@ -177,53 +223,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
-    private static void verifierClient(ClientRequestDto clientRequestDto) throws ClientException {
-        verifierUtilisateurInformation(clientRequestDto);
-        verifierClientInformation(clientRequestDto);
-        verifierAdresseClient(clientRequestDto);
-    }
-
-    private static void verifierUtilisateurInformation(ClientRequestDto clientRequestDto) {
-        if (clientRequestDto == null)
-            throw new ClientException("Le client est null");
-        if (clientRequestDto.nom() == null || clientRequestDto.nom().isBlank())
-            throw new ClientException("le nom est obligatoire");
-        if (clientRequestDto.prenom() == null || clientRequestDto.prenom().isBlank())
-            throw new ClientException("le prenom est obligatoire");
-        if (clientRequestDto.email() == null || clientRequestDto.email().isBlank())
-            throw new ClientException("L'email est obligatoire");
-        if (clientRequestDto.password() == null || clientRequestDto.password().isBlank())
-            throw new ClientException("le password est obligatoire");
-    }
-    
-    private static void verifierClientInformation(ClientRequestDto clientRequestDto) {
-        
-        if (clientRequestDto.dateDeNaissance() == null)
-            throw new ClientException("La date est obligatoire");
-        if (!ageRequis(clientRequestDto.dateDeNaissance())) {
-            throw new ClientException("L'utilisateur doit avoir 18 ans");
-        }
-        if (clientRequestDto.permis() == null || clientRequestDto.permis().isEmpty()) {
-            throw new ClientException("Le permis est obligatoire");
-        }
-        if (clientRequestDto.desactive() == null) {
-            throw new ClientException("Le desactiver est obligatoire");
-        }
-    }
-
-    private static void verifierAdresseClient(ClientRequestDto clientRequestDto) {
-        if (clientRequestDto.adresse().rue() == null ||
-                clientRequestDto.adresse().codePostal() == null ||
-                clientRequestDto.adresse().ville() == null ||
-                clientRequestDto.adresse().rue().isBlank() ||
-                clientRequestDto.adresse().codePostal().isBlank() ||
-                clientRequestDto.adresse().ville().isBlank())
-            throw new ClientException("L'adresse est obligatoire");
-    }
-    
-    
-
-    
     /**
      * Vérifie si un utilisateur est âgé de 18 ans ou plus à partir de sa date de naissance.
      *

@@ -1,5 +1,6 @@
 package com.accenture.service;
 
+
 import com.accenture.exception.ClientException;
 import com.accenture.model.Permis;
 import com.accenture.repository.ClientDao;
@@ -18,6 +19,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +30,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class ClientServiceImplTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClientServiceImplTest.class);
 
 
     @Mock
@@ -52,9 +57,15 @@ class ClientServiceImplTest {
         Mockito.when(daoMock.findByEmailAndPassword("bbbb@gmail.fr", "z")).thenReturn(Optional.empty());
         EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.trouver("bbbb@gmail.fr", "z"));
         assertEquals("Je n'ai pas trouvé l'email", ex.getMessage());
-
+        logger.info(ex.getMessage());
     }
 
+
+    @Test
+    void testAjouter() {
+        assertThrows(ClientException.class, () -> service.ajouter(null));
+        logger.info("L'ajout est bien null");
+    }
 
 
     @DisplayName("""
@@ -70,7 +81,7 @@ class ClientServiceImplTest {
         ClientResponseDto dto = creeClientResponseDto();
         Mockito.when(mapperMock.toClientResponseDto(c)).thenReturn(dto);
         assertSame(dto, service.trouver("b@gmail.fr", "z"));
-
+        logger.info("Utilisateur trouvé");
     }
 
 
@@ -94,7 +105,9 @@ class ClientServiceImplTest {
         Mockito.when(mapperMock.toClientResponseDto(client2)).thenReturn(creeClientResponseDto2());
 
         assertEquals(dtos, service.trouverToutes());
+        logger.info("Liste des clients trouvé");
     }
+
 
     @DisplayName("""
             Test de la méthode ajouter
@@ -116,13 +129,14 @@ class ClientServiceImplTest {
         Mockito.when(mapperMock.toClientResponseDto(clientApresEnreg)).thenReturn(responseDto);
 
         assertSame(responseDto, service.ajouter(requestDto));
+        logger.info("Ajout réussis");
     }
 
     @DisplayName("""
-        Test de la methode supprimer qui doit supprimer un client
-        """)
+            Test de la methode supprimer qui doit supprimer un client
+            """)
     @Test
-    void testSupprimerExiste(){
+    void testSupprimerExiste() {
 
         Client client = creeClient();
         String email = client.getEmail();
@@ -135,17 +149,16 @@ class ClientServiceImplTest {
 
 
     @DisplayName("""
-        Test de la methode supprimer qui doit supprimer un client
-        """)
+            Test de la methode supprimer qui doit supprimer un client
+            """)
     @Test
-    void testSupprimerExistePas(){
+    void testSupprimerExistePas() {
 
         Mockito.when(daoMock.findByEmailAndPassword("tp@gmail.fr", "s")).thenReturn(Optional.empty());
         EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.supprimer("tp@gmail.fr", "s"));
         assertEquals("Utilisateur non trouvé", ex.getMessage());
 
     }
-
 
 
     @DisplayName("""
@@ -230,7 +243,6 @@ class ClientServiceImplTest {
     }
 
 
-
     @DisplayName("""
             Si ajouter(TacheRequestDto sans password (blank) exception levée
             """)
@@ -241,7 +253,6 @@ class ClientServiceImplTest {
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
     }
-
 
 
     @DisplayName("""
@@ -325,6 +336,17 @@ class ClientServiceImplTest {
         assertThrows(ClientException.class, () -> service.ajouter(dto));
     }
 
+    @Test
+    void testAjouterMineur(){
+        ClientRequestDto dto = new ClientRequestDto("L", "V", "v@gmail.fr", "ocre", new AdresseDto("a", "44000", "Nantes"),
+                LocalDate.of(2025, 12, 24),
+                List.of(Permis.A), true);
+        ClientException exception = assertThrows(ClientException.class, () -> service.ajouter(dto));
+        assertEquals("L'utilisateur doit avoir 18 ans", exception.getMessage());
+    }
+
+
+
 
     @DisplayName("""
             Si ajouter(TacheRequestDto sans Permis null) exception levée
@@ -360,10 +382,6 @@ class ClientServiceImplTest {
                 List.of(Permis.A), null);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
     }
-
-
-
-
 
 
     private static Client creeClient() {

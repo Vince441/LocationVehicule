@@ -120,3 +120,39 @@
 2025-03-06 14:04:31 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
 2025-03-06 14:04:31 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
 2025-03-06 14:04:40 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 9.684 seconds (process running for 10.581)
+2025-03-06 15:46:03 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 6608 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 15:46:03 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 15:46:03 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 15:46:10 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 7.381 seconds (process running for 9.416)
+2025-03-06 16:09:26 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 6608 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 16:09:26 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 16:09:26 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 16:09:36 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 6608 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 16:09:36 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 16:09:36 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 16:09:38 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 2.048 seconds (process running for 1416.581)
+2025-03-06 16:09:56 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 7780 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 16:09:56 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 16:09:56 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 16:10:05 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 8.795 seconds (process running for 9.95)
+2025-03-06 16:12:34 [main] ERROR c.a.service.ClientServiceImplTest - Je n'ai pas trouvé l'email
+2025-03-06 16:15:19 [main] INFO  c.a.service.ClientServiceImplTest - Je n'ai pas trouvé l'email
+2025-03-06 16:15:59 [main] INFO  c.a.service.ClientServiceImplTest - Je n'ai pas trouvé
+2025-03-06 16:17:27 [main] INFO  c.a.service.ClientServiceImplTest - Utilisateur trouvé
+2025-03-06 16:18:26 [main] INFO  c.a.service.ClientServiceImplTest - Liste des clients trouvé
+2025-03-06 16:19:48 [main] INFO  c.a.service.ClientServiceImplTest - Ajout réussis
+2025-03-06 16:25:38 [main] INFO  c.a.service.ClientServiceImplTest - Utilisateur trouvé
+2025-03-06 16:25:38 [main] INFO  c.a.service.ClientServiceImplTest - Liste des clients trouvé
+2025-03-06 16:25:38 [main] INFO  c.a.service.ClientServiceImplTest - L'ajout est bien null
+2025-03-06 16:25:38 [main] INFO  c.a.service.ClientServiceImplTest - Ajout réussis
+2025-03-06 16:25:38 [main] INFO  c.a.service.ClientServiceImplTest - Je n'ai pas trouvé l'email
+2025-03-06 16:26:17 [main] INFO  c.a.service.ClientServiceImplTest - Utilisateur trouvé
+2025-03-06 16:26:17 [main] INFO  c.a.service.ClientServiceImplTest - Liste des clients trouvé
+2025-03-06 16:26:17 [main] INFO  c.a.service.ClientServiceImplTest - L'ajout est bien null
+2025-03-06 16:26:17 [main] INFO  c.a.service.ClientServiceImplTest - Ajout réussis
+2025-03-06 16:26:17 [main] INFO  c.a.service.ClientServiceImplTest - Je n'ai pas trouvé l'email
+2025-03-06 16:57:25 [main] INFO  c.a.service.ClientServiceImplTest - Utilisateur trouvé
+2025-03-06 16:57:25 [main] INFO  c.a.service.ClientServiceImplTest - Liste des clients trouvé
+2025-03-06 16:57:25 [main] INFO  c.a.service.ClientServiceImplTest - L'ajout est bien null
+2025-03-06 16:57:25 [main] INFO  c.a.service.ClientServiceImplTest - Ajout réussis
+2025-03-06 16:57:25 [main] INFO  c.a.service.ClientServiceImplTest - Je n'ai pas trouvé l'email
