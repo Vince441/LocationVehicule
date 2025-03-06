@@ -1,169 +1,81 @@
-2025-03-05 10:41:58 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 7268 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 10:41:58 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 10:41:58 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 10:42:13 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 15.539 seconds (process running for 17.951)
-2025-03-05 11:34:24 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 26320 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 11:34:24 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 11:34:24 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 11:34:33 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 9.66 seconds (process running for 11.639)
-2025-03-05 11:34:52 [http-nio-8080-exec-4] INFO  c.a.c.vehicules.VoitureController - La création de la voiture à été réaliser avec succès
-2025-03-05 11:35:04 [http-nio-8080-exec-5] INFO  c.a.c.vehicules.VoitureController - La liste des voitures à été récuperer avec succès
-2025-03-05 11:35:24 [http-nio-8080-exec-6] INFO  c.a.c.vehicules.VoitureController - La modification de la voiture à été réalisée avec succès
-2025-03-05 11:35:35 [http-nio-8080-exec-7] INFO  c.a.c.vehicules.VoitureController - La voiture à bien été supprimée
-2025-03-05 11:40:28 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 26320 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 11:40:28 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 11:40:28 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 11:40:29 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.744 seconds (process running for 368.105)
-2025-03-05 11:40:31 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 26320 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 11:40:31 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 11:40:31 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 11:40:32 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.431 seconds (process running for 371.07)
-2025-03-05 14:01:25 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18532 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 14:01:25 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 14:01:25 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 14:01:36 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 11.932 seconds (process running for 17.469)
-2025-03-05 14:07:06 [http-nio-8080-exec-1] INFO  c.a.c.vehicules.VoitureController - La création de la voiture à été réalisée avec succès
-2025-03-05 14:07:15 [http-nio-8080-exec-2] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
-2025-03-05 14:08:39 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 2840 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 14:08:39 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 14:08:39 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 14:08:45 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 6.351 seconds (process running for 7.272)
-2025-03-05 14:08:50 [http-nio-8080-exec-1] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
-2025-03-05 14:11:07 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 25668 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 14:11:07 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 14:11:07 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 14:11:14 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 7.525 seconds (process running for 8.395)
-2025-03-05 14:11:46 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 29780 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 14:11:46 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 14:11:46 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 14:11:54 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 8.503 seconds (process running for 9.177)
-2025-03-05 14:15:55 [http-nio-8080-exec-1] ERROR c.a.c.vehicules.MotoController - Erreur lors de la création de la moto
-com.accenture.exception.vehicules.VehiculeException: La marque est obligatoire
-	at com.accenture.service.vehicules.MotoServiceImpl.verifierMoto(MotoServiceImpl.java:130)
-	at com.accenture.service.vehicules.MotoServiceImpl.ajouter(MotoServiceImpl.java:63)
-	at com.accenture.controller.vehicules.MotoController.ajouterUneMoto(MotoController.java:56)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:257)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	at java.base/java.lang.Thread.run(Thread.java:1575)
-2025-03-05 14:22:37 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 25696 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 14:22:37 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 14:22:37 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 14:22:45 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 8.647 seconds (process running for 9.586)
-2025-03-05 14:22:58 [http-nio-8080-exec-1] ERROR c.a.c.vehicules.MotoController - Erreur lors de la création de la moto
-com.accenture.exception.vehicules.VehiculeException: La marque est obligatoire
-	at com.accenture.service.vehicules.MotoServiceImpl.verifierMoto(MotoServiceImpl.java:130)
-	at com.accenture.service.vehicules.MotoServiceImpl.ajouter(MotoServiceImpl.java:63)
-	at com.accenture.controller.vehicules.MotoController.ajouterUneMoto(MotoController.java:55)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:257)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	at java.base/java.lang.Thread.run(Thread.java:1575)
-2025-03-05 16:18:44 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 23372 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 16:18:44 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 16:18:44 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 16:18:55 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 11.035 seconds (process running for 12.991)
-2025-03-05 16:19:25 [http-nio-8080-exec-7] INFO  c.a.controller.ClientController - Client crée avec succès
-2025-03-05 16:20:12 [http-nio-8080-exec-8] INFO  c.a.controller.ClientController - Le client à bien été modifier partiellement
-2025-03-05 16:20:57 [http-nio-8080-exec-9] INFO  c.a.controller.ClientController - Client modifié avec succès pour l'email: v.l@gmail.com
-2025-03-05 16:21:12 [http-nio-8080-exec-10] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
-2025-03-05 16:21:25 [http-nio-8080-exec-1] INFO  c.a.controller.ClientController - Le client à bien été modifier partiellement
-2025-03-05 16:21:39 [http-nio-8080-exec-2] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
-2025-03-05 16:22:34 [http-nio-8080-exec-3] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
-2025-03-05 16:22:51 [http-nio-8080-exec-5] INFO  c.a.controller.ClientController - Le client à bien été modifier partiellement
-2025-03-05 16:23:02 [http-nio-8080-exec-6] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
-2025-03-05 16:25:22 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 25764 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
-2025-03-05 16:25:22 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
-2025-03-05 16:25:22 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-05 16:25:32 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 11.08 seconds (process running for 12.818)
-2025-03-05 16:25:51 [http-nio-8080-exec-1] INFO  c.a.controller.ClientController - Client crée avec succès
-2025-03-05 16:26:16 [http-nio-8080-exec-2] INFO  c.a.controller.ClientController - Le client à bien été modifier partiellement
-2025-03-05 16:26:23 [http-nio-8080-exec-5] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
+2025-03-06 09:55:53 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 11520 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 09:55:53 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 09:55:53 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 09:56:00 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 7.602 seconds (process running for 8.661)
+2025-03-06 10:07:08 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 11520 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 10:07:08 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 10:07:08 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 10:07:09 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.198 seconds (process running for 678.002)
+2025-03-06 10:07:11 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 11520 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 10:07:11 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 10:07:11 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 10:07:12 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 0.962 seconds (process running for 680.508)
+2025-03-06 10:40:14 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 11108 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 10:40:14 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 10:40:14 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 10:40:20 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 6.756 seconds (process running for 7.636)
+2025-03-06 10:41:30 [http-nio-8080-exec-2] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 10:42:42 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 11108 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 10:42:42 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 10:42:42 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 10:42:44 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 2.155 seconds (process running for 151.241)
+2025-03-06 10:42:46 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 11108 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 10:42:46 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 10:42:46 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 10:42:47 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.492 seconds (process running for 154.299)
+2025-03-06 10:42:59 [http-nio-8080-exec-1] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 10:46:34 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18616 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 10:46:34 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 10:46:34 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 10:46:43 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 9.384 seconds (process running for 10.693)
+2025-03-06 10:46:51 [http-nio-8080-exec-1] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 11:01:40 [http-nio-8080-exec-2] INFO  c.a.controller.ClientController - Client crée avec succès
+2025-03-06 11:01:49 [http-nio-8080-exec-3] INFO  c.a.controller.ClientController - La liste des clients récupérée avec succès
+2025-03-06 11:03:11 [http-nio-8080-exec-5] INFO  c.a.controller.ClientController - Client trouvé avec succès pour l'email: v.l@gmail.com
+2025-03-06 11:03:51 [http-nio-8080-exec-7] INFO  c.a.controller.ClientController - Client trouvé avec succès pour l'email: v.l@gmail.com
+2025-03-06 11:06:22 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18616 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:06:22 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:06:22 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:06:23 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.435 seconds (process running for 1190.903)
+2025-03-06 11:06:25 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18616 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:06:25 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:06:25 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:06:26 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.334 seconds (process running for 1193.75)
+2025-03-06 11:08:20 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 23616 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:08:20 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:08:20 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:08:30 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 9.791 seconds (process running for 11.769)
+2025-03-06 11:08:56 [http-nio-8080-exec-6] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 11:10:47 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 23616 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:10:47 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:10:47 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:10:48 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.456 seconds (process running for 150.019)
+2025-03-06 11:10:50 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 23616 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:10:50 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:10:50 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:10:51 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.579 seconds (process running for 153.171)
+2025-03-06 11:11:04 [http-nio-8080-exec-5] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 11:11:30 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 23616 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:11:30 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:11:30 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:11:33 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 23616 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:11:33 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:11:33 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:11:34 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 0.871 seconds (process running for 196.032)
+2025-03-06 11:11:39 [http-nio-8080-exec-1] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 11:11:58 [http-nio-8080-exec-6] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 11:12:45 [http-nio-8080-exec-1] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 11:16:08 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:16:08 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:16:08 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:16:17 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 9.456 seconds (process running for 10.411)
+2025-03-06 11:16:47 [http-nio-8080-exec-4] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 11:19:17 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:19:17 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:19:17 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:19:19 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.171 seconds (process running for 192.265)
+2025-03-06 11:19:20 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:19:20 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:19:20 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:19:21 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.291 seconds (process running for 195.082)
+2025-03-06 11:19:26 [http-nio-8080-exec-1] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture

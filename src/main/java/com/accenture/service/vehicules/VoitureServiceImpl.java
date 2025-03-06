@@ -32,7 +32,7 @@ public class VoitureServiceImpl implements VoitureService {
      * n'est trouvée dans la base de données.
      */
     @Override
-    public List<VoitureResponseDto> trouverToute() {
+    public List<VoitureResponseDto> trouverToute() throws VehiculeException  {
         return voitureDao.findAll().stream().map(voitureMapper::toVoitureResponseDto).toList();
     }
 
@@ -44,7 +44,7 @@ public class VoitureServiceImpl implements VoitureService {
      * @throws IllegalArgumentException si les données de la voiture ne sont pas valides selon les critères définis dans la méthode {@link #verifierVoiture(VoitureRequestDto)}.
      */
     @Override
-    public VoitureResponseDto ajouter(VoitureRequestDto voitureRequestDto) {
+    public VoitureResponseDto ajouter(VoitureRequestDto voitureRequestDto) throws VehiculeException {
         verifierVoiture(voitureRequestDto);
         Voiture voiture = voitureMapper.toVoiture(voitureRequestDto);
         Voiture voiturEnreg = voitureDao.save(voiture);
@@ -61,7 +61,7 @@ public class VoitureServiceImpl implements VoitureService {
      * La liste peut être vide si aucune voiture ne correspond aux critères.
      */
     @Override
-    public List<VoitureResponseDto> trouverActif(Boolean actif) {
+    public List<VoitureResponseDto> trouverActif(Boolean actif) throws VehiculeException  {
         List<Voiture> listVoiture = voitureDao.findAll();
 
         return listVoiture.stream().filter(voiture -> voiture.getActif().equals(actif)).map(voitureMapper::toVoitureResponseDto).toList();
@@ -76,7 +76,7 @@ public class VoitureServiceImpl implements VoitureService {
      * @throws EntityNotFoundException si aucune voiture n'est trouvée pour l'identifiant spécifié.
      */
     @Override
-    public VoitureResponseDto trouverUneVoiture(int id) {
+    public VoitureResponseDto trouverUneVoiture(int id) throws VehiculeException  {
         Optional<Voiture> optVoiture = voitureDao.findById(id);
         if (optVoiture.isEmpty()) throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
         Voiture voiture = optVoiture.get();

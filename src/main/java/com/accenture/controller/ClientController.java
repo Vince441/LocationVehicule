@@ -12,14 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/client")
 public class ClientController {
-
     private final ClientService clientService;
     private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
     private static final String DONNEE_INVALIDE = "Données invalides";
@@ -87,21 +86,7 @@ public class ClientController {
             throw new ClientException(e.getMessage());
         }
     }
-
-    @PutMapping("/{email}")
-    @Operation(summary = "Modifier d'un client", description = "Modification de mon compte")
-    @ApiResponse(responseCode = "200", description = "Modification du compte réussis")
-    @ApiResponse(responseCode = "400", description = "Echec lors de la modification du compte")
-    public ResponseEntity<ClientResponseDto> modifierClient(@PathVariable("email") String email, @RequestParam String password, @RequestBody @Valid ClientRequestDto clientRequestDto) {
-        try {
-            ClientResponseDto reponse = clientService.modifier(email, password, clientRequestDto);
-            logger.info("Client modifié avec succès pour l'email: {}", email);
-            return ResponseEntity.ok(reponse);
-        } catch (ClientException e) {
-            logger.error("Erreur lors de la modification du client pour l'email: {}", email, e);
-            throw new ClientException(e.getMessage());
-        }
-    }
+    
 
     @DeleteMapping("/{email}")
     @Operation(summary = "Supprimer un client", description = "Permet de supprimer un compte client.")

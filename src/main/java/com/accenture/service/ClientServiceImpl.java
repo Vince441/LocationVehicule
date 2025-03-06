@@ -91,30 +91,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
-    /**
-     * Modifie les informations d'un client existant dans la base de données.
-     * La méthode vérifie que le client existe en fonction de son email et mot de passe, puis met à jour ses informations avec celles fournies dans le DTO {@link ClientRequestDto}.
-     * Si le client n'est pas trouvé, une exception est levée.
-     *
-     * @param email            l'email du client à modifier.
-     * @param password         le mot de passe du client à modifier.
-     * @param clientRequestDto un objet {@link ClientRequestDto} contenant les nouvelles informations du client.
-     * @return un objet {@link ClientResponseDto} représentant le client modifié.
-     * @throws ClientException         si les informations du client ne sont pas valides.
-     * @throws EntityNotFoundException si aucun client n'est trouvé avec l'email et le mot de passe fournis.
-     */
-    @Override
-    public ClientResponseDto modifier(String email, String password, ClientRequestDto clientRequestDto) throws ClientException {
-        clientDao.findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL));
 
-        verifierClient(clientRequestDto);
-        Client client = clientMapper.toClient(clientRequestDto);
-        client.setEmail(email);
-        Client clientEnreg = clientDao.save(client);
-
-        return clientMapper.toClientResponseDto(clientEnreg);
-    }
 
     /**
      * Supprime un client de la base de données en fonction de son email et de son mot de passe.

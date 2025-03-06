@@ -84,6 +84,8 @@ public class VoitureController {
     @Operation(summary = "Ajouter une voiture", description = "Ajoute une voiture dans le parc.")
     @ApiResponse(responseCode = "201", description = "Voiture ajoutée avec succès")
     @ApiResponse(responseCode = "400", description = "Données invalides")
+    @ApiResponse(responseCode = "500", description = "Il manque une information")
+
     public ResponseEntity<Void> ajouterUneVoiture(@RequestBody VoitureRequestDto voitureRequestDto) {
         try {
             voitureService.ajouter(voitureRequestDto);

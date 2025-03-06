@@ -59,7 +59,7 @@ public class MotoServiceImpl implements MotoService {
      * @throws IllegalArgumentException si les données de la moto ne sont pas valides selon les critères définis dans la méthode {@link #verifierMoto(MotoRequestDto)}.
      */
     @Override
-    public MotoResponseDto ajouter(MotoRequestDto motoRequestDto) {
+    public MotoResponseDto ajouter(MotoRequestDto motoRequestDto) throws VehiculeException {
         verifierMoto(motoRequestDto);
         Moto moto = motoMapper.toMoto(motoRequestDto);
         Moto motoEnreg = motoDao.save(moto);

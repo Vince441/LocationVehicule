@@ -131,7 +131,6 @@ class ClientServiceImplTest {
         service.supprimer(email, password);
         Mockito.verify(daoMock, Mockito.times(1)).delete(client);
 
-
     }
 
 
@@ -409,6 +408,4 @@ class ClientServiceImplTest {
                 new AdresseDto("29bis rue de la bibine", "44100", "Saint-Herblain"),
                 LocalDate.of(1992, 12, 24), List.of(Permis.A), true);
     }
-
-
 }
