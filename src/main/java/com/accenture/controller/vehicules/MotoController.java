@@ -46,7 +46,7 @@ public class MotoController {
 
 
     @PostMapping
-    @Operation(summary = "Ajouter une moto", description = "Ajoute une moto dans le parc.")
+    @Operation(summary = "Ajouter une moto", description = "Ajoute une moto.")
     @ApiResponse(responseCode = "201", description = "Moto ajoutée avec succès")
     @ApiResponse(responseCode = "400", description = "Données invalides")
     public ResponseEntity<Void> ajouterUneMoto(@RequestBody MotoRequestDto motoRequestDto) {
@@ -55,7 +55,7 @@ public class MotoController {
             logger.info("Moto créée avec succès");
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (VehiculeException e) {
-            logger.error("Erreur lors de la création de la moto", e);
+            logger.error("Erreur lors de la création de la moto");
             throw new VehiculeException(e.getMessage());
         }
     }
@@ -101,6 +101,7 @@ public class MotoController {
             logger.info("La moto à bien été modifier partiellement");
             return ResponseEntity.ok(response);
         } catch (VehiculeException e) {
+            logger.error("Erreur lors de la modification de la moto");
             throw new VehiculeException(e.getMessage());
         }
     }
@@ -118,7 +119,7 @@ public class MotoController {
             logger.info("Moto supprimée avec succès");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (VehiculeException e) {
-            logger.error("Echec lors de la supression de la moto", e);
+            logger.error("Echec lors de la supression de la moto");
             throw new VehiculeException(e.getMessage());
         }
     }

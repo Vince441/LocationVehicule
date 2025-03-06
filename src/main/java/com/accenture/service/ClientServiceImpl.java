@@ -22,12 +22,12 @@ public class ClientServiceImpl implements ClientService {
     public static final String JE_N_AI_PAS_TROUVER_L_EMAIL = "Je n'ai pas trouvé l'email";
     private final ClientDao clientDao;
     private final ClientMapper clientMapper;
-    private final AdresseMapper adressMapper;
+    private final AdresseMapper adresseMapper;
 
     public ClientServiceImpl(ClientDao clientDao, ClientMapper clientMapper, AdresseMapper adressMapper) {
         this.clientDao = clientDao;
         this.clientMapper = clientMapper;
-        this.adressMapper = adressMapper;
+        this.adresseMapper = adressMapper;
     }
 
 
@@ -44,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientResponseDto ajouter(ClientRequestDto clientRequestDto) throws ClientException, EntityNotFoundException {
         verifierClient(clientRequestDto);
-        Adresse adresse = adressMapper.toAdresse(clientRequestDto.adresse());
+        Adresse adresse = adresseMapper.toAdresse(clientRequestDto.adresse());
         Client client = clientMapper.toClient(clientRequestDto);
 
         client.setAdresse(adresse);
@@ -89,6 +89,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     private static void verifierAdresseClient(ClientRequestDto clientRequestDto) {
+
         if (clientRequestDto.adresse().rue() == null ||
                 clientRequestDto.adresse().codePostal() == null ||
                 clientRequestDto.adresse().ville() == null ||
@@ -96,9 +97,8 @@ public class ClientServiceImpl implements ClientService {
                 clientRequestDto.adresse().codePostal().isBlank() ||
                 clientRequestDto.adresse().ville().isBlank())
             throw new ClientException("L'adresse est obligatoire");
-    }
 
-
+}
 
     /**
      * Récupère tous les clients de la base de données et les retourne sous forme d'une liste de {@link ClientResponseDto}.
@@ -168,13 +168,13 @@ public class ClientServiceImpl implements ClientService {
     public ClientResponseDto modifierPartiellement(String email, String password, ClientRequestDto clientRequestDto) throws ClientException {
         Optional<Client> optClient = clientDao.findByEmailAndPassword(email, password);
         if (optClient.isEmpty())
-            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL);
+            throw new ClientException(JE_N_AI_PAS_TROUVER_L_EMAIL);
 
         Client clientExistant = optClient.get();
         Client clientEnreg = clientMapper.toClient(clientRequestDto);
 
         Adresse adresseExistant = optClient.get().getAdresse();
-        Adresse adresseEnreg = adressMapper.toAdresse(clientRequestDto.adresse());
+        Adresse adresseEnreg = adresseMapper.toAdresse(clientRequestDto.adresse());
 
         remplacer(clientExistant, clientEnreg, adresseExistant, adresseEnreg);
         Client modifClient = clientDao.save(clientExistant);
@@ -183,12 +183,10 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
-
     private static void remplacer(Client clientExistant, Client clientEnreg, Adresse adresseExistant, Adresse adresseEnreg) {
         modificationInformationUtilisateur(clientExistant, clientEnreg);
         modificationInformationClient(clientExistant, clientEnreg);
         modificationAdresseClient(adresseExistant, adresseEnreg);
-
 
     }
 
@@ -204,7 +202,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
-    private static void modificationInformationClient(Client clientExistant, Client clientEnreg ) {
+    private static void modificationInformationClient(Client clientExistant, Client clientEnreg) {
         if (clientEnreg.getDateDeNaissance() != null)
             clientExistant.setDateDeNaissance(clientEnreg.getDateDeNaissance());
         if (clientEnreg.getPermis() != null)
@@ -214,14 +212,15 @@ public class ClientServiceImpl implements ClientService {
     }
 
     private static void modificationAdresseClient(Adresse adresseExistant, Adresse adresseEnreg) {
-        if (adresseEnreg.getRue() != null)
-            adresseExistant.setRue(adresseEnreg.getRue());
-        if (adresseEnreg.getCodePostal() != null)
-            adresseExistant.setCodePostal(adresseEnreg.getCodePostal());
-        if (adresseEnreg.getVille() != null)
-            adresseExistant.setVille(adresseEnreg.getVille());
+        if (adresseEnreg != null) {
+            if (adresseEnreg.getRue() != null)
+                adresseExistant.setRue(adresseEnreg.getRue());
+            if (adresseEnreg.getCodePostal() != null)
+                adresseExistant.setCodePostal(adresseEnreg.getCodePostal());
+            if (adresseEnreg.getVille() != null)
+                adresseExistant.setVille(adresseEnreg.getVille());
+        }
     }
-
 
     /**
      * Vérifie si un utilisateur est âgé de 18 ans ou plus à partir de sa date de naissance.
@@ -236,6 +235,5 @@ public class ClientServiceImpl implements ClientService {
         }
         return Period.between(dateDeNaissance, LocalDate.now()).getYears() >= 18;
     }
-
 
 }

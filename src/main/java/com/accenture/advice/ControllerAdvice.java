@@ -24,7 +24,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErreurReponse> gestionEntityNotFoundException(EntityNotFoundException ex) {
-        ErreurReponse er = new ErreurReponse(LocalDateTime.now(), "Couille dans l'essaim de frelon asiatique", ex.getMessage());
+        ErreurReponse er = new ErreurReponse(LocalDateTime.now(), "L'entité n'a pas été trouvé", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(er);
 
     }
