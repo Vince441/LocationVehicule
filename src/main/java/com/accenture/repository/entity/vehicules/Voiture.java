@@ -18,12 +18,12 @@ import lombok.NoArgsConstructor;
 public class Voiture extends Vehicule {
 
 
-    private int nombrePlace;
+    private Integer nombrePlace;
     private TypeCarburant carburant;
-    private int nombreDePorte;
+    private Integer nombreDePorte;
     private Transmission transmission;
-    private boolean climatisation;
-    private int nombreDeBagage;
+    private Boolean climatisation;
+    private Integer nombreDeBagage;
     private TypeVoiture typeVoiture;
 
 }

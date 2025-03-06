@@ -19,10 +19,10 @@ import lombok.NoArgsConstructor;
 public class Moto extends Vehicule {
 
 
-    private int nombreDeCylindre;
-    private boolean cylindree;
-    private int puissanceKw;
-    private int hauteurDeSelle;
+    private Integer nombreDeCylindre;
+    private Boolean cylindree;
+    private Integer puissanceKw;
+    private Integer hauteurDeSelle;
     private Transmission transmission;
     private TypeMoto typeMoto;
 

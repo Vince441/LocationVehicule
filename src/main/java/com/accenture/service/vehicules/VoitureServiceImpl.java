@@ -32,7 +32,7 @@ public class VoitureServiceImpl implements VoitureService {
      * n'est trouvée dans la base de données.
      */
     @Override
-    public List<VoitureResponseDto> trouverToute() {
+    public List<VoitureResponseDto> trouverToute() throws VehiculeException {
         return voitureDao.findAll().stream().map(voitureMapper::toVoitureResponseDto).toList();
     }
 
@@ -44,13 +44,46 @@ public class VoitureServiceImpl implements VoitureService {
      * @throws IllegalArgumentException si les données de la voiture ne sont pas valides selon les critères définis dans la méthode {@link #verifierVoiture(VoitureRequestDto)}.
      */
     @Override
-    public VoitureResponseDto ajouter(VoitureRequestDto voitureRequestDto) {
+    public VoitureResponseDto ajouter(VoitureRequestDto voitureRequestDto) throws VehiculeException {
         verifierVoiture(voitureRequestDto);
         Voiture voiture = voitureMapper.toVoiture(voitureRequestDto);
         Voiture voiturEnreg = voitureDao.save(voiture);
 
         return voitureMapper.toVoitureResponseDto(voiturEnreg);
     }
+
+    private static void verifierVoiture(VoitureRequestDto voitureRequestDto) throws VehiculeException {
+        verifierInformationVehicule(voitureRequestDto);
+        verifierInformationVoiture(voitureRequestDto);
+    }
+
+    private static void verifierInformationVoiture(VoitureRequestDto voitureRequestDto) {
+        if (voitureRequestDto.nombrePlace() == null || voitureRequestDto.nombrePlace() < 2)
+            throw new VehiculeException("Le nombre de place est obligatoire et supperieur à 2");
+        if (voitureRequestDto.carburant() == null) throw new VehiculeException("Le type de carburant est obligatoire");
+        if (voitureRequestDto.nombreDePorte() == null || voitureRequestDto.nombreDePorte() != 3 && voitureRequestDto.nombreDePorte() != 5)
+            throw new VehiculeException("Le nombre de porte est obligatoire et de 3 ou 5 portes");
+        if (voitureRequestDto.transmission() == null)
+            throw new VehiculeException("Le type de transmission est obligatoire");
+        if (voitureRequestDto.nombreDeBagage() == null || voitureRequestDto.nombreDeBagage() <= 0)
+            throw new VehiculeException("Le nombre de bagage est obligatoire et supperieur à 0");
+    }
+
+    private static void verifierInformationVehicule(VoitureRequestDto voitureRequestDto) {
+        if (voitureRequestDto == null) throw new VehiculeException("La voiture est null");
+        if (voitureRequestDto.marque() == null || voitureRequestDto.marque().isBlank())
+            throw new VehiculeException("La marque est obligatoire");
+        if (voitureRequestDto.modele() == null || voitureRequestDto.modele().isBlank())
+            throw new VehiculeException("Le modele est obligatoire");
+        if (voitureRequestDto.couleur() == null || voitureRequestDto.couleur().isBlank())
+            throw new VehiculeException("La couleur est obligatoire");
+        if (voitureRequestDto.permis() == null) throw new VehiculeException("Le permis est obligatoire");
+        if (voitureRequestDto.tarifJournalier() == null || voitureRequestDto.tarifJournalier() <= 0)
+            throw new VehiculeException("Le tarif journalier est obligatoire et supperieur à 0");
+        if (voitureRequestDto.kilometrage() == null || voitureRequestDto.kilometrage() <= 0)
+            throw new VehiculeException("Le kilometrage est obligatoire et supp à 0");
+    }
+
 
     /**
      * Récupère toutes les voitures qui ont un état d'activité correspondant à la valeur spécifiée et les transforme en une liste d'objets {@link VoitureResponseDto}.
@@ -61,7 +94,7 @@ public class VoitureServiceImpl implements VoitureService {
      * La liste peut être vide si aucune voiture ne correspond aux critères.
      */
     @Override
-    public List<VoitureResponseDto> trouverActif(Boolean actif) {
+    public List<VoitureResponseDto> trouverActif(Boolean actif) throws VehiculeException {
         List<Voiture> listVoiture = voitureDao.findAll();
 
         return listVoiture.stream().filter(voiture -> voiture.getActif().equals(actif)).map(voitureMapper::toVoitureResponseDto).toList();
@@ -76,31 +109,83 @@ public class VoitureServiceImpl implements VoitureService {
      * @throws EntityNotFoundException si aucune voiture n'est trouvée pour l'identifiant spécifié.
      */
     @Override
-    public VoitureResponseDto trouverUneVoiture(int id) {
+    public VoitureResponseDto trouverUneVoiture(int id) throws VehiculeException {
         Optional<Voiture> optVoiture = voitureDao.findById(id);
         if (optVoiture.isEmpty()) throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
         Voiture voiture = optVoiture.get();
         return voitureMapper.toVoitureResponseDto(voiture);
     }
 
+
     /**
-     * Modifie les informations d'une voiture existante dans la base de données.
-     * La voiture est mise à jour avec les données fournies dans le DTO {@link VoitureRequestDto}.
+     * Modifies an existing car (vehicle) partially based on the provided data.
      *
-     * @param id                l'identifiant de la voiture à modifier.
-     * @param voitureRequestDto un objet {@link VoitureRequestDto} contenant les nouvelles informations à appliquer à la voiture.
-     * @return un objet {@link VoitureResponseDto} représentant la voiture modifiée après l'enregistrement dans la base de données.
-     * @throws VehiculeException si l'identifiant de la voiture n'existe pas dans la base de données, ou si les informations de la voiture ne sont pas valides.
+     * This method takes in a vehicle ID and a {@link VoitureRequestDto} object containing
+     * the new values for the vehicle fields. It retrieves the existing vehicle from the database,
+     * updates its fields based on the new data, and then saves the updated vehicle back to the database.
+     *
+     *
+     * @param id                the ID of the vehicle to be modified
+     * @param voitureRequestDto the data transfer object containing the new values to be applied to the vehicle
+     * @return a {@link VoitureResponseDto} containing the updated vehicle data
+     * @throws VehiculeException       if there is an issue with the vehicle data or processing
+     * @throws EntityNotFoundException if the vehicle with the given ID is not found in the database
      */
     @Override
-    public VoitureResponseDto modifier(int id, VoitureRequestDto voitureRequestDto) throws VehiculeException {
-        if (!voitureDao.existsById(id)) throw new VehiculeException(JE_N_AI_PAS_TROUVER_L_ID);
-        verifierVoiture(voitureRequestDto);
-        Voiture voiture = voitureMapper.toVoiture(voitureRequestDto);
-        voiture.setId(id);
-        Voiture voitureEnreg = voitureDao.save(voiture);
-        return voitureMapper.toVoitureResponseDto(voitureEnreg);
+    public VoitureResponseDto modifierPartiellement(int id, VoitureRequestDto voitureRequestDto) throws VehiculeException {
+        Optional<Voiture> optVoiture = voitureDao.findById(id);
+        if (optVoiture.isEmpty())
+            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
+
+        Voiture voitureExistant = optVoiture.get();
+        Voiture voitureEnreg = voitureMapper.toVoiture(voitureRequestDto);
+
+
+        remplacer(voitureExistant, voitureEnreg);
+
+        Voiture modifVoiture = voitureDao.save(voitureExistant);
+        return voitureMapper.toVoitureResponseDto(modifVoiture);
+
     }
+
+
+    private static void remplacer(Voiture voitureExistant, Voiture voitureEnreg) throws VehiculeException {
+        remplacerInformationVehicule(voitureExistant, voitureEnreg);
+        remplacerInformationVoiture(voitureExistant, voitureEnreg);
+    }
+
+    private static void remplacerInformationVoiture(Voiture voitureExistant, Voiture voitureEnreg) {
+        if (voitureEnreg.getNombrePlace() != null)
+            voitureExistant.setNombrePlace(voitureEnreg.getNombrePlace());
+        if (voitureEnreg.getCarburant() != null)
+            voitureExistant.setCarburant(voitureEnreg.getCarburant());
+        if (voitureEnreg.getClimatisation() != null)
+            voitureExistant.setClimatisation(voitureEnreg.getClimatisation());
+        if (voitureEnreg.getNombreDeBagage() != null)
+            voitureExistant.setNombreDeBagage(voitureEnreg.getNombreDeBagage());
+        if (voitureEnreg.getTypeVoiture() != null)
+            voitureExistant.setTypeVoiture(voitureEnreg.getTypeVoiture());
+    }
+
+    private static void remplacerInformationVehicule(Voiture voitureExistant, Voiture voitureEnreg) {
+        if (voitureEnreg.getMarque() != null)
+            voitureExistant.setMarque(voitureEnreg.getMarque());
+        if (voitureEnreg.getModele() != null)
+            voitureExistant.setModele(voitureEnreg.getModele());
+        if (voitureEnreg.getCouleur() != null)
+            voitureExistant.setCouleur(voitureEnreg.getCouleur());
+        if (voitureEnreg.getPermis() != null)
+            voitureExistant.setPermis(voitureEnreg.getPermis());
+        if (voitureEnreg.getTarifJournalier() != null)
+            voitureExistant.setTarifJournalier(voitureEnreg.getTarifJournalier());
+        if (voitureEnreg.getKilometrage() != null)
+            voitureExistant.setKilometrage(voitureEnreg.getKilometrage());
+        if (voitureEnreg.getActif() != null)
+            voitureExistant.setActif(voitureEnreg.getActif());
+        if (voitureEnreg.getRetirerDuParc() != null)
+            voitureExistant.setRetirerDuParc(voitureEnreg.getRetirerDuParc());
+    }
+
 
     /**
      * Supprime une voiture de la base de données en fonction de son identifiant.
@@ -116,38 +201,4 @@ public class VoitureServiceImpl implements VoitureService {
     }
 
 
-    /**
-     * Vérifie la validité des informations d'une voiture contenues dans le DTO {@link VoitureRequestDto}.
-     * Cette méthode valide plusieurs attributs de la voiture, y compris la marque, le modèle, la couleur, le permis,
-     * le nombre de places, le type de carburant, le nombre de portes, la transmission, le nombre de bagages,
-     * le tarif journalier et le kilométrage.
-     *
-     * @param voitureRequestDto un objet {@link VoitureRequestDto} contenant les informations de la voiture à valider.
-     * @throws VehiculeException si une ou plusieurs informations de la voiture sont invalides.
-     *                           Des exceptions spécifiques sont levées pour chaque champ manquant ou incorrect.
-     */
-    private static void verifierVoiture(VoitureRequestDto voitureRequestDto) throws VehiculeException {
-        if (voitureRequestDto == null) throw new VehiculeException("La voiture est null");
-        if (voitureRequestDto.marque() == null || voitureRequestDto.marque().isBlank())
-            throw new VehiculeException("La marque est obligatoire");
-        if (voitureRequestDto.modele() == null || voitureRequestDto.modele().isBlank())
-            throw new VehiculeException("Le modele est obligatoire");
-        if (voitureRequestDto.couleur() == null || voitureRequestDto.couleur().isBlank())
-            throw new VehiculeException("La couleur est obligatoire");
-        if (voitureRequestDto.permis() == null) throw new VehiculeException("Le permis est obligatoire");
-        if (voitureRequestDto.nombrePlace() == null || voitureRequestDto.nombrePlace() < 2)
-            throw new VehiculeException("Le nombre de place est obligatoire et supperieur à 2");
-        if (voitureRequestDto.carburant() == null) throw new VehiculeException("Le type de carburant est obligatoire");
-        if (voitureRequestDto.nombreDePorte() == null || voitureRequestDto.nombreDePorte() != 3 && voitureRequestDto.nombreDePorte() != 5)
-            throw new VehiculeException("Le nombre de porte est obligatoire et de 3 ou 5 portes");
-        if (voitureRequestDto.transmission() == null)
-            throw new VehiculeException("Le type de transmission est obligatoire");
-        if (voitureRequestDto.nombreDeBagage() == null || voitureRequestDto.nombreDeBagage() <= 0)
-            throw new VehiculeException("Le nombre de bagage est obligatoire et supperieur à 0");
-        if (voitureRequestDto.tarifJournalier() == null || voitureRequestDto.tarifJournalier() <= 0)
-            throw new VehiculeException("Le tarif journalier est obligatoire et supperieur à 0");
-        if (voitureRequestDto.kilometrage() == null || voitureRequestDto.kilometrage() <= 0)
-            throw new VehiculeException("Le kilometrage est obligatoire et supp à 0");
-
-    }
 }

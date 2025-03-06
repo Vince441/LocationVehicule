@@ -1,8 +1,7 @@
 package com.accenture.controller.vehicules;
 
-import com.accenture.controller.ClientController;
+
 import com.accenture.exception.vehicules.VehiculeException;
-import com.accenture.repository.entity.location.Location;
 import com.accenture.service.dto.vehicules.MotoRequestDto;
 import com.accenture.service.dto.vehicules.MotoResponseDto;
 import com.accenture.service.vehicules.MotoService;
@@ -14,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 
@@ -91,20 +90,23 @@ public class MotoController {
         }
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Modifier une moto", description = "Modifie une moto")
-    @ApiResponse(responseCode = "201", description = "Moto modifiée avec succès")
-    @ApiResponse(responseCode = "400", description = "Echec de la modification")
-    public ResponseEntity<MotoResponseDto> modifierUneMoto(@PathVariable("id") int id, @RequestBody @Valid MotoRequestDto motoRequestDto) {
+
+    @PatchMapping("/{id}")
+    @Operation(summary = "Modifier une moto partiellement", description = "Modification d'une moto")
+    @ApiResponse(responseCode = "200", description = "Modification d'une moto réussis")
+    @ApiResponse(responseCode = "400", description = "Echec lors de la modification de la moto")
+    public ResponseEntity<MotoResponseDto> modifierPartiellementUneMoto(@PathVariable("id") int id, @RequestBody @Valid MotoRequestDto motoRequestDto) {
         try {
-            MotoResponseDto reponse = motoService.modifier(id, motoRequestDto);
-            logger.info("Moto modifiée avec succès");
-            return ResponseEntity.ok(reponse);
+            MotoResponseDto response = motoService.modifierPartiellement(id, motoRequestDto);
+            logger.info("La moto à bien été modifier partiellement");
+            return ResponseEntity.ok(response);
         } catch (VehiculeException e) {
-            logger.info("Echec lors de la modification de la moto");
             throw new VehiculeException(e.getMessage());
         }
     }
+
+
+
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer une moto", description = "Suppression d'une moto")

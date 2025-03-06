@@ -6,13 +6,11 @@ import com.accenture.service.dto.AdminRequestDto;
 import com.accenture.service.dto.AdminResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,7 +20,6 @@ public class AdminController {
 
     private final AdminService adminService;
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-    private static final String DONNEE_INVALIDE = "Données invalides";
 
 
     public AdminController(AdminService adminService) {
@@ -61,6 +58,7 @@ public class AdminController {
         }
     }
 
+
     @PostMapping
     @Operation(summary = "Créer un administrateur", description = "Permet d'ajouter un compte admin.")
     @ApiResponse(responseCode = "201", description = "Ajout du compte réussis")
@@ -76,20 +74,21 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/{email}")
-    @Operation(summary = "Modification d'un administrateur", description = "Permet de modifier un compte admin.")
+
+    @PatchMapping("/{email}")
+    @Operation(summary = "Modifier d'un admin partiellement", description = "Modification partiellement de mon compte")
     @ApiResponse(responseCode = "200", description = "Modification du compte réussis")
-    @ApiResponse(responseCode = "400", description = "Modification impossible")
-    public ResponseEntity<AdminResponseDto> modifierAdmin(@PathVariable("email") String email, @RequestParam String password, @RequestBody @Valid AdminRequestDto adminRequestDto) {
+    @ApiResponse(responseCode = "400", description = "Echec lors de la modification du compte")
+    public ResponseEntity<AdminResponseDto> modifierPartiellementUnAdmin(@PathVariable("email") String email, @RequestParam String password, @RequestBody AdminRequestDto adminRequestDto) {
         try {
-            AdminResponseDto reponse = adminService.modifier(email, password, adminRequestDto);
-            logger.info("Administrateur modifié avec succès pour l'email: {}", email);
-            return ResponseEntity.ok(reponse);
+            AdminResponseDto response = adminService.modifierPartiellement(email, password, adminRequestDto);
+            logger.info("L admin à bien été modifier partiellement");
+            return ResponseEntity.ok(response);
         } catch (AdminException e) {
-            logger.error("Erreur lors de la modification de l'administrateur pour l'email: {}", email, e);
             throw new AdminException(e.getMessage());
         }
     }
+
 
     @DeleteMapping("/{email}")
     @Operation(summary = "Supprimer un administrateur", description = "Permet de supprimer un compte admin.")
@@ -106,3 +105,5 @@ public class AdminController {
         }
     }
 }
+
+

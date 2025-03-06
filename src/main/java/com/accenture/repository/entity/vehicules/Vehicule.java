@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+
 
 @Data
 @Entity
@@ -24,9 +24,9 @@ public class Vehicule {
     private String modele;
     private String couleur;
     private Permis permis;
-    private int poid;
-    private int tarifJournalier;
-    private int kilometrage;
+    private Integer poid;
+    private Integer tarifJournalier;
+    private Integer kilometrage;
     private Boolean actif;
     private Boolean retirerDuParc;
 
