@@ -2,8 +2,6 @@ package com.accenture.service.vehicules;
 
 import com.accenture.exception.vehicules.VehiculeException;
 import com.accenture.repository.VoitureDao;
-import com.accenture.repository.entity.Adresse;
-import com.accenture.repository.entity.Client;
 import com.accenture.repository.entity.vehicules.Voiture;
 import com.accenture.service.dto.vehicules.VoitureRequestDto;
 import com.accenture.service.dto.vehicules.VoitureResponseDto;

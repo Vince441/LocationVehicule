@@ -1,11 +1,7 @@
 package com.accenture.controller.vehicules;
 
 
-import com.accenture.controller.ClientController;
-import com.accenture.exception.ClientException;
 import com.accenture.exception.vehicules.VehiculeException;
-import com.accenture.service.dto.ClientRequestDto;
-import com.accenture.service.dto.ClientResponseDto;
 import com.accenture.service.dto.vehicules.VoitureRequestDto;
 import com.accenture.service.dto.vehicules.VoitureResponseDto;
 import com.accenture.service.vehicules.VoitureService;
@@ -17,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -29,10 +24,8 @@ public class VoitureController {
 
     private final VoitureService voitureService;
     private static final Logger logger = LoggerFactory.getLogger(VoitureController.class);
-    private static final String DONNEE_INVALIDE = "Données invalides";
 
     public VoitureController(VoitureService voitureService) {
-
         this.voitureService = voitureService;
     }
 
@@ -99,7 +92,6 @@ public class VoitureController {
             throw new VehiculeException(e.getMessage());
         }
     }
-
 
 
     @PatchMapping("/{id}")
