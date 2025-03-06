@@ -100,20 +100,7 @@ public class VoitureController {
         }
     }
 
-//    @PutMapping("/{id}")
-//    @Operation(summary = "Modifier une voiture", description = "Modifie une voiture")
-//    @ApiResponse(responseCode = "201", description = "Voiture modifié avec succès")
-//    @ApiResponse(responseCode = "400", description = "Echec de la modification")
-//    ResponseEntity<VoitureResponseDto> modifierUneVoiture(@PathVariable("id") int id, @RequestBody @Valid VoitureRequestDto voitureRequestDto) {
-//        try {
-//            VoitureResponseDto reponse = voitureService.modifier(id, voitureRequestDto);
-//            logger.info("La modification de la voiture à été réalisée avec succès");
-//            return ResponseEntity.ok(reponse);
-//        } catch (VehiculeException e) {
-//            logger.error("Echec de la modification de la voiture");
-//            throw new VehiculeException(e.getMessage());
-//        }
-//    }
+
 
     @PatchMapping("/{id}")
     @Operation(summary = "Modifier une voiture partiellement", description = "Modification d'un voiture")

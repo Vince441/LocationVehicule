@@ -18,7 +18,7 @@ public interface MotoService {
 
     MotoResponseDto trouverUneMoto(int id) throws VehiculeException;
 
-    MotoResponseDto modifier(int id, MotoRequestDto motoRequestDto) throws VehiculeException;
+    MotoResponseDto modifierPartiellement(int id, MotoRequestDto motoRequestDto) throws VehiculeException;
 
     void supprimer(int id) throws VehiculeException;
 

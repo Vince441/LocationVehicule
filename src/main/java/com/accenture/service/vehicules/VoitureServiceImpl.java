@@ -34,7 +34,7 @@ public class VoitureServiceImpl implements VoitureService {
      * n'est trouvée dans la base de données.
      */
     @Override
-    public List<VoitureResponseDto> trouverToute() throws VehiculeException  {
+    public List<VoitureResponseDto> trouverToute() throws VehiculeException {
         return voitureDao.findAll().stream().map(voitureMapper::toVoitureResponseDto).toList();
     }
 
@@ -63,7 +63,7 @@ public class VoitureServiceImpl implements VoitureService {
      * La liste peut être vide si aucune voiture ne correspond aux critères.
      */
     @Override
-    public List<VoitureResponseDto> trouverActif(Boolean actif) throws VehiculeException  {
+    public List<VoitureResponseDto> trouverActif(Boolean actif) throws VehiculeException {
         List<Voiture> listVoiture = voitureDao.findAll();
 
         return listVoiture.stream().filter(voiture -> voiture.getActif().equals(actif)).map(voitureMapper::toVoitureResponseDto).toList();
@@ -78,33 +78,12 @@ public class VoitureServiceImpl implements VoitureService {
      * @throws EntityNotFoundException si aucune voiture n'est trouvée pour l'identifiant spécifié.
      */
     @Override
-    public VoitureResponseDto trouverUneVoiture(int id) throws VehiculeException  {
+    public VoitureResponseDto trouverUneVoiture(int id) throws VehiculeException {
         Optional<Voiture> optVoiture = voitureDao.findById(id);
         if (optVoiture.isEmpty()) throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
         Voiture voiture = optVoiture.get();
         return voitureMapper.toVoitureResponseDto(voiture);
     }
-
-
-
-//    /**
-//     * Modifie les informations d'une voiture existante dans la base de données.
-//     * La voiture est mise à jour avec les données fournies dans le DTO {@link VoitureRequestDto}.
-//     *
-//     * @param id                l'identifiant de la voiture à modifier.
-//     * @param voitureRequestDto un objet {@link VoitureRequestDto} contenant les nouvelles informations à appliquer à la voiture.
-//     * @return un objet {@link VoitureResponseDto} représentant la voiture modifiée après l'enregistrement dans la base de données.
-//     * @throws VehiculeException si l'identifiant de la voiture n'existe pas dans la base de données, ou si les informations de la voiture ne sont pas valides.
-//     */
-//    @Override
-//    public VoitureResponseDto modifier(int id, VoitureRequestDto voitureRequestDto) throws VehiculeException {
-//        if (!voitureDao.existsById(id)) throw new VehiculeException(JE_N_AI_PAS_TROUVER_L_ID);
-//        verifierVoiture(voitureRequestDto);
-//        Voiture voiture = voitureMapper.toVoiture(voitureRequestDto);
-//        voiture.setId(id);
-//        Voiture voitureEnreg = voitureDao.save(voiture);
-//        return voitureMapper.toVoitureResponseDto(voitureEnreg);
-//    }
 
 
     @Override
@@ -119,7 +98,7 @@ public class VoitureServiceImpl implements VoitureService {
 
         remplacer(voitureExistant, voitureEnreg);
 
-       Voiture modifVoiture = voitureDao.save(voitureExistant);
+        Voiture modifVoiture = voitureDao.save(voitureExistant);
         return voitureMapper.toVoitureResponseDto(modifVoiture);
 
     }
@@ -127,16 +106,31 @@ public class VoitureServiceImpl implements VoitureService {
     private static void remplacer(Voiture voitureExistant, Voiture voitureEnreg) throws VehiculeException {
         if (voitureEnreg.getMarque() != null)
             voitureExistant.setMarque(voitureEnreg.getMarque());
-        if(voitureEnreg.getModele() != null)
-            voitureExistant.setModele(voitureEnreg.getMarque());
-        if(voitureEnreg.getCouleur() != null)
+        if (voitureEnreg.getModele() != null)
+            voitureExistant.setModele(voitureEnreg.getModele());
+        if (voitureEnreg.getCouleur() != null)
             voitureExistant.setCouleur(voitureEnreg.getCouleur());
-            
-
+        if (voitureEnreg.getPermis() != null)
+            voitureExistant.setPermis(voitureEnreg.getPermis());
+        if (voitureEnreg.getNombrePlace() != null)
+            voitureExistant.setNombrePlace(voitureEnreg.getNombrePlace());
+        if (voitureEnreg.getCarburant() != null)
+            voitureExistant.setCarburant(voitureEnreg.getCarburant());
+        if (voitureEnreg.getClimatisation() != null)
+            voitureExistant.setClimatisation(voitureEnreg.getClimatisation());
+        if (voitureEnreg.getNombreDeBagage() != null)
+            voitureExistant.setNombreDeBagage(voitureEnreg.getNombreDeBagage());
+        if (voitureEnreg.getTarifJournalier() != null)
+            voitureExistant.setTarifJournalier(voitureEnreg.getTarifJournalier());
+        if (voitureEnreg.getKilometrage() != null)
+            voitureExistant.setKilometrage(voitureEnreg.getKilometrage());
+        if (voitureEnreg.getActif() != null)
+            voitureExistant.setActif(voitureEnreg.getActif());
+        if (voitureEnreg.getRetirerDuParc() != null)
+            voitureExistant.setRetirerDuParc(voitureEnreg.getRetirerDuParc());
+        if (voitureEnreg.getTypeVoiture() != null)
+            voitureExistant.setTypeVoiture(voitureEnreg.getTypeVoiture());
     }
-
-
-
 
 
     /**

@@ -3,6 +3,7 @@ package com.accenture.service.vehicules;
 import com.accenture.exception.vehicules.VehiculeException;
 import com.accenture.repository.MotoDao;
 import com.accenture.repository.entity.vehicules.Moto;
+import com.accenture.repository.entity.vehicules.Voiture;
 import com.accenture.service.dto.vehicules.MotoRequestDto;
 import com.accenture.service.dto.vehicules.MotoResponseDto;
 import com.accenture.service.mapper.vehicules.MotoMapper;
@@ -83,23 +84,42 @@ public class MotoServiceImpl implements MotoService {
         return motoMapper.toMotoResponseDto(moto);
     }
 
-    /**
-     * Modifie les informations d'une moto existante dans la base de données.
-     *
-     * @param id             l'identifiant de la moto à modifier.
-     * @param motoRequestDto un objet de type {@link MotoRequestDto} contenant les nouvelles informations à appliquer à la moto.
-     * @return un objet de type {@link MotoResponseDto} représentant la moto modifiée, après l'enregistrement des changements dans la base de données.
-     * @throws VehiculeException si aucune moto n'est trouvée pour l'identifiant spécifié, ou si une erreur survient lors de la validation des données de la moto.
-     */
+
+//    /**
+//     * Modifie les informations d'une moto existante dans la base de données.
+//     *
+//     * @param id             l'identifiant de la moto à modifier.
+//     * @param motoRequestDto un objet de type {@link MotoRequestDto} contenant les nouvelles informations à appliquer à la moto.
+//     * @return un objet de type {@link MotoResponseDto} représentant la moto modifiée, après l'enregistrement des changements dans la base de données.
+//     * @throws VehiculeException si aucune moto n'est trouvée pour l'identifiant spécifié, ou si une erreur survient lors de la validation des données de la moto.
+//     */
+//    @Override
+//    public MotoResponseDto modifier(int id, MotoRequestDto motoRequestDto) throws VehiculeException {
+//        if (!motoDao.existsById(id)) throw new VehiculeException(JE_N_AI_PAS_TROUVER_L_ID);
+//        verifierMoto(motoRequestDto);
+//        Moto moto = motoMapper.toMoto(motoRequestDto);
+//        moto.setId(id);
+//        Moto motoEnreg = motoDao.save(moto);
+//        return motoMapper.toMotoResponseDto(motoEnreg);
+//    }
+
     @Override
-    public MotoResponseDto modifier(int id, MotoRequestDto motoRequestDto) throws VehiculeException {
-        if (!motoDao.existsById(id)) throw new VehiculeException(JE_N_AI_PAS_TROUVER_L_ID);
-        verifierMoto(motoRequestDto);
-        Moto moto = motoMapper.toMoto(motoRequestDto);
-        moto.setId(id);
-        Moto motoEnreg = motoDao.save(moto);
-        return motoMapper.toMotoResponseDto(motoEnreg);
+    public MotoResponseDto modifierPartiellement(int id, MotoRequestDto motoRequestDto) throws VehiculeException {
+        Optional<Moto> optMoto = motoDao.findById(id);
+        if (optMoto.isEmpty())
+            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
+
+        Moto motoExistant = optMoto.get();
+        Moto motoEnreg = motoMapper.toMoto(motoRequestDto);
+
+        remplacer(motoExistant, motoEnreg);
+
+        Moto modifMoto = motoDao.save(motoExistant);
+        return motoMapper.toMotoResponseDto(modifMoto);
+
     }
+
+
 
 
     /**
@@ -148,6 +168,40 @@ public class MotoServiceImpl implements MotoService {
             throw new VehiculeException("Le kilometrage est obligatoire et supp à 0");
 
     }
+
+
+    private static void remplacer(Moto motoExistant, Moto motoEnreg) throws VehiculeException {
+        if (motoEnreg.getMarque() != null)
+            motoExistant.setMarque(motoEnreg.getMarque());
+        if (motoEnreg.getModele() != null)
+            motoExistant.setModele(motoEnreg.getModele());
+        if (motoEnreg.getCouleur() != null)
+            motoExistant.setCouleur(motoEnreg.getCouleur());
+        if (motoEnreg.getPermis() != null)
+            motoExistant.setPermis(motoEnreg.getPermis());
+        if (motoEnreg.getTarifJournalier() != null)
+            motoExistant.setTarifJournalier(motoEnreg.getTarifJournalier());
+        if (motoEnreg.getKilometrage() != null)
+            motoExistant.setKilometrage(motoEnreg.getKilometrage());
+        if (motoEnreg.getPoid() != null)
+            motoExistant.setPoid(motoEnreg.getPoid());
+        if (motoEnreg.getCylindree() != null)
+            motoExistant.setCylindree(motoEnreg.getCylindree());
+        if(motoEnreg.getNombreDeCylindre() != null)
+            motoExistant.setNombreDeCylindre(motoEnreg.getNombreDeCylindre());
+        if(motoEnreg.getPuissanceKw() != null)
+            motoExistant.setPuissanceKw(motoEnreg.getPuissanceKw());
+        if(motoEnreg.getHauteurDeSelle() != null)
+            motoExistant.setHauteurDeSelle(motoEnreg.getHauteurDeSelle());
+        if (motoEnreg.getActif() != null)
+            motoExistant.setActif(motoEnreg.getActif());
+        if (motoEnreg.getRetirerDuParc() != null)
+            motoExistant.setRetirerDuParc(motoEnreg.getRetirerDuParc());
+        if (motoEnreg.getTypeMoto() != null)
+            motoExistant.setTypeMoto(motoEnreg.getTypeMoto());
+    }
+
+
 
 }
 

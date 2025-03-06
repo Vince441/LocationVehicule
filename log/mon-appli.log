@@ -88,3 +88,27 @@
 2025-03-06 11:43:40 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
 2025-03-06 11:43:40 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 0.797 seconds (process running for 1653.974)
 2025-03-06 11:44:00 [http-nio-8080-exec-5] INFO  c.a.controller.AdminController - Administrateur créer avec succès
+2025-03-06 11:44:43 [http-nio-8080-exec-6] INFO  c.a.controller.AdminController - L admin à bien été modifier partiellement
+2025-03-06 11:45:02 [http-nio-8080-exec-8] INFO  c.a.controller.AdminController - La liste des administrateurs récupérée avec succès
+2025-03-06 12:27:01 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 12:27:01 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 12:27:01 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 12:27:04 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 12:27:04 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 12:27:04 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 12:27:07 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 12:27:07 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 12:27:07 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 12:27:08 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.421 seconds (process running for 4261.587)
+2025-03-06 12:27:46 [http-nio-8080-exec-1] INFO  c.a.c.vehicules.VoitureController - La création de la voiture à été réalisée avec succès
+2025-03-06 12:28:53 [http-nio-8080-exec-10] INFO  c.a.c.vehicules.VoitureController - La liste des voitures à été récuperée avec succès
+2025-03-06 12:29:03 [http-nio-8080-exec-1] INFO  c.a.c.vehicules.VoitureController - La création de la voiture à été réalisée avec succès
+2025-03-06 12:29:13 [http-nio-8080-exec-3] INFO  c.a.c.vehicules.VoitureController - La liste des voitures à été récuperée avec succès
+2025-03-06 12:29:33 [http-nio-8080-exec-4] INFO  c.a.c.vehicules.VoitureController - Le client à bien été modifier partiellement
+2025-03-06 12:30:51 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 12:30:51 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 12:30:51 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 12:30:53 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 12:30:53 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 12:30:53 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 12:30:53 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 0.597 seconds (process running for 4487.095)

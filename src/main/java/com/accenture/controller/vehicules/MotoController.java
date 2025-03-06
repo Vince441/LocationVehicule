@@ -5,6 +5,8 @@ import com.accenture.exception.vehicules.VehiculeException;
 import com.accenture.repository.entity.location.Location;
 import com.accenture.service.dto.vehicules.MotoRequestDto;
 import com.accenture.service.dto.vehicules.MotoResponseDto;
+import com.accenture.service.dto.vehicules.VoitureRequestDto;
+import com.accenture.service.dto.vehicules.VoitureResponseDto;
 import com.accenture.service.vehicules.MotoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -105,6 +107,23 @@ public class MotoController {
             throw new VehiculeException(e.getMessage());
         }
     }
+
+    @PatchMapping("/{id}")
+    @Operation(summary = "Modifier une moto partiellement", description = "Modification d'une moto")
+    @ApiResponse(responseCode = "200", description = "Modification d'une moto réussis")
+    @ApiResponse(responseCode = "400", description = "Echec lors de la modification de la moto")
+    public ResponseEntity<MotoResponseDto> modifierPartiellementUneMoto(@PathVariable("id") int id, @RequestBody @Valid MotoRequestDto motoRequestDto) {
+        try {
+            MotoResponseDto response = motoService.modifierPartiellement(id, motoRequestDto);
+            logger.info("La moto à bien été modifier partiellement");
+            return ResponseEntity.ok(response);
+        } catch (VehiculeException e) {
+            throw new VehiculeException(e.getMessage());
+        }
+    }
+
+
+
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer une moto", description = "Suppression d'une moto")
