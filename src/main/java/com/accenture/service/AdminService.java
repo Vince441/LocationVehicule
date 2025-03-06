@@ -15,7 +15,7 @@ public interface AdminService {
 
     AdminResponseDto trouver(String email, String password) throws AdminException;
 
-    AdminResponseDto modifier(String email, String password, AdminRequestDto adminRequestDto) throws AdminException;
+    AdminResponseDto modifierPartiellement(String email, String password, AdminRequestDto adminRequestDto) throws AdminException;
 
     void supprimer(String email, String password) throws AdminException;
 

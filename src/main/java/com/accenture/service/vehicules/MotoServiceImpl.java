@@ -59,7 +59,7 @@ public class MotoServiceImpl implements MotoService {
      * @throws IllegalArgumentException si les données de la moto ne sont pas valides selon les critères définis dans la méthode {@link #verifierMoto(MotoRequestDto)}.
      */
     @Override
-    public MotoResponseDto ajouter(MotoRequestDto motoRequestDto) {
+    public MotoResponseDto ajouter(MotoRequestDto motoRequestDto) throws VehiculeException {
         verifierMoto(motoRequestDto);
         Moto moto = motoMapper.toMoto(motoRequestDto);
         Moto motoEnreg = motoDao.save(moto);
@@ -83,22 +83,74 @@ public class MotoServiceImpl implements MotoService {
         return motoMapper.toMotoResponseDto(moto);
     }
 
+
     /**
-     * Modifie les informations d'une moto existante dans la base de données.
+     * Modifies an existing motorcycle (vehicle) partially based on the provided data.
+     * <p>
+     * This method takes in a motorcycle ID and a {@link MotoRequestDto} object containing
+     * the new values for the motorcycle fields. It retrieves the existing motorcycle from the database,
+     * updates its fields based on the new data, and then saves the updated motorcycle back to the database.
+     * </p>
      *
-     * @param id             l'identifiant de la moto à modifier.
-     * @param motoRequestDto un objet de type {@link MotoRequestDto} contenant les nouvelles informations à appliquer à la moto.
-     * @return un objet de type {@link MotoResponseDto} représentant la moto modifiée, après l'enregistrement des changements dans la base de données.
-     * @throws VehiculeException si aucune moto n'est trouvée pour l'identifiant spécifié, ou si une erreur survient lors de la validation des données de la moto.
+     * @param id             the ID of the motorcycle to be modified
+     * @param motoRequestDto the data transfer object containing the new values to be applied to the motorcycle
+     * @return a {@link MotoResponseDto} containing the updated motorcycle data
+     * @throws VehiculeException       if there is an issue with the motorcycle data or processing
+     * @throws EntityNotFoundException if the motorcycle with the given ID is not found in the database
      */
+
     @Override
-    public MotoResponseDto modifier(int id, MotoRequestDto motoRequestDto) throws VehiculeException {
-        if (!motoDao.existsById(id)) throw new VehiculeException(JE_N_AI_PAS_TROUVER_L_ID);
-        verifierMoto(motoRequestDto);
-        Moto moto = motoMapper.toMoto(motoRequestDto);
-        moto.setId(id);
-        Moto motoEnreg = motoDao.save(moto);
-        return motoMapper.toMotoResponseDto(motoEnreg);
+    public MotoResponseDto modifierPartiellement(int id, MotoRequestDto motoRequestDto) throws VehiculeException {
+        Optional<Moto> optMoto = motoDao.findById(id);
+        if (optMoto.isEmpty())
+            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
+
+        Moto motoExistant = optMoto.get();
+        Moto motoEnreg = motoMapper.toMoto(motoRequestDto);
+
+        remplacer(motoExistant, motoEnreg);
+
+        Moto modifMoto = motoDao.save(motoExistant);
+        return motoMapper.toMotoResponseDto(modifMoto);
+    }
+
+    private static void remplacer(Moto motoExistant, Moto motoEnreg) throws VehiculeException {
+        remplacerInformationVehicule(motoExistant, motoEnreg);
+        remplacerInformationMoto(motoExistant, motoEnreg);
+    }
+
+    private static void remplacerInformationMoto(Moto motoExistant, Moto motoEnreg) {
+        if (motoEnreg.getPoid() != null)
+            motoExistant.setPoid(motoEnreg.getPoid());
+        if (motoEnreg.getCylindree() != null)
+            motoExistant.setCylindree(motoEnreg.getCylindree());
+        if (motoEnreg.getNombreDeCylindre() != null)
+            motoExistant.setNombreDeCylindre(motoEnreg.getNombreDeCylindre());
+        if (motoEnreg.getPuissanceKw() != null)
+            motoExistant.setPuissanceKw(motoEnreg.getPuissanceKw());
+        if (motoEnreg.getHauteurDeSelle() != null)
+            motoExistant.setHauteurDeSelle(motoEnreg.getHauteurDeSelle());
+        if (motoEnreg.getTypeMoto() != null)
+            motoExistant.setTypeMoto(motoEnreg.getTypeMoto());
+    }
+
+    private static void remplacerInformationVehicule(Moto motoExistant, Moto motoEnreg) {
+        if (motoEnreg.getMarque() != null)
+            motoExistant.setMarque(motoEnreg.getMarque());
+        if (motoEnreg.getModele() != null)
+            motoExistant.setModele(motoEnreg.getModele());
+        if (motoEnreg.getCouleur() != null)
+            motoExistant.setCouleur(motoEnreg.getCouleur());
+        if (motoEnreg.getPermis() != null)
+            motoExistant.setPermis(motoEnreg.getPermis());
+        if (motoEnreg.getTarifJournalier() != null)
+            motoExistant.setTarifJournalier(motoEnreg.getTarifJournalier());
+        if (motoEnreg.getKilometrage() != null)
+            motoExistant.setKilometrage(motoEnreg.getKilometrage());
+        if (motoEnreg.getActif() != null)
+            motoExistant.setActif(motoEnreg.getActif());
+        if (motoEnreg.getRetirerDuParc() != null)
+            motoExistant.setRetirerDuParc(motoEnreg.getRetirerDuParc());
     }
 
 
@@ -125,6 +177,13 @@ public class MotoServiceImpl implements MotoService {
      * @throws VehiculeException si l'un des champs requis est invalide ou manquant dans l'objet {@link MotoRequestDto}.
      */
     private static void verifierMoto(MotoRequestDto motoRequestDto) throws VehiculeException {
+        verifierInformationVehicule(motoRequestDto);
+        verifierInformationMoto(motoRequestDto);
+
+
+    }
+
+    private static void verifierInformationVehicule(MotoRequestDto motoRequestDto) {
         if (motoRequestDto == null) throw new VehiculeException("La voiture est null");
         if (motoRequestDto.marque() == null || motoRequestDto.marque().isBlank())
             throw new VehiculeException("La marque est obligatoire");
@@ -133,20 +192,22 @@ public class MotoServiceImpl implements MotoService {
         if (motoRequestDto.couleur() == null || motoRequestDto.couleur().isBlank())
             throw new VehiculeException("La couleur est obligatoire");
         if (motoRequestDto.permis() == null) throw new VehiculeException("Le permis est obligatoire");
-        if (motoRequestDto.poid() == null || motoRequestDto.poid() == 0)
-            throw new VehiculeException("Le poid est obligatoire et supperieur à 0");
         if (motoRequestDto.tarifJournalier() == null || motoRequestDto.tarifJournalier() == 0)
             throw new VehiculeException("Le tarif journalier est obligatoire et supperieur à 0");
+        if (motoRequestDto.kilometrage() == null || motoRequestDto.kilometrage() <= 0)
+            throw new VehiculeException("Le kilometrage est obligatoire et supp à 0");
+    }
+
+    private static void verifierInformationMoto(MotoRequestDto motoRequestDto) {
         if (motoRequestDto.transmission() == null)
             throw new VehiculeException("Le type de transmission est obligatoire");
+        if (motoRequestDto.poid() == null || motoRequestDto.poid() == 0)
+            throw new VehiculeException("Le poid est obligatoire et supperieur à 0");
         if (motoRequestDto.nombreDeCylindre() == null || motoRequestDto.nombreDeCylindre() == 0)
             throw new VehiculeException("Le nombre de cylindre est obligatoire");
         if (motoRequestDto.cylindree() == null) throw new VehiculeException("Le nombre d'exception est obligatoire");
         if (motoRequestDto.puissanceKw() == null || motoRequestDto.puissanceKw() == 0)
             throw new VehiculeException("La puissance est obligatoire et supp à 0");
-        if (motoRequestDto.kilometrage() == null || motoRequestDto.kilometrage() <= 0)
-            throw new VehiculeException("Le kilometrage est obligatoire et supp à 0");
-
     }
 
 }

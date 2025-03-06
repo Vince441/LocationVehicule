@@ -7,12 +7,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,7 +20,6 @@ public class ParcVehiculeController {
 
     private final VehiculeService vehiculeService;
     private static final Logger logger = LoggerFactory.getLogger(ParcVehiculeController.class);
-    private static final String DONNEE_INVALIDE = "Données invalides";
 
 
     public ParcVehiculeController(VehiculeService vehiculeService) {
@@ -41,7 +37,7 @@ public class ParcVehiculeController {
             return listeDeToutLesVehiculesDuParc;
         } catch (VehiculeException e) {
             logger.error("Echec lors de la récupération de la liste de tout les véhicules");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, DONNEE_INVALIDE, e);
+            throw new LocationException(e.getMessage());
         }
 
     }

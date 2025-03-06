@@ -1,7 +1,6 @@
 package com.accenture.repository.entity.location;
 
-import com.accenture.repository.entity.Client;
-import com.accenture.repository.entity.vehicules.Vehicule;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

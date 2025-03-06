@@ -6,23 +6,20 @@ import com.accenture.service.dto.ClientRequestDto;
 import com.accenture.service.dto.ClientResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/client")
 public class ClientController {
-
     private final ClientService clientService;
     private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
-    private static final String DONNEE_INVALIDE = "Données invalides";
 
 
     public ClientController(ClientService clientService) {
@@ -39,7 +36,7 @@ public class ClientController {
             logger.info("La liste des clients récupérée avec succès");
             return client;
         } catch (ClientException e) {
-            logger.error("Erreur lors de la récupération de la liste des clients", e);
+            logger.error("Erreur lors de la récupération de la liste des clients");
             throw new ClientException(e.getMessage());
         }
     }
@@ -54,7 +51,7 @@ public class ClientController {
             logger.info("Client trouvé avec succès pour l'email: {}", email);
             return ResponseEntity.ok(trouve);
         } catch (ClientException e) {
-            logger.error("Erreur lors de la récupération de l'administrateur pour l'email: {}", email, e);
+            logger.error("Erreur lors de la récupération de l'administrateur pour l'email: {}", email);
             throw new ClientException(e.getMessage());
         }
     }
@@ -74,20 +71,21 @@ public class ClientController {
         }
     }
 
-    @PutMapping("/{email}")
-    @Operation(summary = "Modifier d'un client", description = "Modification de mon compte")
+    @PatchMapping("/{email}")
+    @Operation(summary = "Modifier d'un client partiellement", description = "Modification partiellement de mon compte")
     @ApiResponse(responseCode = "200", description = "Modification du compte réussis")
     @ApiResponse(responseCode = "400", description = "Echec lors de la modification du compte")
-    public ResponseEntity<ClientResponseDto> modifierClient(@PathVariable("email") String email, @RequestParam String password, @RequestBody @Valid ClientRequestDto clientRequestDto) {
+    public ResponseEntity<ClientResponseDto> modifierPartiellementUnClient(@PathVariable("email") String email, @RequestParam String password, @RequestBody ClientRequestDto clientRequestDto) {
         try {
-            ClientResponseDto reponse = clientService.modifier(email, password, clientRequestDto);
-            logger.info("Client modifié avec succès pour l'email: {}", email);
-            return ResponseEntity.ok(reponse);
+            ClientResponseDto response = clientService.modifierPartiellement(email, password, clientRequestDto);
+            logger.info("Le client à bien été modifier partiellement");
+            return ResponseEntity.ok(response);
         } catch (ClientException e) {
-            logger.error("Erreur lors de la modification du client pour l'email: {}", email, e);
+            logger.error("Erreur lors de la modification du client");
             throw new ClientException(e.getMessage());
         }
     }
+
 
     @DeleteMapping("/{email}")
     @Operation(summary = "Supprimer un client", description = "Permet de supprimer un compte client.")
@@ -98,10 +96,8 @@ public class ClientController {
             clientService.supprimer(email, password);
             logger.info("Client supprimé avec succès pour l'email: {}", email);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
         } catch (ClientException e) {
-            logger.error("Erreur lors de la suppression du client pour l'email: {}", email, e);
-
+            logger.error("Erreur lors de la suppression du client pour l'email: {}", email);
             throw new ClientException(e.getMessage());
         }
     }

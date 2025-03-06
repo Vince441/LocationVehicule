@@ -45,6 +45,19 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.toAdminResponseDto(adminEnreg);
     }
 
+    private static void verifierAdmin(AdminRequestDto adminRequestDto) throws AdminException {
+        if (adminRequestDto == null)
+            throw new ClientException("Le client est null");
+        if (adminRequestDto.nom() == null || adminRequestDto.nom().isBlank())
+            throw new ClientException("le nom est obligatoire");
+        if (adminRequestDto.prenom() == null || adminRequestDto.prenom().isBlank())
+            throw new ClientException("le prenom est obligatoire");
+        if (adminRequestDto.email() == null || adminRequestDto.email().isBlank())
+            throw new ClientException("L'email est obligatoire");
+        if (adminRequestDto.password() == null || adminRequestDto.password().isBlank())
+            throw new ClientException("le password est obligatoire");
+    }
+
     /**
      * Récupère la liste de tous les administrateurs enregistrés dans la base de données.
      * Chaque administrateur est retourné sous forme de DTO {@link AdminResponseDto}.
@@ -59,6 +72,7 @@ public class AdminServiceImpl implements AdminService {
                 .map(adminMapper::toAdminResponseDto)
                 .toList();
     }
+
 
     /**
      * Recherche un administrateur dans la base de données en fonction de son adresse email et de son mot de passe.
@@ -80,30 +94,53 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.toAdminResponseDto((admin));
     }
 
+
+
     /**
-     * Modifie les informations d'un administrateur dans la base de données en fonction de son email et mot de passe.
-     * Si un administrateur correspondant est trouvé, ses informations sont mises à jour avec celles fournies dans le DTO {@link AdminRequestDto}.
-     * Si l'administrateur n'est pas trouvé, une exception est levée.
+     * Modifies an existing administrator's details partially based on the provided email, password, and update data.
+     * <p>
+     * This method retrieves the existing administrator from the database using the provided email and password.
+     * If an administrator with the given credentials is found, their details are updated with the new data provided
+     * in {@link AdminRequestDto}. The administrator's details are then saved back to the database.
+     * </p>
      *
-     * @param email           l'adresse email de l'administrateur dont les informations doivent être mises à jour.
-     * @param password        le mot de passe de l'administrateur dont les informations doivent être mises à jour.
-     * @param adminRequestDto un objet {@link AdminRequestDto} contenant les nouvelles informations de l'administrateur.
-     * @return un objet {@link AdminResponseDto} représentant l'administrateur mis à jour.
-     * @throws AdminException          si les informations de l'administrateur ne sont pas valides, ou si une erreur survient lors de la mise à jour.
-     * @throws EntityNotFoundException si aucun administrateur n'est trouvé avec les informations données (email et mot de passe).
+     * @param email the email of the administrator to be modified
+     * @param password the password of the administrator for authentication
+     * @param adminRequestDto the data transfer object containing the updated values for the administrator
+     *
+     * @return an {@link AdminResponseDto} containing the updated administrator data
+     *
+     * @throws AdminException if an error occurs during the update process
+     * @throws EntityNotFoundException if no administrator with the given email and password is found
      */
     @Override
-    public AdminResponseDto modifier(String email, String password, AdminRequestDto adminRequestDto) throws AdminException {
-        adminDao.findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL));
+    public AdminResponseDto modifierPartiellement(String email, String password, AdminRequestDto adminRequestDto) throws AdminException {
+        Optional<Admin> optAdmin = adminDao.findByEmailAndPassword(email, password);
+        if (optAdmin.isEmpty())
+            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL);
 
-        verifierAdmin(adminRequestDto);
-        Admin admin = adminMapper.toAdmin(adminRequestDto);
-        admin.setEmail(email);
-        Admin adminEnreg = adminDao.save(admin);
+        Admin adminExistant = optAdmin.get();
+        Admin adminEnreg = adminMapper.toAdmin(adminRequestDto);
 
-        return adminMapper.toAdminResponseDto(adminEnreg);
+        remplacer(adminExistant, adminEnreg);
+
+        Admin modifAdmin = adminDao.save(adminExistant);
+        return adminMapper.toAdminResponseDto(modifAdmin);
+
     }
+
+    private static void remplacer(Admin adminExistant, Admin adminEnreg) {
+        if (adminEnreg.getNom() != null)
+            adminExistant.setNom(adminEnreg.getNom());
+        if (adminEnreg.getPrenom() != null)
+            adminExistant.setPrenom(adminEnreg.getPrenom());
+        if (adminEnreg.getEmail() != null)
+            adminExistant.setEmail(adminEnreg.getEmail());
+        if (adminEnreg.getPassword() != null)
+            adminExistant.setPassword(adminEnreg.getPassword());
+    }
+
+
 
     /**
      * Supprime un administrateur de la base de données en fonction de son email et de son mot de passe.
@@ -120,26 +157,5 @@ public class AdminServiceImpl implements AdminService {
         Admin admin = adminDao.findByEmailAndPassword(email, password).orElseThrow(() -> new EntityNotFoundException("Admin non trouvé"));
         adminDao.delete(admin);
     }
-
-    /**
-     * Vérifie que les informations contenues dans le DTO {@link AdminRequestDto} sont valides.
-     * Cette méthode vérifie si tous les champs obligatoires sont présents et non vides.
-     *
-     * @param adminRequestDto l'objet {@link AdminRequestDto} contenant les informations de l'administrateur à vérifier.
-     * @throws AdminException si une des informations obligatoires est manquante ou invalide.
-     */
-    private static void verifierAdmin(AdminRequestDto adminRequestDto) throws AdminException {
-        if (adminRequestDto == null)
-            throw new ClientException("Le client est null");
-        if (adminRequestDto.nom() == null || adminRequestDto.nom().isBlank())
-            throw new ClientException("le nom est obligatoire");
-        if (adminRequestDto.prenom() == null || adminRequestDto.prenom().isBlank())
-            throw new ClientException("le prenom est obligatoire");
-        if (adminRequestDto.email() == null || adminRequestDto.email().isBlank())
-            throw new ClientException("L'email est obligatoire");
-        if (adminRequestDto.password() == null || adminRequestDto.password().isBlank())
-            throw new ClientException("le password est obligatoire");
-    }
-
 
 }

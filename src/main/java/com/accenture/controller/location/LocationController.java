@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class LocationController {
         try {
             List<LocationResponseDto> location = locationService.trouverParDate(dateDeDebut, dateDeFin);
 
-            logger.info("Vehicule avec réservé à cette date trouvé : {} et {}", dateDeDebut, dateDeFin);
+            logger.info("Vehicule avec réservé à cette date trouvé");
             return location;
         } catch (LocationException e) {
             logger.error("Erreur lors de la récupération de la location");
@@ -55,7 +53,7 @@ public class LocationController {
             logger.info("Location ajoutée avec succès");
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (LocationException e) {
-            logger.error("Erreur lors de la création de la location", e);
+            logger.error("Erreur lors de la création de la location");
             throw new LocationException(e.getMessage());
         }
     }

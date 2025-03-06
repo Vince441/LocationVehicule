@@ -22,12 +22,12 @@ public class ClientServiceImpl implements ClientService {
     public static final String JE_N_AI_PAS_TROUVER_L_EMAIL = "Je n'ai pas trouvé l'email";
     private final ClientDao clientDao;
     private final ClientMapper clientMapper;
-    private final AdresseMapper adressMapper;
+    private final AdresseMapper adresseMapper;
 
     public ClientServiceImpl(ClientDao clientDao, ClientMapper clientMapper, AdresseMapper adressMapper) {
         this.clientDao = clientDao;
         this.clientMapper = clientMapper;
-        this.adressMapper = adressMapper;
+        this.adresseMapper = adressMapper;
     }
 
 
@@ -44,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientResponseDto ajouter(ClientRequestDto clientRequestDto) throws ClientException, EntityNotFoundException {
         verifierClient(clientRequestDto);
-        Adresse adresse = adressMapper.toAdresse(clientRequestDto.adresse());
+        Adresse adresse = adresseMapper.toAdresse(clientRequestDto.adresse());
         Client client = clientMapper.toClient(clientRequestDto);
 
         client.setAdresse(adresse);
@@ -53,6 +53,52 @@ public class ClientServiceImpl implements ClientService {
         return clientMapper.toClientResponseDto(clientEnreg);
     }
 
+
+    private static void verifierClient(ClientRequestDto clientRequestDto) throws ClientException {
+        verifierUtilisateurInformation(clientRequestDto);
+        verifierClientInformation(clientRequestDto);
+        verifierAdresseClient(clientRequestDto);
+    }
+
+    private static void verifierUtilisateurInformation(ClientRequestDto clientRequestDto) {
+        if (clientRequestDto == null)
+            throw new ClientException("Le client est null");
+        if (clientRequestDto.nom() == null || clientRequestDto.nom().isBlank())
+            throw new ClientException("le nom est obligatoire");
+        if (clientRequestDto.prenom() == null || clientRequestDto.prenom().isBlank())
+            throw new ClientException("le prenom est obligatoire");
+        if (clientRequestDto.email() == null || clientRequestDto.email().isBlank())
+            throw new ClientException("L'email est obligatoire");
+        if (clientRequestDto.password() == null || clientRequestDto.password().isBlank())
+            throw new ClientException("le password est obligatoire");
+    }
+
+    private static void verifierClientInformation(ClientRequestDto clientRequestDto) {
+
+        if (clientRequestDto.dateDeNaissance() == null)
+            throw new ClientException("La date est obligatoire");
+        if (!ageRequis(clientRequestDto.dateDeNaissance())) {
+            throw new ClientException("L'utilisateur doit avoir 18 ans");
+        }
+        if (clientRequestDto.permis() == null || clientRequestDto.permis().isEmpty()) {
+            throw new ClientException("Le permis est obligatoire");
+        }
+        if (clientRequestDto.desactive() == null) {
+            throw new ClientException("Le desactiver est obligatoire");
+        }
+    }
+
+    private static void verifierAdresseClient(ClientRequestDto clientRequestDto) {
+
+        if (clientRequestDto.adresse().rue() == null ||
+                clientRequestDto.adresse().codePostal() == null ||
+                clientRequestDto.adresse().ville() == null ||
+                clientRequestDto.adresse().rue().isBlank() ||
+                clientRequestDto.adresse().codePostal().isBlank() ||
+                clientRequestDto.adresse().ville().isBlank())
+            throw new ClientException("L'adresse est obligatoire");
+
+}
 
     /**
      * Récupère tous les clients de la base de données et les retourne sous forme d'une liste de {@link ClientResponseDto}.
@@ -68,7 +114,6 @@ public class ClientServiceImpl implements ClientService {
                 .map(clientMapper::toClientResponseDto)
                 .toList();
     }
-
 
 
     /**
@@ -92,31 +137,6 @@ public class ClientServiceImpl implements ClientService {
 
 
     /**
-     * Modifie les informations d'un client existant dans la base de données.
-     * La méthode vérifie que le client existe en fonction de son email et mot de passe, puis met à jour ses informations avec celles fournies dans le DTO {@link ClientRequestDto}.
-     * Si le client n'est pas trouvé, une exception est levée.
-     *
-     * @param email            l'email du client à modifier.
-     * @param password         le mot de passe du client à modifier.
-     * @param clientRequestDto un objet {@link ClientRequestDto} contenant les nouvelles informations du client.
-     * @return un objet {@link ClientResponseDto} représentant le client modifié.
-     * @throws ClientException         si les informations du client ne sont pas valides.
-     * @throws EntityNotFoundException si aucun client n'est trouvé avec l'email et le mot de passe fournis.
-     */
-    @Override
-    public ClientResponseDto modifier(String email, String password, ClientRequestDto clientRequestDto) throws ClientException {
-        clientDao.findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL));
-
-        verifierClient(clientRequestDto);
-        Client client = clientMapper.toClient(clientRequestDto);
-        client.setEmail(email);
-        Client clientEnreg = clientDao.save(client);
-
-        return clientMapper.toClientResponseDto(clientEnreg);
-    }
-
-    /**
      * Supprime un client de la base de données en fonction de son email et de son mot de passe.
      * Si le client correspondant est trouvé, il est supprimé. Sinon, une exception est levée.
      *
@@ -132,6 +152,77 @@ public class ClientServiceImpl implements ClientService {
 
 
     /**
+     * Modifie partiellement les informations d'un client existant à partir des données fournies dans le {@link ClientRequestDto}.
+     * <p>
+     * Cette méthode recherche un client en fonction de son email et de son mot de passe. Si le client est trouvé, seuls les champs non-nuls
+     * dans le {@link ClientRequestDto} sont appliqués à l'objet `Client` existant. Ensuite, le client mis à jour est sauvegardé dans la base de données.
+     *
+     * @param email            L'email du client à rechercher.
+     * @param password         Le mot de passe du client à rechercher.
+     * @param clientRequestDto L'objet contenant les données à mettre à jour pour le client.
+     * @return {@link ClientResponseDto} L'objet représentant le client mis à jour après modification.
+     * @throws ClientException         Si un problème survient lors de la modification du client (par exemple, si le client n'est pas trouvé).
+     * @throws EntityNotFoundException Si aucun client n'est trouvé avec l'email et le mot de passe fournis.
+     */
+    @Override
+    public ClientResponseDto modifierPartiellement(String email, String password, ClientRequestDto clientRequestDto) throws ClientException {
+        Optional<Client> optClient = clientDao.findByEmailAndPassword(email, password);
+        if (optClient.isEmpty())
+            throw new ClientException(JE_N_AI_PAS_TROUVER_L_EMAIL);
+
+        Client clientExistant = optClient.get();
+        Client clientEnreg = clientMapper.toClient(clientRequestDto);
+
+        Adresse adresseExistant = optClient.get().getAdresse();
+        Adresse adresseEnreg = adresseMapper.toAdresse(clientRequestDto.adresse());
+
+        remplacer(clientExistant, clientEnreg, adresseExistant, adresseEnreg);
+        Client modifClient = clientDao.save(clientExistant);
+        return clientMapper.toClientResponseDto(modifClient);
+
+    }
+
+
+    private static void remplacer(Client clientExistant, Client clientEnreg, Adresse adresseExistant, Adresse adresseEnreg) {
+        modificationInformationUtilisateur(clientExistant, clientEnreg);
+        modificationInformationClient(clientExistant, clientEnreg);
+        modificationAdresseClient(adresseExistant, adresseEnreg);
+
+    }
+
+    private static void modificationInformationUtilisateur(Client clientExistant, Client clientEnreg) {
+        if (clientEnreg.getNom() != null)
+            clientExistant.setNom(clientEnreg.getNom());
+        if (clientEnreg.getPrenom() != null)
+            clientExistant.setPrenom(clientEnreg.getPrenom());
+        if (clientEnreg.getEmail() != null)
+            clientExistant.setEmail(clientEnreg.getEmail());
+        if (clientEnreg.getPassword() != null)
+            clientExistant.setPassword(clientEnreg.getPassword());
+    }
+
+
+    private static void modificationInformationClient(Client clientExistant, Client clientEnreg) {
+        if (clientEnreg.getDateDeNaissance() != null)
+            clientExistant.setDateDeNaissance(clientEnreg.getDateDeNaissance());
+        if (clientEnreg.getPermis() != null)
+            clientExistant.setPermis(clientEnreg.getPermis());
+        if (clientEnreg.getDesactive() != null)
+            clientExistant.setDesactive(clientEnreg.getDesactive());
+    }
+
+    private static void modificationAdresseClient(Adresse adresseExistant, Adresse adresseEnreg) {
+        if (adresseEnreg != null) {
+            if (adresseEnreg.getRue() != null)
+                adresseExistant.setRue(adresseEnreg.getRue());
+            if (adresseEnreg.getCodePostal() != null)
+                adresseExistant.setCodePostal(adresseEnreg.getCodePostal());
+            if (adresseEnreg.getVille() != null)
+                adresseExistant.setVille(adresseEnreg.getVille());
+        }
+    }
+
+    /**
      * Vérifie si un utilisateur est âgé de 18 ans ou plus à partir de sa date de naissance.
      *
      * @param dateDeNaissance la date de naissance de l'utilisateur à vérifier.
@@ -145,43 +236,4 @@ public class ClientServiceImpl implements ClientService {
         return Period.between(dateDeNaissance, LocalDate.now()).getYears() >= 18;
     }
 
-
-    /**
-     * Vérifie la validité des informations d'un client fournies dans le DTO {@link ClientRequestDto}.
-     * La méthode valide chaque champ du DTO pour s'assurer que toutes les informations nécessaires sont présentes et correctes.
-     * Si l'une des informations est invalide, une exception {@link ClientException} est levée.
-     *
-     * @param clientRequestDto un objet {@link ClientRequestDto} contenant les informations à vérifier.
-     * @throws ClientException si l'une des informations est invalide ou manquante, une exception est levée avec un message explicite.
-     */
-    private static void verifierClient(ClientRequestDto clientRequestDto) throws ClientException {
-        if (clientRequestDto == null)
-            throw new ClientException("Le client est null");
-        if (clientRequestDto.nom() == null || clientRequestDto.nom().isBlank())
-            throw new ClientException("le nom est obligatoire");
-        if (clientRequestDto.prenom() == null || clientRequestDto.prenom().isBlank())
-            throw new ClientException("le prenom est obligatoire");
-        if (clientRequestDto.email() == null || clientRequestDto.email().isBlank())
-            throw new ClientException("L'email est obligatoire");
-        if (clientRequestDto.password() == null || clientRequestDto.password().isBlank())
-            throw new ClientException("le password est obligatoire");
-        if (clientRequestDto.adresse().rue() == null ||
-                clientRequestDto.adresse().codePostal() == null ||
-                clientRequestDto.adresse().ville() == null ||
-                clientRequestDto.adresse().rue().isBlank() ||
-                clientRequestDto.adresse().codePostal().isBlank() ||
-                clientRequestDto.adresse().ville().isBlank())
-            throw new ClientException("L'adresse est obligatoire");
-        if (clientRequestDto.dateDeNaissance() == null)
-            throw new ClientException("La date est obligatoire");
-        if (!ageRequis(clientRequestDto.dateDeNaissance())) {
-            throw new ClientException("L'utilisateur doit avoir 18 ans");
-        }
-        if (clientRequestDto.permis() == null || clientRequestDto.permis().isEmpty()) {
-            throw new ClientException("Le permis est obligatoire");
-        }
-        if (clientRequestDto.desactive() == null) {
-            throw new ClientException("Le desactiver est obligatoire");
-        }
-    }
 }

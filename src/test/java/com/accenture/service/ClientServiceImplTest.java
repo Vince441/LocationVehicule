@@ -1,5 +1,6 @@
 package com.accenture.service;
 
+
 import com.accenture.exception.ClientException;
 import com.accenture.model.Permis;
 import com.accenture.repository.ClientDao;
@@ -18,15 +19,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
 class ClientServiceImplTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClientServiceImplTest.class);
 
 
     @Mock
@@ -43,6 +50,12 @@ class ClientServiceImplTest {
     @InjectMocks
     ClientServiceImpl service;
 
+    @Test
+    void testAjouter() {
+        assertThrows(ClientException.class, () -> service.ajouter(null));
+        logger.info("L'ajout est bien null");
+    }
+
 
     @DisplayName("""
             Test de la méthode trouver (String mail) qui doit renvoyer une exception lorsque l'utilisateur' n'existe pas en bas;
@@ -52,9 +65,8 @@ class ClientServiceImplTest {
         Mockito.when(daoMock.findByEmailAndPassword("bbbb@gmail.fr", "z")).thenReturn(Optional.empty());
         EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.trouver("bbbb@gmail.fr", "z"));
         assertEquals("Je n'ai pas trouvé l'email", ex.getMessage());
-
+        logger.info(ex.getMessage());
     }
-
 
 
     @DisplayName("""
@@ -70,7 +82,7 @@ class ClientServiceImplTest {
         ClientResponseDto dto = creeClientResponseDto();
         Mockito.when(mapperMock.toClientResponseDto(c)).thenReturn(dto);
         assertSame(dto, service.trouver("b@gmail.fr", "z"));
-
+        logger.info("Utilisateur trouvé");
     }
 
 
@@ -94,7 +106,9 @@ class ClientServiceImplTest {
         Mockito.when(mapperMock.toClientResponseDto(client2)).thenReturn(creeClientResponseDto2());
 
         assertEquals(dtos, service.trouverToutes());
+        logger.info("Liste des clients trouvé");
     }
+
 
     @DisplayName("""
             Test de la méthode ajouter
@@ -116,13 +130,14 @@ class ClientServiceImplTest {
         Mockito.when(mapperMock.toClientResponseDto(clientApresEnreg)).thenReturn(responseDto);
 
         assertSame(responseDto, service.ajouter(requestDto));
+        logger.info("Ajout réussis");
     }
 
     @DisplayName("""
-        Test de la methode supprimer qui doit supprimer un client
-        """)
+            Test de la methode supprimer qui doit supprimer un client
+            """)
     @Test
-    void testSupprimerExiste(){
+    void testSupprimerExiste() {
 
         Client client = creeClient();
         String email = client.getEmail();
@@ -130,34 +145,33 @@ class ClientServiceImplTest {
         Mockito.when(daoMock.findByEmailAndPassword(email, password)).thenReturn(Optional.of(client));
         service.supprimer(email, password);
         Mockito.verify(daoMock, Mockito.times(1)).delete(client);
-
-
+        logger.info("Le client est supprimé");
     }
 
 
     @DisplayName("""
-        Test de la methode supprimer qui doit supprimer un client
-        """)
+            Test de la methode supprimer qui doit supprimer un client
+            """)
     @Test
-    void testSupprimerExistePas(){
+    void testSupprimerExistePas() {
 
         Mockito.when(daoMock.findByEmailAndPassword("tp@gmail.fr", "s")).thenReturn(Optional.empty());
         EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.supprimer("tp@gmail.fr", "s"));
         assertEquals("Utilisateur non trouvé", ex.getMessage());
-
+        logger.info("Le client ne peux pas être supprimé car il existe pas");
     }
-
 
 
     @DisplayName("""
             Si ajouter(TacheRequestDto sans nom (null) exception levée
             """)
     @Test
-    void testAjouterSansNom() {
+    void testAjouterNomNull() {
         ClientRequestDto dto = new ClientRequestDto(null, "V", "v@gmail.fr", "ocre", new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le nom est null");
     }
 
 
@@ -170,6 +184,7 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le nom est vide");
     }
 
 
@@ -177,11 +192,12 @@ class ClientServiceImplTest {
             Si ajouter(TacheRequestDto sans prenom (null) exception levée
             """)
     @Test
-    void testAjouterSansPrenom() {
+    void testAjouterPrenomNull() {
         ClientRequestDto dto = new ClientRequestDto("L", null, "v@gmail.fr", "ocre", new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le prenom est null");
     }
 
 
@@ -194,6 +210,7 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le prenom est vide");
     }
 
 
@@ -201,11 +218,12 @@ class ClientServiceImplTest {
             Si ajouter(TacheRequestDto sans email (null) exception levée
             """)
     @Test
-    void testAjouterSansEmail() {
+    void testAjouterEmailNull() {
         ClientRequestDto dto = new ClientRequestDto("L", "V", null, "ocre", new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("L'email est null");
     }
 
     @DisplayName("""
@@ -217,19 +235,20 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("L'email est vide");
     }
 
     @DisplayName("""
             Si ajouter(TacheRequestDto sans password (null) exception levée
             """)
     @Test
-    void testAjouterSansPassword() {
+    void testAjouterPasswordNull() {
         ClientRequestDto dto = new ClientRequestDto("L", "V", "v@gmail.fr", null, new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le password est null");
     }
-
 
 
     @DisplayName("""
@@ -241,30 +260,32 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le password est vide");
     }
-
 
 
     @DisplayName("""
             Si ajouter(TacheRequestDto sans Adresse rue (null) exception levée
             """)
     @Test
-    void testAjouterSansAdressRue() {
+    void testAjouterAdressRueNull() {
         ClientRequestDto dto = new ClientRequestDto("L", "V", "v@gmail.fr", "ocre", new AdresseDto(null, "44000", "Nantes"),
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("L'Adresse est null");
     }
 
     @DisplayName("""
             Si ajouter(TacheRequestDto sans Adresse codePostal (null) exception levée
             """)
     @Test
-    void testAjouterSansAdressCodePostal() {
+    void testAjouterAdressCodePostalNull() {
         ClientRequestDto dto = new ClientRequestDto("L", "V", "v@gmail.fr", "ocre", new AdresseDto("sdfs", null, "Nantes"),
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le code postal est null");
     }
 
 
@@ -272,11 +293,12 @@ class ClientServiceImplTest {
             Si ajouter(TacheRequestDto sans Adresse ville (null) exception levée
             """)
     @Test
-    void testAjouterSansAdressVille() {
+    void testAjouterAdressVilleNull() {
         ClientRequestDto dto = new ClientRequestDto("L", "V", "v@gmail.fr", "ocre", new AdresseDto("sdfs", "44000", null),
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("La ville est null, Nantes n'est pas en Bretagne");
     }
 
 
@@ -289,6 +311,7 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("La rue est vide");
     }
 
 
@@ -301,6 +324,7 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le code postal est vide");
     }
 
     @DisplayName("""
@@ -312,6 +336,7 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("La ville est vide");
     }
 
 
@@ -324,6 +349,17 @@ class ClientServiceImplTest {
                 null,
                 List.of(Permis.A), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("La date de naissance est null");
+    }
+
+    @Test
+    void testAjouterMineur() {
+        ClientRequestDto dto = new ClientRequestDto("L", "V", "v@gmail.fr", "ocre", new AdresseDto("a", "44000", "Nantes"),
+                LocalDate.of(2025, 12, 24),
+                List.of(Permis.A), true);
+        ClientException exception = assertThrows(ClientException.class, () -> service.ajouter(dto));
+        assertEquals("L'utilisateur doit avoir 18 ans", exception.getMessage());
+        logger.info("L'utilisateur est mineur");
     }
 
 
@@ -336,6 +372,7 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 null, true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le permis est null, repasse le !");
     }
 
 
@@ -348,6 +385,7 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 List.of(), true);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le permis est vide");
     }
 
 
@@ -360,11 +398,60 @@ class ClientServiceImplTest {
                 LocalDate.of(1990, 12, 24),
                 List.of(Permis.A), null);
         assertThrows(ClientException.class, () -> service.ajouter(dto));
+        logger.info("Le desactive est null");
     }
 
 
+    @DisplayName("""
+            Test modifier partiellement un client / ok
+            """)
+    @Test
+    void testModifierPartiellementOk() throws ClientException, EntityNotFoundException {
+        String email = "test@test.com";
+        String password = "azertyuiop";
+
+        Client clientExistant = creeClient();
+        ClientResponseDto clientEnreg = creeClientResponseDto();
+
+        ClientRequestDto clientRequestDto = new ClientRequestDto("L", "V", "v@gmail.fr", "ocre", new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
+                LocalDate.of(1990, 12, 24),
+                List.of(Permis.A), true);
 
 
+        Mockito.when(daoMock.findByEmailAndPassword(email, password)).thenReturn(Optional.of(clientExistant));
+        Mockito.when(mapperMock.toClient(clientRequestDto)).thenReturn(clientExistant);
+        Mockito.when(daoMock.save(clientExistant)).thenReturn(clientExistant);
+        Mockito.when(mapperMock.toClientResponseDto(clientExistant)).thenReturn(clientEnreg);
+
+        ClientResponseDto result = service.modifierPartiellement(email, password, clientRequestDto);
+        assertNotNull(result);
+        assertEquals(clientEnreg, result);
+        Mockito.verify(daoMock).findByEmailAndPassword(email, password);
+        Mockito.verify(mapperMock).toClient(clientRequestDto);
+        Mockito.verify(daoMock).save(clientExistant);
+        Mockito.verify(mapperMock).toClientResponseDto(clientExistant);
+        logger.info("Lutilisateur à bien été modifié");
+    }
+
+    @DisplayName("Test modifier partiellement un client / client non trouvé")
+    @Test
+    void testModifierPartiellementClientNonTrouve() {
+
+        String mail = "test@test.com";
+        String password = "azertyuiop";
+
+        ClientRequestDto clientRequestDto = new ClientRequestDto("L", "V", "v@gmail.fr", "\n", new AdresseDto("29 rue de la bibine", "44000", "Nantes"),
+                LocalDate.of(1990, 12, 24),
+                List.of(Permis.A), true);
+
+        Mockito.when(daoMock.findByEmailAndPassword(mail, password)).thenReturn(Optional.empty());
+        assertThrows(ClientException.class, () -> service.modifierPartiellement(mail, password, clientRequestDto));
+        Mockito.verify(daoMock).findByEmailAndPassword(mail, password);
+        Mockito.verify(mapperMock, never()).toClient(any());
+        Mockito.verify(daoMock, never()).save(any());
+        Mockito.verify(mapperMock, never()).toClientResponseDto(any());
+        logger.info("Lutilisateur n'a pas bien été modifié");
+    }
 
 
     private static Client creeClient() {
@@ -409,6 +496,4 @@ class ClientServiceImplTest {
                 new AdresseDto("29bis rue de la bibine", "44100", "Saint-Herblain"),
                 LocalDate.of(1992, 12, 24), List.of(Permis.A), true);
     }
-
-
 }
