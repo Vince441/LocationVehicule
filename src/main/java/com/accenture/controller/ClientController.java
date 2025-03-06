@@ -36,7 +36,7 @@ public class ClientController {
             logger.info("La liste des clients récupérée avec succès");
             return client;
         } catch (ClientException e) {
-            logger.error("Erreur lors de la récupération de la liste des clients", e);
+            logger.error("Erreur lors de la récupération de la liste des clients");
             throw new ClientException(e.getMessage());
         }
     }
@@ -51,7 +51,7 @@ public class ClientController {
             logger.info("Client trouvé avec succès pour l'email: {}", email);
             return ResponseEntity.ok(trouve);
         } catch (ClientException e) {
-            logger.error("Erreur lors de la récupération de l'administrateur pour l'email: {}", email, e);
+            logger.error("Erreur lors de la récupération de l'administrateur pour l'email: {}", email);
             throw new ClientException(e.getMessage());
         }
     }
@@ -81,6 +81,7 @@ public class ClientController {
             logger.info("Le client à bien été modifier partiellement");
             return ResponseEntity.ok(response);
         } catch (ClientException e) {
+            logger.error("Erreur lors de la modification du client");
             throw new ClientException(e.getMessage());
         }
     }
@@ -96,7 +97,7 @@ public class ClientController {
             logger.info("Client supprimé avec succès pour l'email: {}", email);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (ClientException e) {
-            logger.error("Erreur lors de la suppression du client pour l'email: {}", email, e);
+            logger.error("Erreur lors de la suppression du client pour l'email: {}", email);
             throw new ClientException(e.getMessage());
         }
     }

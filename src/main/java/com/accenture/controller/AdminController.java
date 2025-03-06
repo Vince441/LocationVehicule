@@ -37,7 +37,7 @@ public class AdminController {
             logger.info("La liste des administrateurs récupérée avec succès");
             return admins;
         } catch (AdminException e) {
-            logger.error("Erreur lors de la récupération de la liste des administrateurs", e);
+            logger.error("Erreur lors de la récupération de la liste des administrateurs");
             throw new AdminException(e.getMessage());
         }
     }
@@ -53,7 +53,7 @@ public class AdminController {
             logger.info("Administrateur trouvé avec succès pour l'email: {}", email);
             return ResponseEntity.ok(trouve);
         } catch (AdminException e) {
-            logger.error("Erreur lors de la récupération de l'administrateur pour l'email: {}", email, e);
+            logger.error("Erreur lors de la récupération de l'administrateur pour l'email: {}", email);
             throw new AdminException(e.getMessage());
         }
     }
@@ -69,7 +69,7 @@ public class AdminController {
             logger.info("Administrateur créer avec succès");
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (AdminException e) {
-            logger.error("Erreur lors de la création de l'administrateur", e);
+            logger.error("Erreur lors de la création de l'administrateur");
             throw new AdminException(e.getMessage());
         }
     }
@@ -85,6 +85,7 @@ public class AdminController {
             logger.info("L admin à bien été modifier partiellement");
             return ResponseEntity.ok(response);
         } catch (AdminException e) {
+            logger.error("Erreur lors de la modification de l'administrateur");
             throw new AdminException(e.getMessage());
         }
     }
@@ -100,7 +101,7 @@ public class AdminController {
             logger.info("Administrateur supprimé avec succès pour l'email: {}", email);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (AdminException e) {
-            logger.error("Erreur lors de la suppression de l'administrateur pour l'email: {}", email, e);
+            logger.error("Erreur lors de la suppression de l'administrateur pour l'email: {}", email);
             throw new AdminException(e.getMessage());
         }
     }

@@ -104,6 +104,7 @@ public class VoitureController {
             logger.info("Le client à bien été modifier partiellement");
             return ResponseEntity.ok(response);
         } catch (VehiculeException e) {
+            logger.error("Erreur lors de la modification de la voiture");
             throw new VehiculeException(e.getMessage());
         }
     }
