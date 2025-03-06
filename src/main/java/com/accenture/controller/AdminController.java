@@ -1,9 +1,12 @@
 package com.accenture.controller;
 
 import com.accenture.exception.AdminException;
+import com.accenture.exception.ClientException;
 import com.accenture.service.AdminService;
 import com.accenture.service.dto.AdminRequestDto;
 import com.accenture.service.dto.AdminResponseDto;
+import com.accenture.service.dto.ClientRequestDto;
+import com.accenture.service.dto.ClientResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -76,20 +79,23 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/{email}")
-    @Operation(summary = "Modification d'un administrateur", description = "Permet de modifier un compte admin.")
+    @PatchMapping("/{email}")
+    @Operation(summary = "Modifier d'un admin partiellement", description = "Modification partiellement de mon compte")
     @ApiResponse(responseCode = "200", description = "Modification du compte réussis")
-    @ApiResponse(responseCode = "400", description = "Modification impossible")
-    public ResponseEntity<AdminResponseDto> modifierAdmin(@PathVariable("email") String email, @RequestParam String password, @RequestBody @Valid AdminRequestDto adminRequestDto) {
+    @ApiResponse(responseCode = "400", description = "Echec lors de la modification du compte")
+    public ResponseEntity<AdminResponseDto> modifierPartiellementUnAdmin(@PathVariable("email") String email, @RequestParam String password, @RequestBody AdminRequestDto adminRequestDto) {
         try {
-            AdminResponseDto reponse = adminService.modifier(email, password, adminRequestDto);
-            logger.info("Administrateur modifié avec succès pour l'email: {}", email);
-            return ResponseEntity.ok(reponse);
+            AdminResponseDto response = adminService.modifierPartiellement(email, password, adminRequestDto);
+            logger.info("L admin à bien été modifier partiellement");
+            return ResponseEntity.ok(response);
         } catch (AdminException e) {
-            logger.error("Erreur lors de la modification de l'administrateur pour l'email: {}", email, e);
             throw new AdminException(e.getMessage());
         }
     }
+
+
+
+
 
     @DeleteMapping("/{email}")
     @Operation(summary = "Supprimer un administrateur", description = "Permet de supprimer un compte admin.")

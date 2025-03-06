@@ -86,7 +86,7 @@ public class ClientController {
             throw new ClientException(e.getMessage());
         }
     }
-    
+
 
     @DeleteMapping("/{email}")
     @Operation(summary = "Supprimer un client", description = "Permet de supprimer un compte client.")
@@ -97,10 +97,8 @@ public class ClientController {
             clientService.supprimer(email, password);
             logger.info("Client supprimé avec succès pour l'email: {}", email);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
         } catch (ClientException e) {
             logger.error("Erreur lors de la suppression du client pour l'email: {}", email, e);
-
             throw new ClientException(e.getMessage());
         }
     }

@@ -6,6 +6,7 @@ import com.accenture.service.dto.AdminResponseDto;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdminService {
 
@@ -15,7 +16,7 @@ public interface AdminService {
 
     AdminResponseDto trouver(String email, String password) throws AdminException;
 
-    AdminResponseDto modifier(String email, String password, AdminRequestDto adminRequestDto) throws AdminException;
+    AdminResponseDto modifierPartiellement(String email, String password, AdminRequestDto adminRequestDto) throws AdminException;
 
     void supprimer(String email, String password) throws AdminException;
 

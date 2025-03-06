@@ -2,7 +2,10 @@ package com.accenture.controller.vehicules;
 
 
 import com.accenture.controller.ClientController;
+import com.accenture.exception.ClientException;
 import com.accenture.exception.vehicules.VehiculeException;
+import com.accenture.service.dto.ClientRequestDto;
+import com.accenture.service.dto.ClientResponseDto;
 import com.accenture.service.dto.vehicules.VoitureRequestDto;
 import com.accenture.service.dto.vehicules.VoitureResponseDto;
 import com.accenture.service.vehicules.VoitureService;
@@ -97,20 +100,35 @@ public class VoitureController {
         }
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Modifier une voiture", description = "Modifie une voiture")
-    @ApiResponse(responseCode = "201", description = "Voiture modifié avec succès")
-    @ApiResponse(responseCode = "400", description = "Echec de la modification")
-    ResponseEntity<VoitureResponseDto> modifierUneVoiture(@PathVariable("id") int id, @RequestBody @Valid VoitureRequestDto voitureRequestDto) {
+//    @PutMapping("/{id}")
+//    @Operation(summary = "Modifier une voiture", description = "Modifie une voiture")
+//    @ApiResponse(responseCode = "201", description = "Voiture modifié avec succès")
+//    @ApiResponse(responseCode = "400", description = "Echec de la modification")
+//    ResponseEntity<VoitureResponseDto> modifierUneVoiture(@PathVariable("id") int id, @RequestBody @Valid VoitureRequestDto voitureRequestDto) {
+//        try {
+//            VoitureResponseDto reponse = voitureService.modifier(id, voitureRequestDto);
+//            logger.info("La modification de la voiture à été réalisée avec succès");
+//            return ResponseEntity.ok(reponse);
+//        } catch (VehiculeException e) {
+//            logger.error("Echec de la modification de la voiture");
+//            throw new VehiculeException(e.getMessage());
+//        }
+//    }
+
+    @PatchMapping("/{id}")
+    @Operation(summary = "Modifier une voiture partiellement", description = "Modification d'un voiture")
+    @ApiResponse(responseCode = "200", description = "Modification d'une voiture réussis")
+    @ApiResponse(responseCode = "400", description = "Echec lors de la modification de la voiture")
+    public ResponseEntity<VoitureResponseDto> modifierPartiellementUneVoiture(@PathVariable("id") int id, @RequestBody @Valid VoitureRequestDto voitureRequestDto) {
         try {
-            VoitureResponseDto reponse = voitureService.modifier(id, voitureRequestDto);
-            logger.info("La modification de la voiture à été réalisée avec succès");
-            return ResponseEntity.ok(reponse);
+            VoitureResponseDto response = voitureService.modifierPartiellement(id, voitureRequestDto);
+            logger.info("Le client à bien été modifier partiellement");
+            return ResponseEntity.ok(response);
         } catch (VehiculeException e) {
-            logger.error("Echec de la modification de la voiture");
             throw new VehiculeException(e.getMessage());
         }
     }
+
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer une voiture", description = "Suppression d'une voiture")

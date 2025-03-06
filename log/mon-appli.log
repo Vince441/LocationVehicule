@@ -79,3 +79,12 @@
 2025-03-06 11:19:20 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
 2025-03-06 11:19:21 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 1.291 seconds (process running for 195.082)
 2025-03-06 11:19:26 [http-nio-8080-exec-1] ERROR c.a.c.vehicules.VoitureController - Echec lors de la création de la voiture
+2025-03-06 11:43:37 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:43:37 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:43:37 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:43:38 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 0.953 seconds (process running for 1651.674)
+2025-03-06 11:43:40 [restartedMain] INFO  c.a.LocationVehiculesApplication - Starting LocationVehiculesApplication using Java 23.0.1 with PID 18948 (C:\Projet\09 - Projet\LocationVehicule\LocationVehicule\target\classes started by v.de.pontlevoye in C:\Projet\09 - Projet\LocationVehicule\LocationVehicule)
+2025-03-06 11:43:40 [restartedMain] DEBUG c.a.LocationVehiculesApplication - Running with Spring Boot v3.4.2, Spring v6.2.2
+2025-03-06 11:43:40 [restartedMain] INFO  c.a.LocationVehiculesApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 11:43:40 [restartedMain] INFO  c.a.LocationVehiculesApplication - Started LocationVehiculesApplication in 0.797 seconds (process running for 1653.974)
+2025-03-06 11:44:00 [http-nio-8080-exec-5] INFO  c.a.controller.AdminController - Administrateur créer avec succès

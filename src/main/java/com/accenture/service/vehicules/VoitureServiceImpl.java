@@ -2,6 +2,8 @@ package com.accenture.service.vehicules;
 
 import com.accenture.exception.vehicules.VehiculeException;
 import com.accenture.repository.VoitureDao;
+import com.accenture.repository.entity.Adresse;
+import com.accenture.repository.entity.Client;
 import com.accenture.repository.entity.vehicules.Voiture;
 import com.accenture.service.dto.vehicules.VoitureRequestDto;
 import com.accenture.service.dto.vehicules.VoitureResponseDto;
@@ -83,24 +85,59 @@ public class VoitureServiceImpl implements VoitureService {
         return voitureMapper.toVoitureResponseDto(voiture);
     }
 
-    /**
-     * Modifie les informations d'une voiture existante dans la base de données.
-     * La voiture est mise à jour avec les données fournies dans le DTO {@link VoitureRequestDto}.
-     *
-     * @param id                l'identifiant de la voiture à modifier.
-     * @param voitureRequestDto un objet {@link VoitureRequestDto} contenant les nouvelles informations à appliquer à la voiture.
-     * @return un objet {@link VoitureResponseDto} représentant la voiture modifiée après l'enregistrement dans la base de données.
-     * @throws VehiculeException si l'identifiant de la voiture n'existe pas dans la base de données, ou si les informations de la voiture ne sont pas valides.
-     */
+
+
+//    /**
+//     * Modifie les informations d'une voiture existante dans la base de données.
+//     * La voiture est mise à jour avec les données fournies dans le DTO {@link VoitureRequestDto}.
+//     *
+//     * @param id                l'identifiant de la voiture à modifier.
+//     * @param voitureRequestDto un objet {@link VoitureRequestDto} contenant les nouvelles informations à appliquer à la voiture.
+//     * @return un objet {@link VoitureResponseDto} représentant la voiture modifiée après l'enregistrement dans la base de données.
+//     * @throws VehiculeException si l'identifiant de la voiture n'existe pas dans la base de données, ou si les informations de la voiture ne sont pas valides.
+//     */
+//    @Override
+//    public VoitureResponseDto modifier(int id, VoitureRequestDto voitureRequestDto) throws VehiculeException {
+//        if (!voitureDao.existsById(id)) throw new VehiculeException(JE_N_AI_PAS_TROUVER_L_ID);
+//        verifierVoiture(voitureRequestDto);
+//        Voiture voiture = voitureMapper.toVoiture(voitureRequestDto);
+//        voiture.setId(id);
+//        Voiture voitureEnreg = voitureDao.save(voiture);
+//        return voitureMapper.toVoitureResponseDto(voitureEnreg);
+//    }
+
+
     @Override
-    public VoitureResponseDto modifier(int id, VoitureRequestDto voitureRequestDto) throws VehiculeException {
-        if (!voitureDao.existsById(id)) throw new VehiculeException(JE_N_AI_PAS_TROUVER_L_ID);
-        verifierVoiture(voitureRequestDto);
-        Voiture voiture = voitureMapper.toVoiture(voitureRequestDto);
-        voiture.setId(id);
-        Voiture voitureEnreg = voitureDao.save(voiture);
-        return voitureMapper.toVoitureResponseDto(voitureEnreg);
+    public VoitureResponseDto modifierPartiellement(int id, VoitureRequestDto voitureRequestDto) throws VehiculeException {
+        Optional<Voiture> optVoiture = voitureDao.findById(id);
+        if (optVoiture.isEmpty())
+            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_ID);
+
+        Voiture voitureExistant = optVoiture.get();
+        Voiture voitureEnreg = voitureMapper.toVoiture(voitureRequestDto);
+
+
+        remplacer(voitureExistant, voitureEnreg);
+
+       Voiture modifVoiture = voitureDao.save(voitureExistant);
+        return voitureMapper.toVoitureResponseDto(modifVoiture);
+
     }
+
+    private static void remplacer(Voiture voitureExistant, Voiture voitureEnreg) throws VehiculeException {
+        if (voitureEnreg.getMarque() != null)
+            voitureExistant.setMarque(voitureEnreg.getMarque());
+        if(voitureEnreg.getModele() != null)
+            voitureExistant.setModele(voitureEnreg.getMarque());
+        if(voitureEnreg.getCouleur() != null)
+            voitureExistant.setCouleur(voitureEnreg.getCouleur());
+            
+
+    }
+
+
+
+
 
     /**
      * Supprime une voiture de la base de données en fonction de son identifiant.

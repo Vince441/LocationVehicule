@@ -5,8 +5,12 @@ import com.accenture.exception.ClientException;
 import com.accenture.exception.vehicules.VehiculeException;
 import com.accenture.repository.AdminDao;
 import com.accenture.repository.entity.Admin;
+import com.accenture.repository.entity.Adresse;
+import com.accenture.repository.entity.Client;
 import com.accenture.service.dto.AdminRequestDto;
 import com.accenture.service.dto.AdminResponseDto;
+import com.accenture.service.dto.ClientRequestDto;
+import com.accenture.service.dto.ClientResponseDto;
 import com.accenture.service.mapper.AdminMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -80,30 +84,26 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.toAdminResponseDto((admin));
     }
 
-    /**
-     * Modifie les informations d'un administrateur dans la base de données en fonction de son email et mot de passe.
-     * Si un administrateur correspondant est trouvé, ses informations sont mises à jour avec celles fournies dans le DTO {@link AdminRequestDto}.
-     * Si l'administrateur n'est pas trouvé, une exception est levée.
-     *
-     * @param email           l'adresse email de l'administrateur dont les informations doivent être mises à jour.
-     * @param password        le mot de passe de l'administrateur dont les informations doivent être mises à jour.
-     * @param adminRequestDto un objet {@link AdminRequestDto} contenant les nouvelles informations de l'administrateur.
-     * @return un objet {@link AdminResponseDto} représentant l'administrateur mis à jour.
-     * @throws AdminException          si les informations de l'administrateur ne sont pas valides, ou si une erreur survient lors de la mise à jour.
-     * @throws EntityNotFoundException si aucun administrateur n'est trouvé avec les informations données (email et mot de passe).
-     */
+
+
+
     @Override
-    public AdminResponseDto modifier(String email, String password, AdminRequestDto adminRequestDto) throws AdminException {
-        adminDao.findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL));
+    public AdminResponseDto modifierPartiellement(String email, String password, AdminRequestDto adminRequestDto) throws AdminException {
+        Optional<Admin> optAdmin = adminDao.findByEmailAndPassword(email, password);
+        if (optAdmin.isEmpty())
+            throw new EntityNotFoundException(JE_N_AI_PAS_TROUVER_L_EMAIL);
 
-        verifierAdmin(adminRequestDto);
-        Admin admin = adminMapper.toAdmin(adminRequestDto);
-        admin.setEmail(email);
-        Admin adminEnreg = adminDao.save(admin);
+        Admin adminExistant = optAdmin.get();
+        Admin adminEnreg = adminMapper.toAdmin(adminRequestDto);
 
-        return adminMapper.toAdminResponseDto(adminEnreg);
+        remplacer(adminExistant, adminEnreg);
+
+        Admin modifAdmin = adminDao.save(adminExistant);
+        return adminMapper.toAdminResponseDto(modifAdmin);
+
     }
+
+
 
     /**
      * Supprime un administrateur de la base de données en fonction de son email et de son mot de passe.
@@ -139,6 +139,20 @@ public class AdminServiceImpl implements AdminService {
             throw new ClientException("L'email est obligatoire");
         if (adminRequestDto.password() == null || adminRequestDto.password().isBlank())
             throw new ClientException("le password est obligatoire");
+    }
+
+
+
+    private static void remplacer(Admin adminExistant, Admin adminEnreg) {
+        if (adminEnreg.getNom() != null)
+            adminExistant.setNom(adminEnreg.getNom());
+        if (adminEnreg.getPrenom() != null)
+            adminExistant.setPrenom(adminEnreg.getPrenom());
+        if (adminEnreg.getEmail() != null)
+            adminExistant.setEmail(adminEnreg.getEmail());
+        if (adminEnreg.getPassword() != null)
+            adminExistant.setPassword(adminEnreg.getPassword());
+
     }
 
 

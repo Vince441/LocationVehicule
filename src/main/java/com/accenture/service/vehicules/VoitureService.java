@@ -17,7 +17,7 @@ public interface VoitureService {
 
     VoitureResponseDto trouverUneVoiture(int id) throws VehiculeException;
 
-    VoitureResponseDto modifier(int id, VoitureRequestDto voitureRequestDto) throws VehiculeException;
+    VoitureResponseDto modifierPartiellement(int id, VoitureRequestDto voitureRequestDto) throws VehiculeException;
 
     void supprimer(int id) throws VehiculeException;
 
