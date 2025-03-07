@@ -63,7 +63,7 @@ public class ClientController {
     public ResponseEntity<Void> ajouterClient(@RequestBody ClientRequestDto clientRequestDto) {
         try {
             clientService.ajouter(clientRequestDto);
-            logger.info("Client crée avec succès");
+            logger.info("Client créé avec succès");
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ClientException e) {
             logger.error("Erreur lors de la création du client", e);
