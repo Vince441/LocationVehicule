@@ -20,8 +20,6 @@ public record ClientResponseDto(
         @Schema(description = "Email", example = "v.l@gmail.com")
         String email,
 
-        @Schema(description = "Password", example = "azertyuiop")
-        String password,
 
         AdresseDto adresse,
 

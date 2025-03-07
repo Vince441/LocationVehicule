@@ -14,8 +14,7 @@ public record AdminResponseDto(
         @Schema(description = "Email", example = "v.l@gmail.com")
         String email,
 
-        @Schema(description = "Password", example = "azertyuiop")
-        String password,
+
 
         Fonction fonction
 ) {
